@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "01. On Time for the Exam", "01. On Time for the Exam\01. On Time for the Exam.csproj", "{DA4B8A55-10D6-4C2C-A549-48952160DED2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02. Trip", "02. Trip\02. Trip.csproj", "{D7CD70BF-E010-4AEA-8D6C-D3C1303EA037}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "03. Operations", "03. Operations\03. Operations.csproj", "{9ACE9DB3-2A1B-4536-8EEB-6CFFB00C09E6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "04. Match Tickets", "04. Match Tickets\04. Match Tickets.csproj", "{D26D0270-F32A-43AD-B8F3-26CF9EB78448}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "05. Invalid Number", "05. Invalid Number\05. Invalid Number.csproj", "{90198477-C7E1-4767-96DE-ED3167C534D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GodzillaVsKong", "GodzillaVsKong\GodzillaVsKong.csproj", "{4F9C6AFE-DD5F-479A-A6E9-F6EB34C26CD4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA4B8A55-10D6-4C2C-A549-48952160DED2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA4B8A55-10D6-4C2C-A549-48952160DED2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA4B8A55-10D6-4C2C-A549-48952160DED2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA4B8A55-10D6-4C2C-A549-48952160DED2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7CD70BF-E010-4AEA-8D6C-D3C1303EA037}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7CD70BF-E010-4AEA-8D6C-D3C1303EA037}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7CD70BF-E010-4AEA-8D6C-D3C1303EA037}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7CD70BF-E010-4AEA-8D6C-D3C1303EA037}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9ACE9DB3-2A1B-4536-8EEB-6CFFB00C09E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9ACE9DB3-2A1B-4536-8EEB-6CFFB00C09E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9ACE9DB3-2A1B-4536-8EEB-6CFFB00C09E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9ACE9DB3-2A1B-4536-8EEB-6CFFB00C09E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D26D0270-F32A-43AD-B8F3-26CF9EB78448}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D26D0270-F32A-43AD-B8F3-26CF9EB78448}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D26D0270-F32A-43AD-B8F3-26CF9EB78448}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D26D0270-F32A-43AD-B8F3-26CF9EB78448}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90198477-C7E1-4767-96DE-ED3167C534D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90198477-C7E1-4767-96DE-ED3167C534D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90198477-C7E1-4767-96DE-ED3167C534D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90198477-C7E1-4767-96DE-ED3167C534D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F9C6AFE-DD5F-479A-A6E9-F6EB34C26CD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F9C6AFE-DD5F-479A-A6E9-F6EB34C26CD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F9C6AFE-DD5F-479A-A6E9-F6EB34C26CD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F9C6AFE-DD5F-479A-A6E9-F6EB34C26CD4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A8AA7209-D67C-4A32-BB23-8A5486523460}
+	EndGlobalSection
+EndGlobal
