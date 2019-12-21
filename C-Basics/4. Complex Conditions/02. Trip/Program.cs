@@ -7,24 +7,38 @@ namespace _02.Trip
         static void Main(string[] args)
         {
             decimal budget = decimal.Parse(Console.ReadLine());
+            decimal spent = budget * 0.7m;
             string season = Console.ReadLine();
-            string destination = string.Empty;
+            string destination = "Bulgaria";
+            string accomodation = "Hotel";
             if (budget <= 100)
             {
-                destination = "BG";
+                if (season == "summer")
+                {
+                    spent = budget * 0.3m;
+                    accomodation = "Camp";
+                }
             }
             else if (budget <= 1000)
             {
                 destination = "Balkans";
+                if (season == "summer")
+                {
+                    spent = budget * 0.4m;
+                    accomodation = "Camp";
+                }
+                else if (season == "winter")
+                {
+                    spent = budget * 0.8m;
+                }
             }
             else
             {
-                destination = "EU";
+                destination = "Europe";
+                spent = budget * 0.9m;
             }
-            if (season = "summer")
-            {
-
-            }
+            Console.WriteLine("Somewhere in " + destination);
+            Console.WriteLine("{0} - {1:0.00}", accomodation, spent);
         }
     }
 }
