@@ -1,15 +1,15 @@
-using System;
+﻿using System;
 
 namespace _13.Notifications
 {
-    class Notifications
+    class Program
     {
         static void ShowSuccessMessage(string operation, string message)
         {
             Console.WriteLine("Successfully executed " + operation + ".");
             Console.WriteLine("======================" + new string('=', operation.Length) + "=");
             //Console.WriteLine("==============================");
-            Console.WriteLine(message + ".");
+            Console.WriteLine("Message: " + message + ".");
             Console.WriteLine();
         }
 
@@ -57,7 +57,7 @@ namespace _13.Notifications
         static void Main(string[] args)
         {
             int n = int.Parse(Console.ReadLine());
-            while (n != 0)
+            while (n!= 0)
             {
                 ReadAndProcessMessage();
                 n--;
