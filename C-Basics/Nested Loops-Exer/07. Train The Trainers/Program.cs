@@ -1,32 +1,31 @@
-﻿using System;
+﻿//https://judge.softuni.bg/Contests/Practice/Index/1165#6
 
-namespace _07.Train_The_Trainers
+using System;
+
+namespace _07._Train_The_Trainers
 {
     class Program
     {
         static void Main(string[] args)
         {
-            int n = int.Parse(Console.ReadLine());
-
-            string input = Console.ReadLine();
-
-            int counter = 0;
-            double totalPresentationScore = 0;
-
-            while (input != "Finish")
+            byte n = byte.Parse(Console.ReadLine());
+            string title = "";
+            decimal gradeSumTotal = 0;
+            int numStudentsGrades = 0;
+            while ((title = Console.ReadLine()) != "Finish")
             {
-                double presentationScore = 0;
+                decimal gradeSum = 0;
                 for (int i = 0; i < n; i++)
                 {
-                    presentationScore += double.Parse(Console.ReadLine());
+                    decimal grade = decimal.Parse(Console.ReadLine());
+                    gradeSum += grade;
+                    numStudentsGrades++;
                 }
-                double averagePresentationScore = presentationScore / n;
-                Console.WriteLine($"{input} - {averagePresentationScore:f2}.");
-                totalPresentationScore += averagePresentationScore;
-                counter++;
-                input = Console.ReadLine();
+                Console.WriteLine($"{title} - {gradeSum / n :f2}.");
+                gradeSumTotal += gradeSum;
+                
             }
-            Console.WriteLine($"Student's final assessment is {totalPresentationScore/counter:f2}.");
+            Console.WriteLine($"Student's final assessment is {gradeSumTotal / numStudentsGrades:f2}.");
         }
     }
 }
