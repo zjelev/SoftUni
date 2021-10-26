@@ -1,0 +1,53 @@
+<log>
+    <date>17.9.2021 9:07:26</date>
+    <level>Error</level>
+    <message>Error parsing JSON.</message>
+</log><log>
+    <date>31.3.2015 5:33:08</date>
+    <level>Critical</level>
+    <message>No connection string found in App.config</message>
+</log><log>
+    <date>31.3.2015 5:33:09</date>
+    <level>Fatal</level>
+    <message>mscorlib.dll does not respond</message>
+</log><log>
+    <date>17.9.2021 9:18:14</date>
+    <level>Error</level>
+    <message>Error parsing JSON.</message>
+</log><log>
+    <date>31.3.2015 5:33:08</date>
+    <level>Critical</level>
+    <message>No connection string found in App.config</message>
+</log><log>
+    <date>31.3.2015 5:33:09</date>
+    <level>Fatal</level>
+    <message>mscorlib.dll does not respond</message>
+</log><log>
+    <date>17.9.2021 9:19:35</date>
+    <level>Error</level>
+    <message>Error parsing JSON.</message>
+</log><log>
+    <date>17.9.2021 9:19:35</date>
+    <level>Info</level>
+    <message>User Pesho successfully registered.</message>
+</log><log>
+    <date>31.3.2015 5:33:07</date>
+    <level>Warning</level>
+    <message>Warning: ping is too high - disconnect imminent</message>
+</log><log>
+    <date>31.3.2015 5:33:08</date>
+    <level>Critical</level>
+    <message>No connection string found in App.config</message>
+</log><log>
+    <date>31.3.2015 5:33:09</date>
+    <level>Fatal</level>
+    <message>mscorlib.dll does not respond</message>
+</log><log>
+    <date>17.9.2021 10:03:43</date>
+    <level>Info</level>
+    <message>Everything seems nice</message>
+</log><log>
+    <date>17.9.2021 10:04:50</date>
+    <level>Error</level>
+    <message>Everything seems not nice</message>
+</log>
