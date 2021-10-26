@@ -19,7 +19,7 @@ namespace Stealer
             methods[1].Invoke(newInstance, new object[] {"novaParola"});
             MethodInfo who = classType.GetMethod("DownloadAllBankAccountsInTheWorld");
             who?.Invoke(newInstance, new object[] { });
-            who.MakeGenericMethod(typeof(string));
+            // who.MakeGenericMethod(typeof(string));
 			// End Stamo's lection
             
             FieldInfo[] classFields = classType.GetFields(
