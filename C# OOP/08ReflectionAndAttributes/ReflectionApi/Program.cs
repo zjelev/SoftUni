@@ -39,11 +39,11 @@ namespace ReflectionApi
 
                 publicMethods[1].Invoke(newInstance, new object[] { 30 });
 
-                //MethodInfo who = testType.GetMethods(publicMethods[2])
+                MethodInfo who = testType.GetMethod(publicMethods[2].ToString());
 
                 MethodInfo appendMethod = testType.GetMethod("WhoAmI");
-                appendMethod?.Invoke(newInstance, new object[] {});  // can be also null
-                appendMethod.GetParameters();
+                // appendMethod?.Invoke(newInstance, new object[] {});  // can be also null
+                // appendMethod.GetParameters();
 
                 //appendMethod.MakeGenericMethod(typeof(string)); //when we have generic methods, TestClass doesn't have
 
