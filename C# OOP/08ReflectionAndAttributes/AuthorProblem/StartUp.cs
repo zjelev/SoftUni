@@ -8,18 +8,8 @@ namespace AuthorProblem
         [Author("Gosho")]
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var tracker = new Tracker();
+            tracker.PrintMethodsByAuthor();
         }
-
-        // [Flags]
-        // public enum FileAccess
-        // {
-        //     Read = 1,
-        //     Write = 2,
-        //     ReadWrite = Read | Write
-        // }
-
-        // [DllImport("user32.dll", EntryPoint="MessageBox")]
-        // public static extern int ShowMessageBox(int hWnd, string text, string caption, int type);
     }
 }
