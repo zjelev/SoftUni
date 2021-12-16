@@ -20,7 +20,7 @@ namespace BBBusers
                     while (line != null)
                     {
                         allUsers++;
-                        if (line.Contains("marica-iztok.com"))
+                        if (line.Contains("email.com"))
                         {
                             // string pattern = @"[\w-]+@([\w-]+\.)+[\w-]+";
                             // Regex regex = new Regex(pattern);
