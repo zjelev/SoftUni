@@ -16,7 +16,7 @@ namespace BBBusers
                     sw.Start();
                     string line = reader.ReadLine();
                     int allUsers = 0;
-                    int usersWithEmailsMMI = 0;
+                    int usersWithEmails = 0;
                     while (line != null)
                     {
                         allUsers++;
@@ -33,12 +33,12 @@ namespace BBBusers
                             string newLine = string.Join(" ", lineArr).Trim();
                             newLine = string.Concat("docker exec greenlight-v2 bundle exec rake user:create[\"", newLine, "\",\"123456\",\"user\"]");
                             writer.WriteLine(newLine);
-                            usersWithEmailsMMI++;                        
+                            usersWithEmails++;                        
                         }
                         line = reader.ReadLine();
                     }
                     sw.Stop();
-                    Console.WriteLine($"From {allUsers} users with e-mails {usersWithEmailsMMI} have e-mails ending in desired e-mail");
+                    Console.WriteLine($"From {allUsers} users with e-mails {usersWithEmails} have e-mails ending in desired e-mail");
                     Console.WriteLine($"Conversion took {sw.ElapsedTicks} timer ticks.");
                 }
             }
