@@ -38,7 +38,7 @@ namespace BBBusers
                         line = reader.ReadLine();
                     }
                     sw.Stop();
-                    Console.WriteLine($"From {allUsers} users with e-mails {usersWithEmailsMMI} have e-mails ending in marica-iztok.com.");
+                    Console.WriteLine($"From {allUsers} users with e-mails {usersWithEmailsMMI} have e-mails ending in desired e-mail");
                     Console.WriteLine($"Conversion took {sw.ElapsedTicks} timer ticks.");
                 }
             }
