@@ -3,9 +3,6 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyName>BankAccount</AssemblyName>
-    <RootNamespace>BankAccount.NS</RootNamespace>
-    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
 
 </Project>
