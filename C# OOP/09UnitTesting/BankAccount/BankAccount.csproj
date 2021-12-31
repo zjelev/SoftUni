@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>BankAccount</AssemblyName>
-    <RootNamespace>BankAccount.NS</RootNamespace>
+    <RootNamespace>BankAccount</RootNamespace>
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
 
