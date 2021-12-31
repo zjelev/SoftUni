@@ -16,7 +16,7 @@ namespace Tests
 
             for (long i = 0; i < 15; i++)
             {
-                Person person = new Person(i + 1, "Pesho"+i.ToString());
+                Person person = new Person(i+1, $"Pesho {i+1}");
                 persons[i] = person;
             }
 
@@ -42,9 +42,34 @@ namespace Tests
             Assert.Throws<InvalidOperationException>(() => db.Remove());
         }
         
+        [Test]
         public void FindByNonexistingUsernameThrowsException()
         {
             Assert.Throws<InvalidOperationException>(() => db.FindByUsername("Pesho500"));
+        }
+
+        [Test]
+        public void FindByUsernameEmptyThrowsExc()
+        {
+            Assert.Throws<ArgumentNullException>(() => db.FindByUsername(""));
+        }
+
+        [Test]
+        public void FindByUsernameCaseSensitiveThrowsException()
+        {
+            Assert.Throws<InvalidOperationException>(() => db.FindByUsername("pesho 1"));
+        }
+
+        [Test]
+        public void FindByIdNonExistThrowsExc()
+        {
+            Assert.Throws<InvalidOperationException>(() => db.FindById(0));
+        }
+
+        [Test]
+        public void FindByIdNegativeThrowsExc()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => db.FindById(-1));
         }
     }
 }
