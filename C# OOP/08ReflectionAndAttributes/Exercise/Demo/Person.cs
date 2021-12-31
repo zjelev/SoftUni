@@ -14,10 +14,10 @@ namespace Demo
             get => this.name; 
             set
             {
-                // if(string.IsNullOrWhiteSpace(value))
-                // {
-                //     throw new ArgumentException("Name can not be empy.");
-                // }
+                if(string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("Name can not be empy.");
+                }
 
                 this.name = value; // + "sth else";
             }

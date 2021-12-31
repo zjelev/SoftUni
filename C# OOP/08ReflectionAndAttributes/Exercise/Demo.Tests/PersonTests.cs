@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using Demo;
 using System;
 
 namespace Demo.Tests
