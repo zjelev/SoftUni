@@ -1,3 +1,5 @@
+using System;
+using CarManager;
 using NUnit.Framework;
 
 namespace Tests
@@ -9,10 +11,12 @@ namespace Tests
         {
         }
 
-        [Test]
-        public void Test1()
-        {
-            Assert.Pass();
-        }
+        [TestCase(null)]
+        [TestCase("1")]
+        public void MakeNullEmpltyThrowsExc(string make)
+            {
+                Assert.Throws<ArgumentException>(()
+                    => new Car(make, "model", 0, 0));
+            }
     }
 }
