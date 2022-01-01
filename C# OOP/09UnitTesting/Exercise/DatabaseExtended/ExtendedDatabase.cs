@@ -3,13 +3,13 @@ using System.Linq;
 
 namespace ExtendedDatabase
 {
-    public class ExtendedDatabase
+    public class Database
     {
         private Person[] persons;
 
         private int count;
 
-        public ExtendedDatabase(params Person[] persons)
+        public Database(params Person[] persons)
         {
             this.persons = new Person[16];
             AddRange(persons);

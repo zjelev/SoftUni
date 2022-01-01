@@ -1,5 +1,5 @@
-﻿namespace ExtendedDatabase
-{
+﻿// namespace ExtendedDatabase
+// {
     public class Person
     {
         private long id;
@@ -23,4 +23,4 @@
             private set { id = value; }
         }
     }
-}
+//}
