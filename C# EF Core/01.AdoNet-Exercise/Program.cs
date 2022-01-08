@@ -130,6 +130,12 @@ namespace AdoNet
                         string minionName = reader["Name"]?.ToString();
                         string minionAge = reader["Age"]?.ToString();
 
+                        if (minionName == String.Empty || minionAge == String.Empty)
+                        {
+                            sb.AppendLine("No minions");
+                            break;
+                        }
+                        
                         sb.AppendLine($"{rowNum}. {minionName} {minionAge}");
                         rowNum++;
                     }
