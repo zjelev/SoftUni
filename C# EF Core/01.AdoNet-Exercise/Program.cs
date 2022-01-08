@@ -46,12 +46,15 @@ namespace AdoNet
             // command = new SqlCommand(insertValues, dbConn);
             // command.ExecuteScalar();
             
-            Console.WriteLine(getVillainCountMinions(dbConn));
-        }
+            // Console.WriteLine(GetVillainCountMinions(dbConn));
 
-        private static string getVillainCountMinions(SqlConnection dbConn)
+            Console.Write("Input villain id: ");
+            int villainId = int.Parse(Console.ReadLine());
+            Console.WriteLine(GetMinionsOfAVillain(dbConn, villainId));
+        }
+        private static string GetVillainCountMinions(SqlConnection dbConn)
         {            
-            string selectVillainCountMinions = @"
+            string query = @"
             SELECT v.Name, COUNT(mv.MinionId) AS MinionCount
                 FROM Villains v
                 JOIN MinionsVillains mv on v.Id = mv.VillainId
@@ -59,11 +62,12 @@ namespace AdoNet
             HAVING COUNT(mv.MinionId) > 2
             ORDER BY COUNT(mv.VillainId) DESC";
 
-            using SqlCommand command = new SqlCommand(selectVillainCountMinions, dbConn);
+            using SqlCommand command = new SqlCommand(query, dbConn);
             //string result = command.ExecuteScalar()?.ToString();
+            
+            StringBuilder sb = new StringBuilder();
 
             using SqlDataReader reader = command.ExecuteReader();
-            StringBuilder sb = new StringBuilder();
             
             if (reader.HasRows)
             {
@@ -81,6 +85,62 @@ namespace AdoNet
             }
 
             return sb.ToString().TrimEnd();
+        }
+
+        private static string GetMinionsOfAVillain(SqlConnection dbConn, int villainId)
+        {
+            string selectVillainName = @"SELECT Name FROM Villains WHERE Id = @villainId";
+
+            using SqlCommand getVillainName = new SqlCommand(selectVillainName, dbConn);
+            getVillainName.Parameters.AddWithValue("@villainId", villainId);
+
+            string villainName = getVillainName.ExecuteScalar()?.ToString();
+            
+            StringBuilder sb = new StringBuilder();
+
+            if (villainName == null)
+            {
+                sb.AppendLine($"No villain with ID {villainId} exists in the database.");
+                return sb.ToString().TrimEnd();
+            }
+            else
+            {
+                sb.AppendLine($"Villain: {villainName}");
+
+                string query = @"
+                    SELECT m.[Name], m.[Age] FROM Villains v
+                    LEFT OUTER JOIN MinionsVillains mv
+                    ON v.Id = mv.VillainId
+                    LEFT OUTER JOIN Minions m
+                    ON mv.MinionId = m.Id
+                    WHERE v.[Name] = @villainName
+                    ORDER BY m.[Name]";
+
+                using SqlCommand getMinionsInfo = new SqlCommand(query, dbConn);
+                getMinionsInfo.Parameters.AddWithValue("@villainName", villainName);
+
+                using SqlDataReader reader = getMinionsInfo.ExecuteReader();
+            
+                if (reader.HasRows)
+                {
+                    int rowNum = 1;
+
+                    while (reader.Read())
+                    {
+                        string minionName = reader["Name"]?.ToString();
+                        string minionAge = reader["Age"]?.ToString();
+
+                        sb.AppendLine($"{rowNum}. {minionName} {minionAge}");
+                        rowNum++;
+                    }
+                }
+                else
+                {
+                    sb.AppendLine("No minions");
+                }
+
+                return sb.ToString().TrimEnd();
+            }
         }
     }
 }
