@@ -53,15 +53,21 @@ namespace AdoNet
             // int villainId = int.Parse(Console.ReadLine());
             // Console.WriteLine(GetMinionsOfAVillain(dbConn, villainId));
 
-            string[] inputFour = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
-            string minionName = inputFour[1];
-            int minionAge = int.Parse(inputFour[2]);
-            string town = inputFour[3];
-            inputFour = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
-            string villainName = inputFour[1];
+            // 4. Add Minion
+            // string[] inputFour = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            // string minionName = inputFour[1];
+            // int minionAge = int.Parse(inputFour[2]);
+            // string town = inputFour[3];
+            // inputFour = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            // string villainName = inputFour[1];
 
-            Console.WriteLine(AddMinion(dbConn, minionName, minionAge, town, villainName));
+            // Console.WriteLine(AddMinion(dbConn, minionName, minionAge, town, villainName));
+
+            // 5.
+            string countryName = Console.ReadLine();
+            ChangeTownNamesCasing(dbConn, countryName);
         }
+
         private static string GetVillainCountMinions(SqlConnection dbConn)
         {            
             string query = @"
@@ -254,5 +260,57 @@ namespace AdoNet
             return townId;
         }
 
+        private static void ChangeTownNamesCasing(SqlConnection dbConn, string countryName)
+        {
+            StringBuilder output = new StringBuilder();
+            List<Town> towns = new List<Town>();
+
+            string changeTownNames = @"update Towns
+                        set Name = UPPER(Name)
+                        WHERE CountryCode = (SELECT Id FROM Countries WHERE Name = @countryName)";
+            
+            using SqlCommand changeTownNamesCmd = new SqlCommand(changeTownNames, dbConn);
+            changeTownNamesCmd.Parameters.AddWithValue("@countryName", countryName);
+            changeTownNamesCmd.ExecuteScalar();
+
+            string getTownNames = @"select t.Id, t.Name, t.CountryCode from Towns t 
+                join Countries c
+                on t.CountryCode = c.Id
+                WHERE c.Name = @countryName";
+
+            using SqlCommand getTownNamesCmd = new SqlCommand(getTownNames, dbConn);
+            getTownNamesCmd.Parameters.AddWithValue("@countryName", countryName);
+            using SqlDataReader reader = getTownNamesCmd.ExecuteReader();
+
+            int changedTownsCount = 0;
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    int townId = int.Parse(reader["Id"]?.ToString());
+                    string townName = reader["Name"]?.ToString();
+                    int countryCode = int.Parse(reader["CountryCode"]?.ToString());
+
+                    towns.Add(new Town(townId, townName, countryCode));
+                    changedTownsCount++;
+                }
+            }
+            else
+            {
+                output.AppendLine("No town names were affected.");
+            }
+            Console.WriteLine($"{changedTownsCount} town names were affected.");
+
+            foreach (var town in towns)
+            {
+
+            }
+
+            // return string.Join(", ", towns);
+            towns.ForEach(t => Console.Write("{0}, ", t.Name));
+        }
+
+        
     }
 }
