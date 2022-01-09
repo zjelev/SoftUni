@@ -168,7 +168,7 @@ namespace AdoNet
             string villainId = SelectVillainId(dbConn, villainName, output);
 
             string insertMinion = @"INSERT INTO Minions (Name, Age, TownId)
-                                   VALUS (@minionName, @minionAge, @townId)";
+                                   VALUES (@minionName, @minionAge, @townId)";
 
             using SqlCommand insertMinionCmd = new SqlCommand(insertMinion, dbConn);
             insertMinionCmd.Parameters.AddRange(new []
@@ -185,7 +185,20 @@ namespace AdoNet
             getMinionIdCmd.Parameters.AddWithValue("@minionName", minionName);
 
             string minionId = getMinionIdCmd.ExecuteScalar()?.ToString();
-            
+
+            string assignMinion = @"INSERT INTO MinionsVillains(MinionId, VillainId) 
+                VALUES (@minionId, @villainId)";
+
+            using SqlCommand assignMinionCmd = new SqlCommand(assignMinion, dbConn);
+            assignMinionCmd.Parameters.AddRange(new[]
+            {
+                new SqlParameter("@minionId", minionId),
+                new SqlParameter("@villainId", villainId)
+            });
+
+            assignMinionCmd.ExecuteNonQuery();
+
+            output.AppendLine($"Successfully added {minionName} to be minion of {villainName}.");
             return output.ToString().TrimEnd();
         }
 
@@ -203,7 +216,7 @@ namespace AdoNet
                 using SqlCommand selectFactorIdCmd = new SqlCommand(selectFactorId, dbConn);
                 string factorId = selectFactorIdCmd.ExecuteScalar()?.ToString();
 
-                string insertVillain = @"INSERT INTO Vilains(Name, EvilnessFactorId) 
+                string insertVillain = @"INSERT INTO Villains(Name, EvilnessFactorId) 
                                         VALUES (@villainName, @factorId)";
                 using SqlCommand insertTownCmd = new SqlCommand(insertVillain, dbConn);
                 insertTownCmd.Parameters.AddWithValue("@villainName", villainName);
