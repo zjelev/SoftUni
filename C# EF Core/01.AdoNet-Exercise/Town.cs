@@ -9,8 +9,8 @@ namespace AdoNet
             CountryCode = countryCode;
         }
 
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int CountryCode { get; set; }
+        public int Id { get; }
+        public string Name { get; private set; }
+        public int CountryCode { get; private set; }
     }
 }

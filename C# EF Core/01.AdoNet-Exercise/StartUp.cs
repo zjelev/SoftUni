@@ -70,8 +70,11 @@ namespace AdoNet
             //Console.WriteLine(ChangeTownNamesCasing(dbConn, countryName));
 
             // 6. Remove Villain
-            int villainId = int.Parse(Console.ReadLine());
-            Console.WriteLine(RemoveVillainById(dbConn, villainId));
+            // int villainId = int.Parse(Console.ReadLine());
+            // Console.WriteLine(RemoveVillainById(dbConn, villainId));
+
+            // 7. Print All Minion Names
+            PrintMinionNames(dbConn);
 
         }
 
@@ -373,6 +376,42 @@ namespace AdoNet
                 }
             }
             return sb.ToString().TrimEnd();
+        }
+
+        private static void PrintMinionNames(SqlConnection dbConn)
+        {
+            StringBuilder sb = new StringBuilder();
+            string countMinionsQry = @"SELECT (COUNT (*)) FROM MINIONS";
+            using SqlCommand countMinionsCmd = new SqlCommand(countMinionsQry, dbConn);
+            int minionsCount = int.Parse(countMinionsCmd.ExecuteScalar()?.ToString());
+
+            string[] minions = new string[minionsCount];
+
+            string getMinionNames = @"SELECT [Name] FROM Minions";
+
+            using SqlCommand getMinionNamesCmd = new SqlCommand(getMinionNames, dbConn);
+            using SqlDataReader reader = getMinionNamesCmd.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                for (int i = 0; reader.Read(); i++)
+                {
+                    minions[i] = reader["Name"].ToString();
+                }
+            }
+
+            string[] minionsMixed = new string[minions.Length];
+            int count = minions.Length;
+            for (int i = 0; i < minions.Length - 1; i++)
+            {
+                minionsMixed[i] = minions[minionsCount - count + i];
+                count--;
+            }
+
+            foreach (var name in minionsMixed)
+            {
+                Console.WriteLine(name);
+            }
         }
     }
 }
