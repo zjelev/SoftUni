@@ -24,7 +24,7 @@ namespace AdoNet
                     CREATE TABLE EvilnessFactors(Id INT PRIMARY KEY IDENTITY, Name VARCHAR(50))
                     CREATE TABLE Villains (Id INT PRIMARY KEY IDENTITY, Name VARCHAR(50), EvilnessFactorId INT FOREIGN KEY REFERENCES EvilnessFactors(Id))
                     CREATE TABLE MinionsVillains (MinionId INT FOREIGN KEY REFERENCES Minions(Id),VillainId INT FOREIGN KEY REFERENCES Villains(Id),CONSTRAINT PK_MinionsVillains PRIMARY KEY (MinionId, VillainId))";
-            
+
             string insertValues = useDB + @"
                     INSERT INTO Countries ([Name]) VALUES ('Bulgaria'),('England'),('Cyprus'),('Germany'),('Norway')
                     INSERT INTO Towns ([Name], CountryCode) VALUES ('Plovdiv', 1),('Varna', 1),('Burgas', 1),('Sofia', 1),('London', 2),('Southampton', 2),('Bath', 2),('Liverpool', 2),('Berlin', 3),('Frankfurt', 3),('Oslo', 4)
@@ -32,7 +32,7 @@ namespace AdoNet
                     INSERT INTO EvilnessFactors (Name) VALUES ('Super good'),('Good'),('Bad'), ('Evil'),('Super evil')
                     INSERT INTO Villains (Name, EvilnessFactorId) VALUES ('Gru',2),('Victor',1),('Jilly',3),('Miro',4),('Rosen',5),('Dimityr',1),('Dobromir',2)
                     INSERT INTO MinionsVillains (MinionId, VillainId) VALUES (4,2),(1,1),(5,7),(3,5),(2,6),(11,5),(8,4),(9,7),(7,1),(1,3),(7,3),(5,3),(4,3),(1,2),(2,1),(2,7)";
-            
+
             using SqlConnection dbConn = new SqlConnection(conn);
             dbConn.Open();
 
@@ -47,8 +47,10 @@ namespace AdoNet
             // command = new SqlCommand(insertValues, dbConn);
             // command.ExecuteScalar();
 
+            // 2. Villain Names
             // Console.WriteLine(GetVillainCountMinions(dbConn));
 
+            // 3. Minion Names
             // Console.Write("Input villain id: ");
             // int villainId = int.Parse(Console.ReadLine());
             // Console.WriteLine(GetMinionsOfAVillain(dbConn, villainId));
@@ -63,28 +65,33 @@ namespace AdoNet
 
             // Console.WriteLine(AddMinion(dbConn, minionName, minionAge, town, villainName));
 
-            // 5.
-            string countryName = Console.ReadLine();
-            ChangeTownNamesCasing(dbConn, countryName);
+            // 5. Change Town Names Casing
+            //string countryName = Console.ReadLine();
+            //Console.WriteLine(ChangeTownNamesCasing(dbConn, countryName));
+
+            // 6. Remove Villain
+            int villainId = int.Parse(Console.ReadLine());
+            Console.WriteLine(RemoveVillainById(dbConn, villainId));
+
         }
 
         private static string GetVillainCountMinions(SqlConnection dbConn)
-        {            
+        {
             string query = @"
             SELECT v.Name, COUNT(mv.MinionId) AS MinionCount
                 FROM Villains v
                 JOIN MinionsVillains mv on v.Id = mv.VillainId
             GROUP BY v.Id, v.Name
             HAVING COUNT(mv.MinionId) > 2
-            ORDER BY COUNT(mv.VillainId) DESC";
+            ORDER BY COUNT(mv.VillainId) ASC";
 
             using SqlCommand command = new SqlCommand(query, dbConn);
-            //string result = command.ExecuteScalar()?.ToString();
-            
+            Console.WriteLine(command.ExecuteScalar()?.ToString());
+
             StringBuilder sb = new StringBuilder();
 
             using SqlDataReader reader = command.ExecuteReader();
-            
+
             if (reader.HasRows)
             {
                 while (reader.Read())
@@ -111,7 +118,7 @@ namespace AdoNet
             getVillainName.Parameters.AddWithValue("@villainId", villainId);
 
             string villainName = getVillainName.ExecuteScalar()?.ToString();
-            
+
             StringBuilder sb = new StringBuilder();
 
             if (villainName == null)
@@ -136,7 +143,7 @@ namespace AdoNet
                 getMinionsInfo.Parameters.AddWithValue("@villainName", villainName);
 
                 using SqlDataReader reader = getMinionsInfo.ExecuteReader();
-            
+
                 if (reader.HasRows)
                 {
                     int rowNum = 1;
@@ -151,7 +158,7 @@ namespace AdoNet
                             sb.AppendLine("No minions");
                             break;
                         }
-                        
+
                         sb.AppendLine($"{rowNum}. {minionName} {minionAge}");
                         rowNum++;
                     }
@@ -177,7 +184,7 @@ namespace AdoNet
                                    VALUES (@minionName, @minionAge, @townId)";
 
             using SqlCommand insertMinionCmd = new SqlCommand(insertMinion, dbConn);
-            insertMinionCmd.Parameters.AddRange(new []
+            insertMinionCmd.Parameters.AddRange(new[]
             {
                 new SqlParameter("@minionName", minionName),
                 new SqlParameter("@minionAge", minionAge),
@@ -260,15 +267,15 @@ namespace AdoNet
             return townId;
         }
 
-        private static void ChangeTownNamesCasing(SqlConnection dbConn, string countryName)
+        private static string ChangeTownNamesCasing(SqlConnection dbConn, string countryName)
         {
-            StringBuilder output = new StringBuilder();
+            string output = String.Empty;
             List<Town> towns = new List<Town>();
 
             string changeTownNames = @"update Towns
                         set Name = UPPER(Name)
                         WHERE CountryCode = (SELECT Id FROM Countries WHERE Name = @countryName)";
-            
+
             using SqlCommand changeTownNamesCmd = new SqlCommand(changeTownNames, dbConn);
             changeTownNamesCmd.Parameters.AddWithValue("@countryName", countryName);
             changeTownNamesCmd.ExecuteScalar();
@@ -295,22 +302,77 @@ namespace AdoNet
                     towns.Add(new Town(townId, townName, countryCode));
                     changedTownsCount++;
                 }
+                
+                Console.WriteLine($"{changedTownsCount} town names were affected.");
+                Console.Write("[");
+                foreach (var town in towns)
+                {
+                    output += town.Name + ", ";
+                };
+                
+                //towns.ForEach(t => Console.Write("{0}, ", t.Name));
+                output = output.Remove(output.Length - 2, 2) + "]";
             }
             else
             {
-                output.AppendLine("No town names were affected.");
+                output = "No town names were affected.";
             }
-            Console.WriteLine($"{changedTownsCount} town names were affected.");
-
-            foreach (var town in towns)
-            {
-
-            }
-
-            // return string.Join(", ", towns);
-            towns.ForEach(t => Console.Write("{0}, ", t.Name));
+            return output;
         }
 
-        
+        private static string RemoveVillainById(SqlConnection dbConn, int villainId)
+        {
+            StringBuilder sb = new StringBuilder();
+            using SqlTransaction sqlTransaction = dbConn.BeginTransaction();
+
+            string getVillainName = @"SELECT [Name] FROM Villains WHERE Id = @villainId";
+
+            using SqlCommand getVillainNameCmd = new SqlCommand(getVillainName, dbConn);
+            getVillainNameCmd.Parameters.AddWithValue("@villainId", villainId);
+            getVillainNameCmd.Transaction = sqlTransaction;
+
+            string villainName = getVillainNameCmd.ExecuteScalar()?.ToString();
+            
+            if (villainName == null)
+            {
+                sb.AppendLine($"No such villain was found.");
+            }
+            else
+            {
+                try
+                {
+                    string releaseMinions = @"DELETE FROM MinionsVillains WHERE VillainId = @villainId";
+                    using SqlCommand releaseMinionsCmd = new SqlCommand(releaseMinions, dbConn);
+                    releaseMinionsCmd.Parameters.AddWithValue("@villainId", villainId);
+                    releaseMinionsCmd.Transaction = sqlTransaction;
+                    int releasedMinoinsCount = releaseMinionsCmd.ExecuteNonQuery();
+                    
+                    string deleteVillain = @"DELETE FROM Villains WHERE Id = @villainId";
+                    using SqlCommand deleteVillainCmd = new SqlCommand(deleteVillain, dbConn);
+                    deleteVillainCmd.Parameters.AddWithValue("@villainId", villainId);
+                    deleteVillainCmd.Transaction = sqlTransaction;
+                    deleteVillainCmd.ExecuteNonQuery();
+
+                    sqlTransaction.Commit();
+
+                    sb.AppendLine($"{villainName} was deleted")
+                      .AppendLine($"{releasedMinoinsCount} minions were released.");
+                }
+                catch (Exception ex)
+                {
+                    sb.AppendLine(ex.Message);
+
+                    try
+                    {
+                        sqlTransaction.Rollback();
+                    }
+                    catch (Exception rollbackEx)
+                    {
+                        sb.AppendLine(rollbackEx.Message);
+                    }
+                }
+            }
+            return sb.ToString().TrimEnd();
+        }
     }
 }
