@@ -400,12 +400,24 @@ namespace AdoNet
                 }
             }
 
-            string[] minionsMixed = new string[minions.Length];
-            int count = minions.Length;
-            for (int i = 0; i < minions.Length - 1; i++)
+            foreach (var name in minions)
             {
-                minionsMixed[i] = minions[minionsCount - count + i];
-                count--;
+                Console.WriteLine(name);
+            }
+
+            Console.WriteLine("---------");
+            string[] minionsMixed = new string[minions.Length];
+            for (int i = 0; i < minions.Length / 2; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    minionsMixed[i] = minions[i];
+                }
+                else
+                {
+                    
+                    minionsMixed[i] = minions[minionsCount - i];
+                }
             }
 
             foreach (var name in minionsMixed)
