@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -77,9 +78,12 @@ namespace AdoNet
             // PrintMinionNames(dbConn);
 
             // 8. Increase Minion Age
-            string ages = Console.ReadLine();
-            IncreaseMinionAge(dbConn, ages);
+            // string ages = Console.ReadLine();
+            // IncreaseMinionAge(dbConn, ages);
 
+            // 9. Increase Age Stored Procedure
+            int minionId = int.Parse(Console.ReadLine());
+            IncreaseMinionAgeSP(dbConn, minionId);
         }
 
         private static string GetVillainCountMinions(SqlConnection dbConn)
@@ -459,6 +463,23 @@ namespace AdoNet
                      Console.WriteLine($"{reader["Name"]?.ToString()} {reader["Age"]?.ToString()}");
                 }
             }
+        }
+        
+        private static void IncreaseMinionAgeSP(SqlConnection dbConn, int minionId)
+        {
+            string procedureName = "usp_GetOlder";
+            using SqlCommand increaseMinionsAgeSP = new SqlCommand(procedureName, dbConn);
+            increaseMinionsAgeSP.CommandType = CommandType.StoredProcedure;
+            increaseMinionsAgeSP.Parameters.AddWithValue("@minionId", minionId);
+            increaseMinionsAgeSP.ExecuteNonQuery();
+
+            string selectMinions = @"SELECT [Id], [Name], [Age] FROM Minions WHERE Id = @minionId";
+            using SqlCommand selectMinionsCmd = new SqlCommand(selectMinions, dbConn);
+            selectMinionsCmd.Parameters.AddWithValue("@minionId", minionId);
+            using SqlDataReader reader = selectMinionsCmd.ExecuteReader();
+
+            reader.Read();
+            Console.WriteLine($"{reader["Name"]?.ToString()} – {reader["Age"]?.ToString()} years old");
         }
     }
 }
