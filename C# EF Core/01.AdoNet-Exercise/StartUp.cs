@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
@@ -7,7 +7,7 @@ namespace AdoNet
 {
     class StartUp
     {
-        private const string conn = @"Server = .\SQLEXPRESS; Integrated security = true";
+        private const string conn = @"Server = .; Integrated security = true";
         private const string dbName = "MinionsDB";
 
         //IList<Output> outputs = new List<Output>();
@@ -74,7 +74,11 @@ namespace AdoNet
             // Console.WriteLine(RemoveVillainById(dbConn, villainId));
 
             // 7. Print All Minion Names
-            PrintMinionNames(dbConn);
+            // PrintMinionNames(dbConn);
+
+            // 8. Increase Minion Age
+            string ages = Console.ReadLine();
+            IncreaseMinionAge(dbConn, ages);
 
         }
 
@@ -400,10 +404,10 @@ namespace AdoNet
                 }
             }
 
-            //foreach (var name in minions)
-            //{
-            //    Console.WriteLine(name);
-            //}
+            foreach (var name in minions)
+            {
+                Console.WriteLine(name);
+            }
 
             Console.WriteLine("---------");
             string[] minionsMixed = new string[minions.Length];
@@ -424,6 +428,36 @@ namespace AdoNet
             foreach (var name in minionsMixed)
             {
                 Console.WriteLine(name);
+            }
+        }
+
+        private static void IncreaseMinionAge(SqlConnection dbConn, string ages)
+        {
+            string[] agesArr = ages.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            
+            foreach (var character in agesArr)
+            {
+                int minionId = int.Parse(character);
+                
+                string setMinionAgeName = @"UPDATE Minions SET Age = Age + 1, 
+                Name = UPPER(LEFT(Name, 1)) + LOWER(RIGHT(Name, LEN(Name) - 1))
+                FROM [MinionsDB].[dbo].[Minions] WHERE Id = @minionId";
+
+                using SqlCommand setMinionAgeNameCmd = new SqlCommand(setMinionAgeName, dbConn);
+                setMinionAgeNameCmd.Parameters.AddWithValue("@minionId", minionId);
+                setMinionAgeNameCmd.ExecuteScalar();
+            }
+            
+            string selectMinions = @"SELECT [Id], [Name], [Age] FROM Minions";
+            using SqlCommand selectMinionsCmd = new SqlCommand(selectMinions, dbConn);
+            using SqlDataReader reader = selectMinionsCmd.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                     Console.WriteLine($"{reader["Name"]?.ToString()} {reader["Age"]?.ToString()}");
+                }
             }
         }
     }
