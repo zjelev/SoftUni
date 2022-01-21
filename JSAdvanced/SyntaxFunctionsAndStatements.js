@@ -16,6 +16,3 @@ function gcd_two_numbers(x, y) {
     }
     return x;
   }
-  
-  console.log(gcd_two_numbers(2154, 458));
-  console.log(gcd_two_numbers(15, 5));
