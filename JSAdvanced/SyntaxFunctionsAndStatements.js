@@ -64,3 +64,36 @@ function timeToWalk(steps, stepLenghtMeters, speedKmH) {
 timeToWalk(4000, 0.60, 5);
 timeToWalk(2564, 0.70, 5.5);
 
+// 5. Road Radar
+function roadRadar(speed, area) {
+  let limit = 0;
+  if (area === 'residential') {
+    limit = 20;
+  } else if (area === 'city') {
+    limit = 50;
+  } else if (area === 'interstate') {
+    limit = 90;
+  } else {
+    limit = 130;
+  }
+  let output = '';
+  if (speed > limit + 40) {
+    output = 'reckless driving'
+  } else if (speed > limit + 20){
+    output = 'excessive speeding'
+  } else if (speed > limit) {
+    output = 'speeding '
+  }
+  let overLimit = speed - limit;
+  if (overLimit > 0) {
+    console.log(`The speed is ${overLimit} km/h faster than the allowed speed of ${limit} - ${output}`);
+  } else {
+    console.log(`Driving ${speed} km/h in a ${limit} zone`)
+  }
+}
+
+roadRadar(40, 'city');
+roadRadar(21, 'residential');
+roadRadar(120, 'interstate');
+roadRadar(200, 'motorway');
+
