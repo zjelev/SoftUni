@@ -17,7 +17,6 @@ function gcd_two_numbers(x, y) {
       x = t;
     }
     return x;
-<<<<<<< HEAD
   }
   
   console.log(gcd_two_numbers(458, 2154));
@@ -64,6 +63,4 @@ function timeToWalk(steps, stepLenghtMeters, speedKmH) {
 
 timeToWalk(4000, 0.60, 5);
 timeToWalk(2564, 0.70, 5.5);
-=======
-  }
->>>>>>> 477a155ec910852c0c24d4e0dfbeb84423f9b807
+
