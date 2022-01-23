@@ -1,3 +1,120 @@
+// // Lab
+// // 1
+// function stringLength(arg1, arg2, arg3) {
+//   let num1 = arg1.length;
+//   let num2 = arg2.length;
+//   let num3 = arg3.length;
+//   let sum = num1 + num2 + num3;
+//   let average = Math.floor(sum / 3);
+//   console.log(sum);
+//   console.log(average);
+// }
+
+// stringLength('chocolate', 'ice cream', 'cake');
+// stringLength('pasta', '5', '22.3');
+
+// // 2
+// function mathOperations(num1, num2, operator) {
+//   let result;
+//   switch (operator) {
+//     case '+': result = num1 + num2; break;
+//     case '-': result = num1 - num2; break;
+//     case '*': result = num1 * num2; break;
+//     case '/': result = num1 / num2; break;
+//     case '%': result = num1 % num2; break;
+//     case '**': result = num1 ** num2; break;
+  
+//     default: break;
+//   }
+
+//   console.log(result);
+// }
+
+// mathOperations(5, 6, '+');
+// mathOperations(3, 5.5, '*');
+
+// // 3
+// function sumOfNumbers(n, m) {
+//   let sum = 0;
+//   let first = +n;
+//   let last = +m;
+//   for (let i = first; i <= last; i++) {
+//     sum += i;
+//   }
+//   console.log(sum)
+// }
+
+// sumOfNumbers('1', '5');
+// sumOfNumbers('-8', '20');
+
+// // 5
+// function circleArea(param) {
+//   let result;
+//   if (typeof(param) == 'number') {
+//     result = param ** 2 * Math.PI;
+//     console.log(result.toFixed(2));
+//   } else {
+//     console.log(`We can not calculate the circle area, because we receive a ${typeof(param)}.`)
+//   }
+// }
+
+// circleArea(5);
+// circleArea('name');
+
+// // 6
+// function squareOfStars(size = 1) {
+//   let line = '';
+//   for (let i = 0; i < size; i++) {
+//     for (let j = 0; j < size; j++) {
+//       line += '* ';
+//     }
+//     console.log(line);
+//     line = '';
+//   }
+// }
+
+// squareOfStars();
+// squareOfStars(2);
+// squareOfStars(5);
+
+// // 7
+// function dayOfWeek(day = 'error') {
+//   let output;
+//   switch (day) {
+//     case 'Monday': output = 1; break;
+//     case 'Tuesday': output = 2; break;
+//     case 'Wednesday': output = 3; break;
+//     case 'Thursday': output = 4; break;
+//     case 'Friday': output = 5; break;
+//     case 'Saturday': output = 6; break;
+//     case 'Sunday': output = 7; break;
+  
+//     default: output = 'error'; break;
+//   }
+//   console.log(output);
+// }
+
+// dayOfWeek('Monday');
+// dayOfWeek('Invalid');
+
+// 8
+function aggregateElements(params) {
+  let sum = 0;
+  let inverseSum = 0;
+  let concat = '';
+  for (let i = 0; i <= params.length; i++) {
+    sum += Number(params[i]);
+    inverseSum += Number(1 / params[i]);
+    concat += String(params[i]);
+  }
+  console.log(sum);
+  console.log(inverseSum);
+  console.log(concat);
+}
+
+aggregateElements([1, 2, 3])
+
+// // Exercise
 // // 1 Fruit
 // function fruit(fruit, weight, price) {
 //     let kilograms = weight / 1000;
@@ -122,30 +239,30 @@
 // cookingByNumbers('9', 'dice', 'spice', 'chop', 'bake', 'fillet');
 
 // 7. Validity Checker
-function validityChecker(x1, y1, x2, y2) {
-  // let x1 = Number(params.shift());
-  // let y1 = Number(params.shift());
-  // let x2 = Number(params.shift());
-  // let y2 = Number(params.shift());
+// function validityChecker(x1, y1, x2, y2) {
+//   // let x1 = Number(params.shift());
+//   // let y1 = Number(params.shift());
+//   // let x2 = Number(params.shift());
+//   // let y2 = Number(params.shift());
 
-  console.log(`{${x1}, ${y1}} to {0, 0} is ${isValid(x1, y1, 0, 0)}`);
-  console.log(`{${x2}, ${y2}} to {0, 0} is ${isValid(x2, y2, 0, 0)}`);
-  console.log(`{${x1}, ${y1}} to {${x2}, ${y2}} is ${isValid(x1, y1, x2, y2)}`);
+//   console.log(`{${x1}, ${y1}} to {0, 0} is ${isValid(x1, y1, 0, 0)}`);
+//   console.log(`{${x2}, ${y2}} to {0, 0} is ${isValid(x2, y2, 0, 0)}`);
+//   console.log(`{${x1}, ${y1}} to {${x2}, ${y2}} is ${isValid(x1, y1, x2, y2)}`);
   
-  function isValid(x1, y1, x2, y2) {
-    let distance = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
-    if (Number.isInteger(distance)) {
-      return 'valid';
-    } else {
-      return 'invalid';
-    };
-  }
-}
+//   function isValid(x1, y1, x2, y2) {
+//     let distance = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+//     if (Number.isInteger(distance)) {
+//       return 'valid';
+//     } else {
+//       return 'invalid';
+//     };
+//   }
+// }
 
-validityChecker(3, 0, 0, 4);
-validityChecker(2, 1, 1, 1);
+// validityChecker(3, 0, 0, 4);
+// validityChecker(2, 1, 1, 1);
 
-// 8. *Words Uppercase
-function wordsUppercase(params) {
+// // 8. *Words Uppercase
+// function wordsUppercase(params) {
   
-}
+// }
