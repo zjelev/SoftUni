@@ -156,17 +156,40 @@ let arr = [1, 2, 3, 4, 5, 6, 7, 10, 100, 256];
 
 // // 4
 function lastKNumbersSequence(n, k) {
-    let nums = [1, 1];
-    nums.length = k;
-    let nextNum = 0;
-    for (let i = 2; i < n; i++) {
-        
-        for (let j = k - 1; j > 0; j--) {
-            nextNum += Number(nums[j]);
+    let nums = [1];
+    let sumPreviosElements = 0;
+    for (let i = 0; i < k - 1; i++) {
+        sumPreviosElements += nums[i];
+        nums.push(sumPreviosElements);
+    }
+    
+    for (let i = k; i < n; i++) {
+        let nextNum = 0;
+        for (let j = k; j > 0; j--) {
+            if (typeof(nums[i - j]) == 'number') {
+                nextNum += Number(nums[i - j]);
+            }
         }
         nums.push(nextNum);
     }
-    console.log(nums);
+
+    return nums;
 }
 
-lastKNumbersSequence(6, 2)
+lastKNumbersSequence(8, 2)
+
+function numSequent(n, k) {
+    let output = [1];
+    while(n-- > 1) {
+        let sum = 0;
+        for (let i = output.length - 1; i > output.length - 1 - k; i--) {
+            if (typeof(output[i]) == 'number') {
+                sum += Number(output[i]);
+            }
+        }
+        output.push(sum);
+    }
+    console.log(output);
+}
+
+numSequent(8, 8);
