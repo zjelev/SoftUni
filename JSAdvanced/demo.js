@@ -1,3 +1,5 @@
+//sudo apt install nodejs
+
 function maxNum(first, second, third) {
     let result = Math.max(first, second, third);
     console.log(`The largest number is ${result}`);
