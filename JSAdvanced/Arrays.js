@@ -11,14 +11,13 @@
 // function calc(oper, arg1, arg2) {
 //     let result = oper(arg1, arg2);
 //     console.log(num);
-//     var num = 10; //with var num is hoisted (hiddenly declared) in beginning of scope
+//     var num = 10;        //with var num is hoisted (hiddenly declared) in beginning of scope
 //     return result + num;
 // }
 
-// //let sum = 5; // Error
+// let sum = 5; // Error
 
 // let result = calc(sum, 5, 10);
-// console.log(result);
 
 // //26:12
 // let emptyArr = [];
@@ -37,14 +36,14 @@
 // console.log(array.length);  //WTF
 
 // // 46:15
-let names = ['Pesho', 'Gosho', 'ivan', 'Stamat', 'Batman', 'Superman', 'SpiderMan', 'captain America', 'Wonder Woman'];
+let names = ['Pesho', 'Gosho', 'ivan', 'Stamat', 'Batman', 'superman', 'SpiderMan', 'captain America', 'Wonder Woman'];
 
 // getNames(names);
 
 // function getNames(names) {
 //     // let firstName = names[0];
 //     // let secondName = names[1];
-//     // Array destructuring
+//     // // Array destructuring
 //     let [firstName, ...others] = names; // rest operator
 
 //     console.log(firstName);
@@ -57,30 +56,21 @@ let names = ['Pesho', 'Gosho', 'ivan', 'Stamat', 'Batman', 'Superman', 'SpiderMa
 // names.push('Gerry');
 // console.log(names.push('Gerry'));
 
-// console.log(lastName);
-// console.log(names);
-
-
 // function solve(...names) {           // Rest operator
 //     console.log(names.join(', '));
 // }
 // solve('pesho', 'gosho', 'stamat');
 
-// let numbers = [10, 2, 100, 4];
+let numbers = [10, 2, 100, 4];
 // let largestNumber = Math.max(...numbers);   // Spread operator
-// console.log(largestNumber);
 
-//  1:14 - Task 1
+// // 1:14 - Task 1
 // function sumFirstLast(params) {
 //     console.log(Number(params[0]) + Number(params[params.length - 1]));
 // }
 
 // sumFirstLast(['20', '30', '40']);
-// console.log(names);
 // let result = names.splice(2, 1);
-// console.log(result);
-// console.log(names);
-
 
 // // 2
 // function evenPositionElement(params) {
@@ -143,9 +133,40 @@ let arr = [1, 2, 3, 4, 5, 6, 7, 10, 100, 256];
 
 // names.concat(arr);
 
-arr = names.slice();
+// arr = names.slice();
 
-console.log(names);
-console.log(result);
-console.log(arr);
-// console.log(newArr);
+// 2:00 Iteration Methods
+
+// for (const name of names) {      // forof
+//     console.log(name);
+// }
+// names.forEach((x, i, arr) => console.log(x + ' ' + i + ' ' + arr));
+
+// names = names.filter(x => (x[0] !== 'S' && x[0] !== 's'));   // returns all
+
+// names = names.find(x => x[0] === 'S');                       // Like FirstOrDefault in C#
+
+// names = names.some(x => x[0] === 'S');  //Like Any in C#
+
+// names = names.map(x => x.toUpperCase());                     // Like Select in C#
+
+// names = names.reduce((accumulator, element) => {
+//     return accumulator + element[0];
+// }, '');
+
+// // 4
+function lastKNumbersSequence(n, k) {
+    let nums = [1, 1];
+    nums.length = k;
+    let nextNum = 0;
+    for (let i = 2; i < n; i++) {
+        
+        for (let j = k - 1; j > 0; j--) {
+            nextNum += Number(nums[j]);
+        }
+        nums.push(nextNum);
+    }
+    console.log(nums);
+}
+
+lastKNumbersSequence(6, 2)
