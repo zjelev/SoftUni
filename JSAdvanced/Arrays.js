@@ -54,7 +54,6 @@ let names = ['Pesho', 'Gosho', 'ivan', 'Stamat', 'Batman', 'superman', 'SpiderMa
 // let lastName = names.pop();
 
 // names.push('Gerry');
-// console.log(names.push('Gerry'));
 
 // function solve(...names) {           // Rest operator
 //     console.log(names.join(', '));
@@ -106,9 +105,6 @@ let result;
 
 // result = names.splice(2, names.length, 1, 3, 5); 
 
-// console.log(result);
-// console.log(names);
-
 let arr = [1, 2, 3, 4, 5, 6, 7, 10, 100, 256];
 // arr.length = 5;
 // arr.fill(5, 1, 3);  // Ctrl + Shift + Space
@@ -155,57 +151,109 @@ let arr = [1, 2, 3, 4, 5, 6, 7, 10, 100, 256];
 // }, '');
 
 // // 4
-let start;
-let stop;
+// let start;
+// let stop;
 
-function lastKNumbersSequence(n, k) {
-    let nums = [1];
-    let sumPreviosElements = 0;
-    for (let i = 0; i < k - 1; i++) {
-        sumPreviosElements += nums[i];
-        nums.push(sumPreviosElements);
-    }
+// function lastKNumbersSequence(n, k) {
+//     let nums = [1];
+//     let sumPreviosElements = 0;
+//     for (let i = 0; i < k - 1; i++) {
+//         sumPreviosElements += nums[i];
+//         nums.push(sumPreviosElements);
+//     }
     
-    // for (let i = k; i < n; i++) {
-    //     let nextNum = 0;
-    //     for (let j = k; j > 0; j--) {
-    //         nextNum += Number(nums[i - j]);
-    //     }
-    // }
+//     // for (let i = k; i < n; i++) {
+//     //     let nextNum = 0;
+//     //     for (let j = k; j > 0; j--) {
+//     //         nextNum += Number(nums[i - j]);
+//     //     }
+//     // }
 
-    while(n-- > k) {
-        let sum = 0;
-        for (let i = nums.length - 1; i > nums.length - 1 - k; i--) {
-            //if (typeof(nums[i]) == 'number') {
-                sum += Number(nums[i]);
-            // }
-        }
-        nums.push(sum);
-    }
+//     while(n-- > k) {
+//         let sum = 0;
+//         for (let i = nums.length - 1; i > nums.length - 1 - k; i--) {
+//             //if (typeof(nums[i]) == 'number') {
+//                 sum += Number(nums[i]);
+//             // }
+//         }
+//         nums.push(sum);
+//     }
 
-    return nums;
+//     return nums;
+// }
+
+// function numSequent(n, k) {
+//     let output = [1];
+//     while(n-- > 1) {
+//         let sum = 0;
+//         for (let i = output.length - 1; i > output.length - 1 - k; i--) {
+//             if (typeof(output[i]) == 'number') {
+//                 sum += Number(output[i]);
+//             }
+//         }
+//         output.push(sum);
+//     }
+//     return output;
+// }
+
+// start = Date.now();
+// console.log(lastKNumbersSequence(16, 5))
+// stop = Date.now();
+// console.log(`My code spent ${stop - start} ms`);
+
+// start = Date.now();
+// console.log(numSequent(16, 5))
+// stop = Date.now();
+// console.log(`Other code spent ${stop - start} ms`);
+
+// // 5
+// function processOddPositions(params) {
+//     let result = params.filter((v, i) => i % 2 == 1).map(v => v * 2).reverse();
+//     return result;
+// }
+
+// console.log(processOddPositions([10, 15, 20, 25]))
+
+// // 6
+// function smallestTwoNumbers(params) {
+//     let result = params.sort((a, b) => a -b).slice(0, 2)
+//     return result;
+// }
+
+// console.log(smallestTwoNumbers([30, 15, 50, 5]));
+
+// // 7
+// function biggestElement(matrix) {  
+//     //let maxNum = Number.MIN_SAFE_INTEGER;
+//     // matrix.forEach(row => {
+//     //     row.forEach(el => {
+//     //         if (el > maxNum) {
+//     //             maxNum = el;
+//     //         }
+//     //     })
+//     // });
+
+//     // matrix.forEach(row => {
+//     //     let maxInRow = Math.max(...row);
+//     //     if ( maxInRow > maxNum) {
+//     //         maxNum = maxInRow;
+//     //     }
+//     // });
+
+//     // let maxNums = matrix.map(row => Math.max(...row));
+//     // let maxNum = Math.max(...maxNums);
+
+//     let maxNum = matrix
+//         .map(row => Math.max(...row))
+//         .reduce((a, x) => Math.max(a, x), Number.MIN_SAFE_INTEGER)
+
+//     return maxNum;
+// }
+
+// console.log(biggestElement([[3, 5, 7, 12],[-1, 4, 33, 2],[8, 3, 0, 4]]));
+// console.log(biggestElement([[20, 50, 10], [8, 33, 145]]));
+
+// 8 
+function diagonalSums(matrix) {
+    
 }
-
-function numSequent(n, k) {
-    let output = [1];
-    while(n-- > 1) {
-        let sum = 0;
-        for (let i = output.length - 1; i > output.length - 1 - k; i--) {
-            if (typeof(output[i]) == 'number') {
-                sum += Number(output[i]);
-            }
-        }
-        output.push(sum);
-    }
-    return output;
-}
-
-start = Date.now();
-console.log(lastKNumbersSequence(16, 5))
-stop = Date.now();
-console.log(`My code spent ${stop - start} ms`);
-
-start = Date.now();
-console.log(numSequent(16, 5))
-stop = Date.now();
-console.log(`Other code spent ${stop - start} ms`);
