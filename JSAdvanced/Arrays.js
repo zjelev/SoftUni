@@ -60,7 +60,7 @@ let names = ['Pesho', 'Gosho', 'ivan', 'Stamat', 'Batman', 'superman', 'SpiderMa
 // }
 // solve('pesho', 'gosho', 'stamat');
 
-let numbers = [10, 2, 100, 4];
+// let numbers = [10, 2, 100, 4];
 // let largestNumber = Math.max(...numbers);   // Spread operator
 
 // // 1:14 - Task 1
@@ -101,11 +101,11 @@ let numbers = [10, 2, 100, 4];
 //     console.log(array.join(' '));
 // }
 
-let result;
+// let result;
 
 // result = names.splice(2, names.length, 1, 3, 5); 
 
-let arr = [1, 2, 3, 4, 5, 6, 7, 10, 100, 256];
+// let arr = [1, 2, 3, 4, 5, 6, 7, 10, 100, 256];
 // arr.length = 5;
 // arr.fill(5, 1, 3);  // Ctrl + Shift + Space
 // arr.reverse();
@@ -253,7 +253,66 @@ let arr = [1, 2, 3, 4, 5, 6, 7, 10, 100, 256];
 // console.log(biggestElement([[3, 5, 7, 12],[-1, 4, 33, 2],[8, 3, 0, 4]]));
 // console.log(biggestElement([[20, 50, 10], [8, 33, 145]]));
 
-// 8 
-function diagonalSums(matrix) {
+// // 8 
+// function diagonalSums(matrix) {
+//     let leftRightSum = 0;
+
+//     for (let i = 0; i < matrix.length; i++) {
+//         leftRightSum += matrix[i][i]; 
+//     }
+
+//     let rightLeftSum = 0;
+//     let reverseCounter = matrix.length;
+//     for (let i = 0; i < matrix.length; i++) {
+//         rightLeftSum += matrix[i][--reverseCounter];
+//     }
+
+//     return leftRightSum + ' ' + rightLeftSum;
+// }
+
+// console.log(diagonalSums([[3, 5, 17],[-1, 7, 14],[1, -8, 89]]));
+
+// 9. 
+function equalNeighbors(matrix) {
+    let sum = 0;
+    let lastRow = matrix[matrix.length - 1];
     
+    for (let i = 0; i < matrix.length - 1; i++) {
+        for (let j = 0; j < matrix[i].length - 1; j++) {
+            if ((matrix[i][j] === matrix[i + 1][j])) {
+                sum++;
+            }
+
+            if (matrix[i][j] === matrix[i][j+1]) {
+                sum++;
+            }
+        }
+    }
+
+    for (let row = 0; row < matrix.length - 1; row++) {
+        if (matrix[row][matrix[row].length - 1] === matrix[row + 1][matrix[row].length - 1]) {
+            sum++;
+        }
+    }
+
+    for (let col = 0; col < lastRow.length - 1; col++) {
+        if (lastRow[col] === lastRow[col + 1]) {
+            sum++
+        }
+    }
+
+    return sum;
 }
+
+// console.log(equalNeighbors([['2', '3', '4', '7', '0'],
+// ['4', '0', '5', '3', '4'],
+// ['2', '3', '5', '4', '2'],
+// ['9', '8', '7', '5', '4']]))
+
+// console.log(equalNeighbors([['test', 'yes', 'yo', 'ho'],
+// ['well', 'done', 'yo', '6'],
+// ['not', 'done', 'yet', '5']]));
+
+console.log(equalNeighbors([[2, 2, 5, 7, 4],
+                            [4, 0, 5, 3, 4],
+                            [2, 5, 5, 4, 2]]))
