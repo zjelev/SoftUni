@@ -97,22 +97,22 @@
 // dayOfWeek('Monday');
 // dayOfWeek('Invalid');
 
-// 8
-function aggregateElements(params) {
-  let sum = 0;
-  let inverseSum = 0;
-  let concat = '';
-  for (let i = 0; i <= params.length; i++) {
-    sum += Number(params[i]);
-    inverseSum += Number(1 / params[i]);
-    concat += String(params[i]);
-  }
-  console.log(sum);
-  console.log(inverseSum);
-  console.log(concat);
-}
+// // 8
+// function aggregateElements(arr) {
+//   let sum = 0;
+//   let inverseSum = 0;
+//   let concat = '';
+//   for (let i = 0; i < arr.length; i++) {
+//     sum += Number(arr[i]);
+//     inverseSum += Number(1 / arr[i]);
+//     concat += String(arr[i]);
+//   }
+//   console.log(sum);
+//   console.log(inverseSum);
+//   console.log(concat);
+// }
 
-aggregateElements([1, 2, 3])
+// aggregateElements([2, 4, 8, 16])
 
 // // Exercise
 // // 1 Fruit
@@ -262,7 +262,20 @@ aggregateElements([1, 2, 3])
 // validityChecker(3, 0, 0, 4);
 // validityChecker(2, 1, 1, 1);
 
-// // 8. *Words Uppercase
-// function wordsUppercase(params) {
-  
-// }
+// 8. *Words Uppercase
+function wordsUppercase(inputStr) {
+  // array = inputStr.split(/[\s,?'!.]+/);
+  // let output = [];
+  // for (let word of array) {
+  //   output.push(word.toUpperCase())
+  // }
+
+  // return output.join(', ');
+
+  return inputStr.toUpperCase()
+    .split(/[\W]+/)
+    .filter(w => w.length > 0)
+    .join(', ')
+}
+
+console.log(wordsUppercase('Functions in JS can be nested, i.e. hold other functions'));
