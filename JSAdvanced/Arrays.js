@@ -155,6 +155,9 @@ let arr = [1, 2, 3, 4, 5, 6, 7, 10, 100, 256];
 // }, '');
 
 // // 4
+let start;
+let stop;
+
 function lastKNumbersSequence(n, k) {
     let nums = [1];
     let sumPreviosElements = 0;
@@ -163,20 +166,25 @@ function lastKNumbersSequence(n, k) {
         nums.push(sumPreviosElements);
     }
     
-    for (let i = k; i < n; i++) {
-        let nextNum = 0;
-        for (let j = k; j > 0; j--) {
-            if (typeof(nums[i - j]) == 'number') {
-                nextNum += Number(nums[i - j]);
-            }
+    // for (let i = k; i < n; i++) {
+    //     let nextNum = 0;
+    //     for (let j = k; j > 0; j--) {
+    //         nextNum += Number(nums[i - j]);
+    //     }
+    // }
+
+    while(n-- > k) {
+        let sum = 0;
+        for (let i = nums.length - 1; i > nums.length - 1 - k; i--) {
+            //if (typeof(nums[i]) == 'number') {
+                sum += Number(nums[i]);
+            // }
         }
-        nums.push(nextNum);
+        nums.push(sum);
     }
 
     return nums;
 }
-
-lastKNumbersSequence(8, 2)
 
 function numSequent(n, k) {
     let output = [1];
@@ -189,7 +197,15 @@ function numSequent(n, k) {
         }
         output.push(sum);
     }
-    console.log(output);
+    return output;
 }
 
-numSequent(8, 8);
+start = Date.now();
+console.log(lastKNumbersSequence(16, 5))
+stop = Date.now();
+console.log(`My code spent ${stop - start} ms`);
+
+start = Date.now();
+console.log(numSequent(16, 5))
+stop = Date.now();
+console.log(`Other code spent ${stop - start} ms`);
