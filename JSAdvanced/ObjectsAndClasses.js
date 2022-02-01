@@ -70,5 +70,32 @@ function townsToJson(input) {
     console.log(JSON.stringify(result));
 }
 
-townsToJson(['| Town | Latitude | Longitude |','| Sofia | 42.696552 | 23.32601 |',
-    '| Beijing | 39.913818 | 116.363625 |'])
+// townsToJson(['| Town | Latitude | Longitude |', '| Sofia | 42.696552 | 23.32601 |', '| Beijing | 39.913818 | 116.363625 |']);
+
+function sumByTown(input) {
+    let data = input
+        .map(v => v.split(','));
+    
+    let result = [];
+    for (let i = 1; i < data.length; i+=2) {
+        let town = {
+            [data[i - 1]]: Number(data[i])
+        };
+
+        if (result.town.hasOwnProperty([data[i - 1]])) {
+            result.push(town);
+        }
+    }
+
+    return result;
+}
+
+console.log(sumByTown(['Sofia', '20', 'Varna', '3', 'Sofia', '5', 'Varna', '4']))
+
+function fromJsonToHtmlTable(params) {
+    
+}
+
+let res = ""
+let check = res ? "Yes" : "No";
+    console.log(check);
