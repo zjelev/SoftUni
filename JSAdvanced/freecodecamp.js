@@ -120,14 +120,29 @@
 // }
 // console.log(countdown(5));
 
-function rangeOfNumbers(startNum, endNum) {
-    if (endNum === startNum) {
-        return [endNum];
-    } else {
-        const arr = rangeOfNumbers(startNum, endNum - 1);
-        arr.push(endNum);
-        return arr;
-    }
-};
+// function rangeOfNumbers(startNum, endNum) {
+//     if (endNum === startNum) {
+//         return [endNum];
+//     } else {
+//         const arr = rangeOfNumbers(startNum, endNum - 1);
+//         arr.push(endNum);
+//         return arr;
+//     }
+// };
 
-console.log(rangeOfNumbers(4, 4));
+// console.log(rangeOfNumbers(4, 4));
+
+// // ES6
+// const sum = (...args) => args.reduce((a, b) => a + b, 0);
+  
+// const arr1 = ['JAN', 'FEB', 'MAR', 'APR', 'MAY'];
+// let arr2 = [...arr1]; 
+
+const HIGH_TEMPERATURES = {
+    yesterday: 75,
+    today: 77,
+    tomorrow: 80
+  };
+    
+const { today: highToday, tomorrow: highTomorrow } = HIGH_TEMPERATURES;
+console.log(highToday, highTomorrow);
