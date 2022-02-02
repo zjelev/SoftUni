@@ -63,10 +63,8 @@ function townsToJson(input) {
             [properties[1]]: Number(Number(row[1]).toFixed(2)),
             [properties[2]]: Number(Number(row[2]).toFixed(2)),
         };
-
         result.push(town);
     });
-
     console.log(JSON.stringify(result));
 }
 
@@ -81,12 +79,10 @@ function sumByTown(input) {
         let town = {
             [data[i - 1]]: Number(data[i])
         };
-
         if (result.town.hasOwnProperty([data[i - 1]])) {
             result.push(town);
         }
     }
-
     return result;
 }
 
