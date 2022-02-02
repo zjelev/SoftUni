@@ -106,21 +106,21 @@ function fromJsonToHtmlTable(input) {
 // console.log(fromJsonToHtmlTable(['[{"Name":"Pesho <div>-a","Age":20,"City":"Sofia"},{"Name":"Gosho","Age":18,"City":"Plovdiv"},{"Name":"Angel","Age":18,"City":"Veliko Tarnovo"}]']))
 
 class Person {
-    //#currentAge;
+    #currentAge;
     static type = 'Homo Sapiens';
-    constructor(firstName, lastName, age) {
+    constructor(firstName, lastName, age = 0) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.currentAge = age;
+        this.#currentAge = age || 0;
     }
     
     get age() { 
-        return this.currentAge
+        return this.#currentAge
     }
 
     set age(value) {
         if (!(value < 0 || value > 120)) {
-            this.currentAge = value;
+            this.#currentAge = value;
         }
     }
 
@@ -133,10 +133,13 @@ class Person {
     }
 
     static talk() {
-        console.log('reqewdfsd');
+        console.log('Im talking ' + this.type); // this refers to class!?
     }
 }
 let person = new Person('Pesho', 'Petrov', 18);
 console.log(person.age);
 Person.talk();
 console.log(Person.type);
+console.log(person instanceof Person);
+
+// No method overloading in JS. Only 1 ctor!
