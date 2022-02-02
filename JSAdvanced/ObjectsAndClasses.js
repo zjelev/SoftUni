@@ -49,39 +49,39 @@
 // // console.log(person2[0].manager.firstName);
 
 // //1
-// function townsToJson(input) {
-//     let data = input
-//         .map(row => row.split('|').filter(x => x != '').map(x => x.trim()));
+function townsToJson(input) {
+    let data = input
+        .map(row => row.split('|').filter(x => x != '').map(x => x.trim()));
 
-//     let properties = data.shift();
+    let properties = data.shift();
 
-//     let result = [];
+    let result = [];
 
-//     data.forEach(row => {
-//         let town = {
-//             [properties[0]]: row[0],
-//             [properties[1]]: Number(Number(row[1]).toFixed(2)),
-//             [properties[2]]: Number(Number(row[2]).toFixed(2)),
-//         };
-//         result.push(town);
-//     });
-//     console.log(JSON.stringify(result));
-// }
+    data.forEach(row => {
+        let town = {
+            [properties[0]]: row[0],
+            [properties[1]]: Number(Number(row[1]).toFixed(2)),
+            [properties[2]]: Number(Number(row[2]).toFixed(2)),
+        };
+        result.push(town);
+    });
+    console.log(JSON.stringify(result));
+}
 
 // townsToJson(['| Town | Latitude | Longitude |', '| Sofia | 42.696552 | 23.32601 |', '| Beijing | 39.913818 | 116.363625 |']);
 
-// function sumByTown(input = []) {
-//     //.map(v => v.split(','));
-//     let result = {};
-//     for (let i = 1; i < input.length; i += 2) {
-//         if (!result.hasOwnProperty(input[i - 1])) {
-//             result[input[i - 1]] = Number(input[i]);
-//         } else {
-//             result[input[i - 1]] += Number(input[i]);
-//         }
-//     }
-//     return result;
-// }
+function sumByTown(input = []) {
+    //.map(v => v.split(','));
+    let result = {};
+    for (let i = 1; i < input.length; i += 2) {
+        if (!result.hasOwnProperty(input[i - 1])) {
+            result[input[i - 1]] = Number(input[i]);
+        } else {
+            result[input[i - 1]] += Number(input[i]);
+        }
+    }
+    return result;
+}
 
 // console.log(sumByTown(['Sofia', '20', 'Varna', '3', 'Sofia', '5', 'Varna', '4']))
 
@@ -103,4 +103,40 @@ function fromJsonToHtmlTable(input) {
     return html;
 }
 
-console.log(fromJsonToHtmlTable(['[{"Name":"Pesho <div>-a","Age":20,"City":"Sofia"},{"Name":"Gosho","Age":18,"City":"Plovdiv"},{"Name":"Angel","Age":18,"City":"Veliko Tarnovo"}]']))
+// console.log(fromJsonToHtmlTable(['[{"Name":"Pesho <div>-a","Age":20,"City":"Sofia"},{"Name":"Gosho","Age":18,"City":"Plovdiv"},{"Name":"Angel","Age":18,"City":"Veliko Tarnovo"}]']))
+
+class Person {
+    //#currentAge;
+    static type = 'Homo Sapiens';
+    constructor(firstName, lastName, age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.currentAge = age;
+    }
+    
+    get age() { 
+        return this.currentAge
+    }
+
+    set age(value) {
+        if (!(value < 0 || value > 120)) {
+            this.currentAge = value;
+        }
+    }
+
+    get fullName() {
+        return this.firstName + " " + this.lastName;
+    }
+
+    greet() {
+        console.log(`Hello, my name is ${this.fullName}`);
+    }
+
+    static talk() {
+        console.log('reqewdfsd');
+    }
+}
+let person = new Person('Pesho', 'Petrov', 18);
+console.log(person.age);
+Person.talk();
+console.log(Person.type);
