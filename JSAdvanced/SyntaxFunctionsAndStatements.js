@@ -1,49 +1,45 @@
-// // Lab
-// // 1
-// function stringLength(arg1, arg2, arg3) {
-//   let num1 = arg1.length;
-//   let num2 = arg2.length;
-//   let num3 = arg3.length;
-//   let sum = num1 + num2 + num3;
-//   let average = Math.floor(sum / 3);
-//   console.log(sum);
-//   console.log(average);
-// }
+// Lab
+// 1
+function stringLength(arg1, arg2, arg3) {
+  let num1 = arg1.length;
+  let num2 = arg2.length;
+  let num3 = arg3.length;
+  let sum = num1 + num2 + num3;
+  let average = Math.floor(sum / 3);
+  console.log(sum);
+  console.log(average);
+}
 
 // stringLength('chocolate', 'ice cream', 'cake');
 // stringLength('pasta', '5', '22.3');
 
-// // 2
-// function mathOperations(num1, num2, operator) {
-//   let result;
-//   switch (operator) {
-//     case '+': result = num1 + num2; break;
-//     case '-': result = num1 - num2; break;
-//     case '*': result = num1 * num2; break;
-//     case '/': result = num1 / num2; break;
-//     case '%': result = num1 % num2; break;
-//     case '**': result = num1 ** num2; break;
-  
-//     default: break;
-//   }
-
-//   console.log(result);
-// }
-
+// 2
+function mathOperations(num1, num2, operator) {
+  let result;
+  switch (operator) {
+    case '+': result = num1 + num2; break;
+    case '-': result = num1 - num2; break;
+    case '*': result = num1 * num2; break;
+    case '/': result = num1 / num2; break;
+    case '%': result = num1 % num2; break;
+    case '**': result = num1 ** num2; break;
+    default: break;
+  }
+   return result;
+}
 // mathOperations(5, 6, '+');
 // mathOperations(3, 5.5, '*');
 
-// // 3
-// function sumOfNumbers(n, m) {
-//   let sum = 0;
-//   let first = +n;
-//   let last = +m;
-//   for (let i = first; i <= last; i++) {
-//     sum += i;
-//   }
-//   console.log(sum)
-// }
-
+// 3
+function sumOfNumbers(n, m) {
+  let sum = 0;
+  let first = +n;
+  let last = +m;
+  for (let i = first; i <= last; i++) {
+    sum += i;
+  }
+  return sum;
+}
 // sumOfNumbers('1', '5');
 // sumOfNumbers('-8', '20');
 
