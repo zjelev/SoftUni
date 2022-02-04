@@ -55,7 +55,7 @@ function cappyJuice(input) {
         }
     });
 
-    Object.keys(juicesInOrder).forEach(j => console.log(`${j} => ${juicesInOrder[j]}`));
+    Object.keys(juicesInOrder).forEach(key => console.log(`${key} => ${juicesInOrder[key]}`));
 }
 
 // cappyJuice(['Kiwi => 234','Pear => 2345','Watermelon => 3456','Kiwi => 4567','Pear => 5678','Watermelon => 6789'])
