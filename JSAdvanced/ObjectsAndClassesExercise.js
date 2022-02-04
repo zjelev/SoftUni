@@ -40,20 +40,22 @@ function JsonsTable(input) {
 //3
 function cappyJuice(input) {
     let juices = {};
+    let juicesInOrder = {};
     input.forEach(el => {
-        let juiceArr = el.split(" => ");
-        let juice = { [juiceArr[0]]: Number([juiceArr[1]]) };
-        juices.push(juice);
-    })
+        let [product, qty] = el.split(" => ");
+        
+        if (!juices[product]) {
+            juices[product] = Number(qty);
+        } else {
+            juices[product] += Number(qty);
+        }
+        
+        if (juices[product] >= 1000) {
+            juicesInOrder[product] = parseInt(juices[product] / 1000);
+        }
+    });
 
-    juices.forEach(j => {
-        console.log(Object.keys(j));
-    })
+    Object.keys(juicesInOrder).forEach(j => console.log(`${j} => ${juicesInOrder[j]}`));
 }
 
-cappyJuice(['Orange => 2000',
-    'Peach => 1432',
-    'Banana => 450',
-    'Peach => 600',
-    'Strawberry => 549']
-)
+// cappyJuice(['Kiwi => 234','Pear => 2345','Watermelon => 3456','Kiwi => 4567','Pear => 5678','Watermelon => 6789'])
