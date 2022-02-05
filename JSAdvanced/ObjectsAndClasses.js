@@ -172,21 +172,17 @@ function lowestPricesInCities(input) {
     input.forEach(el => {
         let [town, product, price] = el.split(" | ");
         let obj = { product, town, price };
-        products.push(obj);
-        
-        if (products.find(x => x.product === product).price < obj.price) {
-            minPriceProducts.push(obj);
+        let previous = products.find(x => x.product === product);
+        if (!previous) {
+            products.push(obj);
+        } else {
+            if (previous[price] < price) {
+                products[previous] = obj;
+            }
         }
     })
-
-    console.log(products);
+    products.forEach(p => console.log(`${p.product} -> ${p.price} (${p.town})`))
 }
 
-lowestPricesInCities(['Sample Town | Sample Product | 1000',
-    'Sample Town | Orange | 2',
-    'Sample Town | Peach | 1',
-    'Sofia | Orange | 3',
-    'Sofia | Peach | 2',
-    'New York | Sample Product | 1000.1',
-    'New York | Burger | 10']
-)
+lowestPricesInCities(['Sample Town | Sample Product | 1000', 'Sample Town | Orange | 2','Sample Town | Peach | 1',
+    'Sofia | Orange | 3','Sofia | Peach | 2','New York | Sample Product | 1000.1','New York | Burger | 10'])
