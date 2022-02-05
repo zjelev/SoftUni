@@ -80,11 +80,11 @@ function sumByTown(input = []) {
             result[input[i - 1]] += Number(input[i]);
         }
     }
-    return result;
+    return JSON.stringify(result);
 }
 
 // console.log(sumByTown(['Sofia', '20', 'Varna', '3', 'Sofia', '5', 'Varna', '4']))
-
+//4
 function fromJsonToHtmlTable(input) {
     let products = JSON.parse(input);
     let first = products[0];
@@ -113,8 +113,8 @@ class Person {
         this.lastName = lastName;
         this.#currentAge = age || 0;
     }
-    
-    get age() { 
+
+    get age() {
         return this.#currentAge
     }
 
@@ -136,10 +136,58 @@ class Person {
         console.log('Im talking ' + this.type); // this refers to class!?
     }
 }
-let person = new Person('Pesho', 'Petrov', 18);
-console.log(person.age);
-Person.talk();
-console.log(Person.type);
-console.log(person instanceof Person);
+// let person = new Person('Pesho', 'Petrov', 18);
+// console.log(person.age);
+// Person.talk();
+// console.log(Person.type);
+// console.log(person instanceof Person);
 
 // No method overloading in JS. Only 1 ctor!
+
+//3
+function populationsInTowns(input) {
+    let towns = {};
+    input.forEach(el => {
+        let [townKey, populationVal] = el.split(" <-> ");
+
+        if (towns[townKey]) {
+            towns[townKey] += Number(populationVal)
+        } else {
+            towns[townKey] = Number(populationVal)
+        }
+    })
+
+    for (const key in towns) {
+        console.log(`${key} : ${towns[key]}`);
+    }
+}
+
+// populationsInTowns(['Sofia <-> 1200000','Montana <-> 20000','New York <-> 10000000','Washington <-> 2345000','Las Vegas <-> 1000000'])
+
+//5
+function lowestPricesInCities(input) {
+    let products = [];
+    input.forEach(el => {
+        let [town, product, price] = el.split(" | ");
+        let obj = { product, town, price };
+
+        if (!products.find(x => x.product === product)) {
+            products.push(obj);
+        } else {
+            if (true) {
+                
+            }
+        }
+    })
+
+    console.log(products);
+}
+
+lowestPricesInCities(['Sample Town | Sample Product | 1000',
+    'Sample Town | Orange | 2',
+    'Sample Town | Peach | 1',
+    'Sofia | Orange | 3',
+    'Sofia | Peach | 2',
+    'New York | Sample Product | 1000.1',
+    'New York | Burger | 10']
+)
