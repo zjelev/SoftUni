@@ -167,16 +167,15 @@ function populationsInTowns(input) {
 //5
 function lowestPricesInCities(input) {
     let products = [];
+    let minPriceProducts = [];
+
     input.forEach(el => {
         let [town, product, price] = el.split(" | ");
         let obj = { product, town, price };
-
-        if (!products.find(x => x.product === product)) {
-            products.push(obj);
-        } else {
-            if (true) {
-                
-            }
+        products.push(obj);
+        
+        if (products.find(x => x.product === product).price < obj.price) {
+            minPriceProducts.push(obj);
         }
     })
 

@@ -142,7 +142,7 @@ let names = ['Pesho', 'Gosho', 'ivan', 'Stamat', 'Batman', 'superman', 'SpiderMa
 
 // names = names.find(x => x[0] === 'S');                       // Like FirstOrDefault in C#
 
-// names = names.some(x => x[0] === 'S');  //Like Any in C#
+// names = names.some(x => x[0] === 'S');                       //Like Any in C#
 
 // names = names.map(x => x.toUpperCase());                     // Like Select in C#
 
