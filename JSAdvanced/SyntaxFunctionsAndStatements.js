@@ -9,7 +9,6 @@ function stringLength(arg1, arg2, arg3) {
   console.log(sum);
   console.log(average);
 }
-
 // stringLength('chocolate', 'ice cream', 'cake');
 // stringLength('pasta', '5', '22.3');
 
@@ -25,7 +24,7 @@ function mathOperations(num1, num2, operator) {
     case '**': result = num1 ** num2; break;
     default: break;
   }
-   return result;
+  return result;
 }
 // mathOperations(5, 6, '+');
 // mathOperations(3, 5.5, '*');
@@ -46,14 +45,13 @@ function sumOfNumbers(n, m) {
 // 5
 function circleArea(param) {
   let result;
-  if (typeof(param) == 'number') {
+  if (typeof (param) == 'number') {
     result = param ** 2 * Math.PI;
     console.log(result.toFixed(2));
   } else {
-    console.log(`We can not calculate the circle area, because we receive a ${typeof(param)}.`)
+    console.log(`We can not calculate the circle area, because we receive a ${typeof (param)}.`)
   }
 }
-
 // circleArea(5);
 // circleArea('name');
 
@@ -68,7 +66,6 @@ function squareOfStars(size = 1) {
     line = '';
   }
 }
-
 // squareOfStars();
 // squareOfStars(2);
 // squareOfStars(5);
@@ -88,7 +85,6 @@ function dayOfWeek(day = 'error') {
   }
   console.log(output);
 }
-
 // dayOfWeek('Monday');
 // dayOfWeek('Invalid');
 
@@ -106,7 +102,6 @@ function aggregateElements(arr) {
   console.log(inverseSum);
   console.log(concat);
 }
-
 // aggregateElements([2, 4, 8, 16])
 
 // 9. *Words Uppercase
@@ -117,7 +112,6 @@ function wordsUppercase(inputStr) {
   //   output.push(word.toUpperCase())
   // }
   // return output.join(', ');
-
   return inputStr.toUpperCase()
     .split(/[\W]+/)
     .filter(w => w.length > 0)
@@ -135,11 +129,11 @@ function fruit(fruit, weight, price) {
 
 // 2 Greatest Common Divisor
 function gcd(x, y) {
-  if ((typeof x !== 'number') || (typeof y !== 'number')) 
+  if ((typeof x !== 'number') || (typeof y !== 'number'))
     return false;
   x = Math.abs(x);
   y = Math.abs(y);
-  while(y) {
+  while (y) {
     var t = y;
     y = x % y;
     x = t;
@@ -182,24 +176,33 @@ function timeToWalk(steps, stepLenghtMeters, speedKmH) {
 // console.log(timeToWalk(2564, 0.70, 5.5))
 
 // 5
-function roadRadar(speed, area) {
-  let limit = 130;
-  if (area === 'residential') {
-    limit = 20;
-  } else if (area === 'city') {
-    limit = 50;
-  } else if (area === 'interstate') {
-    limit = 90;
+function roadRadar(arr) { // outside judge use (...arr) 
+  let area = arr[1];
+  let speed = +arr[0];
+  let limit = 0;
+  let output = "";
+  switch (area) {
+    case "residential":
+      limit = 20;
+      break;
+    case "city":
+      limit = 50;
+      break;
+    case "interstate":
+      limit = 90;
+      break;
+    case "motorway":
+      limit = 130;
+      break;
   }
-  let output = '';
   if (speed > limit + 40) {
-    output = 'reckless driving';
-  } else if (speed > limit + 20){
-    output = 'excessive speeding';
+    output = "reckless driving";
+  } else if (speed > limit + 20) {
+    output = "excessive speeding";
   } else if (speed > limit) {
-    output = 'speeding';
+    output = "speeding";
   }
-  console.log(output);
+  return output;
   // let overLimit = speed - limit;
   // if (overLimit > 0) {
   //   console.log(`The speed is ${overLimit} km/h faster than the allowed speed of ${limit} - ${output}`);
@@ -207,16 +210,14 @@ function roadRadar(speed, area) {
   //   console.log(`Driving ${speed} km/h in a ${limit} zone`);
   // }
 }
-roadRadar(40, 'city');
-roadRadar(21, 'residential');
-roadRadar(120, 'interstate');
-roadRadar(200, 'motorway');
+// console.log(roadRadar(40, 'city'))
+// console.log(roadRadar(21, 'residential'))
+// console.log(roadRadar(120, 'interstate'))
+// console.log(roadRadar(200, 'motorway'))
 
 // 6.
-function cookingByNumbers(...params) {
+function cookingByNumbers(params) {
   let number = +params.shift();
-  let result = [];
-
   params.forEach(p => {
     switch (p) {
       case 'chop':
@@ -235,23 +236,22 @@ function cookingByNumbers(...params) {
         number *= 0.80;
         break;
     }
-    result.push((Math.round(number * 10) / 10));
+    console.log((Math.round(number * 10) / 10));
   });
-  return result.join("\n");
 }
-console.log(cookingByNumbers('32', 'chop', 'chop', 'chop', 'chop', 'chop'));
-cookingByNumbers('9', 'dice', 'spice', 'chop', 'bake', 'fillet');
+// cookingByNumbers('32', 'chop', 'chop', 'chop', 'chop', 'chop');
+// cookingByNumbers('9', 'dice', 'spice', 'chop', 'bake', 'fillet');
 
 // 7
-function validityChecker(x1, y1, x2, y2) {
-  // let x1 = Number(params.shift());
-  // let y1 = Number(params.shift());
-  // let x2 = Number(params.shift());
-  // let y2 = Number(params.shift());
+function validityChecker(params) {
+  let x1 = Number(params.shift());
+  let y1 = Number(params.shift());
+  let x2 = Number(params.shift());
+  let y2 = Number(params.shift());
   console.log(`{${x1}, ${y1}} to {0, 0} is ${isValid(x1, y1, 0, 0)}`);
   console.log(`{${x2}, ${y2}} to {0, 0} is ${isValid(x2, y2, 0, 0)}`);
   console.log(`{${x1}, ${y1}} to {${x2}, ${y2}} is ${isValid(x1, y1, x2, y2)}`);
-  
+
   function isValid(x1, y1, x2, y2) {
     let distance = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
     if (Number.isInteger(distance)) {
@@ -263,3 +263,16 @@ function validityChecker(x1, y1, x2, y2) {
 }
 // validityChecker(3, 0, 0, 4);
 // validityChecker(2, 1, 1, 1);
+
+// 8
+function calorieObject(params) {
+  let foods = {};
+  for (let i = 0; i < params.length; i += 2) {
+    let key = params[i];
+    let value = params[i + 1];
+    foods[key] = +value;
+  }
+  console.log(foods);
+}
+// calorieObject(['Yoghurt', '48', 'Rise', '138', 'Apple', '52']);
+// calorieObject(['Potato', '93', 'Skyr', '63', 'Cucumber', '18', 'Milk', '42']);
