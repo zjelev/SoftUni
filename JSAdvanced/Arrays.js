@@ -145,7 +145,13 @@ function compareNums(a, b) {
 
 function lastKNumbersSequence(n, k) {
     let nums = [1];
-    for (let i = 1; i < n; i++) {
+    let sum = 1;
+    for (let i = 1; i <= k; i++) {
+        nums[i] = sum;
+        sum += nums[i];
+    }
+
+    for (let i = k + 1; i < n; i++) {
         let lastK = nums.slice(i - k, i);
         let sum = 0;
         lastK.forEach(x => sum += x);
@@ -153,7 +159,7 @@ function lastKNumbersSequence(n, k) {
     }
     return nums;
 }
-console.log(lastKNumbersSequence(8, 2))
+// console.log(lastKNumbersSequence(0, 1))
 
 // function numSequent(n, k) {
 //     let output = [1];
@@ -191,7 +197,6 @@ function smallestTwoNumbers(params) {
     let result = params.sort((a, b) => a -b).slice(0, 2)
     return result;
 }
-
 // console.log(smallestTwoNumbers([30, 15, 50, 5]));
 
 // 7
