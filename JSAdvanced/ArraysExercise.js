@@ -98,6 +98,18 @@ function arraySort2Crit(input) {
 }
 // console.log(arraySort2Crit(['test', 'Deny', 'omen', 'Default']));
 
+// 7
+function magicMatrices(matrix) {
+    let sums = [0];
+    matrix.forEach((row, i) => {
+        let sumRow = row.reduce((acc, v) => acc + v)
+
+
+    });
+}
+
+magicMatrices([[4, 5, 6], [6, 5, 4], [5, 5, 5]])
+
 // 8
 function tictactoe(moves) {
     let matrix = [[false, false, false],
@@ -182,9 +194,4 @@ function diagonalAttack(matrix) {
     }
     return matrix;
 }
-console.log(diagonalAttack(['5 3 12 3 1',
-    '11 4 23 2 5',
-    '101 12 3 21 10',
-    '1 4 5 2 2',
-    '5 22 33 11 1']
-));
+// console.log(diagonalAttack(['5 3 12 3 1','11 4 23 2 5',    '101 12 3 21 10',    '1 4 5 2 2',    '5 22 33 11 1']));

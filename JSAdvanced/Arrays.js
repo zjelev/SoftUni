@@ -31,10 +31,20 @@ function calc(oper, arg1, arg2) {
 // array[-1] = 'Gosho';
 // console.log(array); 
 // console.log(array.length);  //WTF
+let arr = [];
+arr[3.4] = 'Oranges';
+arr[-1] = 'Apples';
+//console.log(arr.length);                // 0
+//console.log(arr.hasOwnProperty(3.4));   // true
+
+arr["1"] = 'Grapes';
+//console.log(arr.length);                // 2
+//console.log(arr); // [ <1 empty item>, 'Grapes', '3.4': 'Oranges', '-1': 'Apples' ]
 
 // 46:15
 let names = ['Pesho', 'Gosho', 'ivan', 'Stamat', 'Batman', 'superman', 'SpiderMan', 'captain America', 'Wonder Woman'];
-
+// console.log(names.splice(2, names.length, 1, 3, 5))
+// console.log(names);
 // getNames(names);
 function getNames(names) {
     // let firstName = names[0];
@@ -42,8 +52,8 @@ function getNames(names) {
     // // Array destructuring
     let [firstName, ...others] = names; // Rest operator
 
-    console.log(firstName);
-    console.log(others);
+    // console.log(firstName);
+    // console.log(others);
 }
 
 // // 51:00 Mutator Methods
@@ -51,7 +61,7 @@ function getNames(names) {
 // names.push('Gerry');
 
 function solve(...names) {           // Rest operator
-    console.log(names.join(', '));
+    // console.log(names.join(', '));
 }
 // solve('pesho', 'gosho', 'stamat');
 
@@ -76,7 +86,7 @@ function evenPositionElement(params) {
             output += params[key] + ' ';
         }
     }
-    console.log(output);
+    // console.log(output);
 }
 // evenPositionElement(['5', '30', '40']);
 
@@ -90,10 +100,10 @@ function negativePositiveNums(params) {
             array.push(element)
         }
     });
-    console.log(array.join(' '));
+    // console.log(array.join(' '));
 }
 
-// let result = names.splice(2, names.length, 1, 3, 5); 
+
 // let arr = [1, 2, 3, 4, 5, 6, 7, 10, 100, 256];
 // arr.length = 5;
 // arr.fill(5, 1, 3);  // Ctrl + Shift + Space
@@ -159,21 +169,20 @@ function lastKNumbersSequence(n, k) {
     }
     return nums;
 }
-// console.log(lastKNumbersSequence(0, 1))
 
-// function numSequent(n, k) {
-//     let output = [1];
-//     while(n-- > 1) {
-//         let sum = 0;
-//         for (let i = output.length - 1; i > output.length - 1 - k; i--) {
-//             if (typeof(output[i]) == 'number') {
-//                 sum += Number(output[i]);
-//             }
-//         }
-//         output.push(sum);
-//     }
-//     return output;
-// }
+function numSequent(n, k) {
+    let output = [1];
+    while(n-- > 1) {
+        let sum = 0;
+        for (let i = output.length - 1; i > output.length - 1 - k; i--) {
+            if (typeof(output[i]) == 'number') {
+                sum += Number(output[i]);
+            }
+        }
+        output.push(sum);
+    }
+    return output;
+}
 
 // start = Date.now();
 // console.log(lastKNumbersSequence(16, 5))
@@ -181,7 +190,7 @@ function lastKNumbersSequence(n, k) {
 // console.log(`My code spent ${stop - start} ms`);
 
 // start = Date.now();
-// console.log(numSequent(16, 5))
+// console.log(numSequent(16, 3))
 // stop = Date.now();
 // console.log(`Other code spent ${stop - start} ms`);
 
@@ -288,3 +297,5 @@ function equalNeighbors(matrix) {
 // console.log(equalNeighbors([[2, 2, 5, 7, 4],
 // [4, 0, 5, 3, 4],
 // [2, 5, 5, 4, 2]]))
+
+
