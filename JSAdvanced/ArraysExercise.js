@@ -69,7 +69,7 @@ function rotateArray(input) {
 function increasingSubsequence(input) {
     let currMax = Number.MIN_SAFE_INTEGER;
     input = input.filter(num => {
-        if (num > currMax) {
+        if (num >= currMax) {
             currMax = num;
             return true;
         } else {
@@ -94,7 +94,7 @@ function arraySort2Crit(input) {
     // });
     const twoCrtSort = (a, b) => a.length - b.length || a.localeCompare(b);
     input.sort(twoCrtSort);
-    return input;
+    return input.join("\n");
 }
 // console.log(arraySort2Crit(['test', 'Deny', 'omen', 'Default']));
 
