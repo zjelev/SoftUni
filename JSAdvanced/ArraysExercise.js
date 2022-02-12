@@ -100,15 +100,27 @@ function arraySort2Crit(input) {
 
 // 7
 function magicMatrices(matrix) {
-    let sums = [0];
-    matrix.forEach((row, i) => {
-        let sumRow = row.reduce((acc, v) => acc + v)
-
-
-    });
+    let sumRow = matrix[0].reduce((acc, curr) => acc + curr);
+    for (let i = 0; i < matrix.length; i++) {
+        if (sumRow !== matrix[i].reduce((acc, curr) => acc + curr)) {
+            return false;
+        } else {
+            let sumCol = 0;
+            for (let j = 0; j < matrix.length; j++) {
+                sumCol += matrix[j][i];
+            }
+            if (sumRow !== sumCol) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
-magicMatrices([[4, 5, 6], [6, 5, 4], [5, 5, 5]])
+console.log(magicMatrices([[1, 0, 0],
+    [0, 0, 1],
+    [0, 1, 0]]   
+   ))
 
 // 8
 function tictactoe(moves) {
