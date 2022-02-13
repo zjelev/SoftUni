@@ -117,10 +117,9 @@ function magicMatrices(matrix) {
     return true;
 }
 
-console.log(magicMatrices([[1, 0, 0],
-    [0, 0, 1],
-    [0, 1, 0]]   
-   ))
+// console.log(magicMatrices([[4, 5, 6],    [6, 5, 4],    [5, 5, 5]]      ))
+// console.log(magicMatrices([[11, 32, 45],    [21, 0, 1],    [21, 1, 1]]        ))
+// console.log(magicMatrices([[1, 0, 0],    [0, 0, 1],    [0, 1, 0]]      ))
 
 // 8
 function tictactoe(moves) {
@@ -197,13 +196,26 @@ function diagonalAttack(matrix) {
     })
 
     i = 0;
-    j = matrix[0].length - 1;
+    j = matrix.length - 1;
+    let newMatrix = [];
     if (leftSum === rightSum) {
         matrix.forEach(row => {
-            row = row.split(" ");
-            row.splice(i, 1, leftSum);
+            splitRow = row.split(" ");
+            let newSplitRow = [];
+            splitRow.forEach((v, index) => {
+                if (index !== i && index !== j) {
+                    v = leftSum;
+                }
+                newSplitRow.push(v);
+            })
+            newMatrix.push(newSplitRow.join(" "));
+            i++;
+            j--;
         })
+        return newMatrix.join("\n");
+    } else {
+        return matrix.join("\n");
     }
-    return matrix;
 }
-// console.log(diagonalAttack(['5 3 12 3 1','11 4 23 2 5',    '101 12 3 21 10',    '1 4 5 2 2',    '5 22 33 11 1']));
+// console.log(diagonalAttack(['5 3 12 3 1', '11 4 23 2 5', '101 12 3 21 10', '1 4 5 2 2', '5 22 33 11 1']))
+// console.log(diagonalAttack(['1 1 1', '1 1 1', '1 1 0']))
