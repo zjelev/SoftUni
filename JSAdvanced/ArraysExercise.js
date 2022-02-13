@@ -217,5 +217,13 @@ function diagonalAttack(matrix) {
         return matrix.join("\n");
     }
 }
-// console.log(diagonalAttack(['5 3 12 3 1', '11 4 23 2 5', '101 12 3 21 10', '1 4 5 2 2', '5 22 33 11 1']))
 // console.log(diagonalAttack(['1 1 1', '1 1 1', '1 1 0']))
+
+// 10
+function orbit(params) {
+    let matrix = [];
+    return matrix.join("\n");
+
+
+}
+console.log(orbit([4, 4, 0, 0]))
