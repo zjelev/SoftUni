@@ -222,8 +222,14 @@ function diagonalAttack(matrix) {
 // 10
 function orbit(params) {
     let matrix = [];
-    return matrix.join("\n");
-
-
+    for (let i = 0; i < params[0]; i++) {
+        matrix.push([]);
+        for (let j = 0; j < params[1]; j++) {
+            matrix[i][j] = Math.max(Math.abs(i - params[2]), Math.abs(j - params[3])) + 1;
+        }
+    }
+    for (let row of matrix) {
+        console.log(row.join(' '));
+    }
 }
-console.log(orbit([4, 4, 0, 0]))
+orbit([5, 5, 2, 2])
