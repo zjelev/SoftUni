@@ -232,4 +232,23 @@ function orbit(params) {
         console.log(row.join(' '));
     }
 }
-orbit([5, 5, 2, 2])
+// orbit([5, 5, 2, 2])
+
+// 11
+function spiralMatrix(rows, cols) {
+    let matrix = [];
+    for (let i = 0; i < rows; i++) {
+        matrix[i] = [];
+        for (let j = 0; j < cols; j++) {
+            matrix[i][j] = 0;
+        }
+    }
+
+
+    
+    for (let row of matrix) {
+        console.log(row.join(' '));
+    }
+}
+
+spiralMatrix(5, 5);
