@@ -8,7 +8,7 @@ namespace AdoNet
     {
         static void Main(string[] args)
         {
-            string connString = @"Server = .\SQLEXPRESS; Database = SoftUni; Integrated security = true;";
+            string connString = @"Server = .; Database = D:\RCM\_DB\AD\PERSONS.MDF; Integrated security = true;";
             int result;
             IList<Employee> employees = new List<Employee>();
 
@@ -19,13 +19,14 @@ namespace AdoNet
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.CommandText = "SELECT TOP 10 * FROM Employees WHERE DepartmentId = @deptId";
+                    //command.CommandText = "SELECT COUNT(*) FROM t_HoliDays";
                     command.Connection = dbCon;
                     // SqlParameter param = new SqlParameter();
                     // param.DbType = System.Data.DbType.Int32;
                     // param.ParameterName = "@deptId";
                     // param.Value = 7;
 
-                    command.Parameters.AddWithValue("@deptId", 7);
+                    command.Parameters.AddWithValue("@deptId", 7);  // Prevent SQl Injection
 
                     result = (int)command.ExecuteScalar();
                     using (SqlDataReader reader = command.ExecuteReader())
