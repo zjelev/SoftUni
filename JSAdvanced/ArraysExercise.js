@@ -14,10 +14,8 @@ function solve(input) {
 
     console.log(input.reduce((acc, curr) => acc *= curr))
 }
-
 // solve([1, 2 ,3, 4, 1, 9])
 
-// React!!!
 // 1
 function solve(input) {
     return input.join(input.pop());
@@ -232,4 +230,34 @@ function orbit(params) {
         console.log(row.join(' '));
     }
 }
-orbit([5, 5, 2, 2])
+// orbit([5, 5, 2, 2])
+
+// 11
+function spiralMatrix(w, h) {
+    let matrix = new Array(w).fill(new Array(h).fill(""))
+    matrix = matrix.map(x => x.map(y => ""))
+    let [startRow, endRow, startClmn, endClmn, counter] = [0, h - 1, 0, w - 1, 0]
+
+    while (startClmn <= endClmn && startRow <= endRow) {
+        for (let i = startClmn; i <= endClmn; i++) {
+            matrix[startRow][i] = ++counter
+        }
+        startRow++
+        for (let i = startRow; i <= endClmn; i++) {
+            matrix[i][endClmn] = ++counter
+        }
+        endClmn--
+        for (let i = endClmn; i >= startClmn; i--) {
+            matrix[endRow][i] = ++counter
+        }
+        endRow--
+        for (let i = endRow; i >= startRow; i--) {
+            matrix[i][startClmn] = ++counter
+        }
+        startClmn++
+    }
+
+    return matrix.map(x => x.join(" ")).join("\n")
+}
+
+console.log(spiralMatrix(5, 5))
