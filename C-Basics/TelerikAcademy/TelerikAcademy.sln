@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01allocatearray", "01allocatearray\01allocatearray.csproj", "{A8CD5B64-E2BA-4967-98DD-33C2AAAB154D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "15primenumbers", "15primenumbers\15primenumbers.csproj", "{ABF646A9-E076-4EE1-B577-8B63588D0526}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8CD5B64-E2BA-4967-98DD-33C2AAAB154D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8CD5B64-E2BA-4967-98DD-33C2AAAB154D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8CD5B64-E2BA-4967-98DD-33C2AAAB154D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8CD5B64-E2BA-4967-98DD-33C2AAAB154D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABF646A9-E076-4EE1-B577-8B63588D0526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABF646A9-E076-4EE1-B577-8B63588D0526}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABF646A9-E076-4EE1-B577-8B63588D0526}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABF646A9-E076-4EE1-B577-8B63588D0526}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A7F94FB2-40E5-47A0-B889-D4DD7CDD9E8A}
+	EndGlobalSection
+EndGlobal

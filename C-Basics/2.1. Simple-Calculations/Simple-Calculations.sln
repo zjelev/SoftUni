@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Currency Converter", "ConsoleApp1\Currency Converter.csproj", "{976184E1-794D-4F5C-B610-E0F57B61AEE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1000 Days after birth", "1000 Days after birth\1000 Days after birth.csproj", "{85B88C16-9D6E-4002-87EB-91A9ADF0BA48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radians to Degrees", "Radians to Degrees\Radians to Degrees.csproj", "{8E67D79A-5E98-4E81-853E-E8B4FEF7782E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BGN-to-EUR-Converter", "BGN-to-EUR-Converter\BGN-to-EUR-Converter.csproj", "{585AEE6A-5897-4EEB-B3F4-AAC1EFD6F6BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{976184E1-794D-4F5C-B610-E0F57B61AEE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{976184E1-794D-4F5C-B610-E0F57B61AEE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{976184E1-794D-4F5C-B610-E0F57B61AEE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{976184E1-794D-4F5C-B610-E0F57B61AEE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85B88C16-9D6E-4002-87EB-91A9ADF0BA48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85B88C16-9D6E-4002-87EB-91A9ADF0BA48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85B88C16-9D6E-4002-87EB-91A9ADF0BA48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85B88C16-9D6E-4002-87EB-91A9ADF0BA48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E67D79A-5E98-4E81-853E-E8B4FEF7782E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E67D79A-5E98-4E81-853E-E8B4FEF7782E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E67D79A-5E98-4E81-853E-E8B4FEF7782E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E67D79A-5E98-4E81-853E-E8B4FEF7782E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{585AEE6A-5897-4EEB-B3F4-AAC1EFD6F6BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{585AEE6A-5897-4EEB-B3F4-AAC1EFD6F6BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{585AEE6A-5897-4EEB-B3F4-AAC1EFD6F6BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{585AEE6A-5897-4EEB-B3F4-AAC1EFD6F6BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FB222478-63C0-4927-91A2-EF6A429C9F91}
+	EndGlobalSection
+EndGlobal
