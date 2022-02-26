@@ -34,59 +34,62 @@ namespace AdoNet
                     INSERT INTO Villains (Name, EvilnessFactorId) VALUES ('Gru',2),('Victor',1),('Jilly',3),('Miro',4),('Rosen',5),('Dimityr',1),('Dobromir',2)
                     INSERT INTO MinionsVillains (MinionId, VillainId) VALUES (4,2),(1,1),(5,7),(3,5),(2,6),(11,5),(8,4),(9,7),(7,1),(1,3),(7,3),(5,3),(4,3),(1,2),(2,1),(2,7)";
 
-            using SqlConnection dbConn = new SqlConnection(conn);
-            dbConn.Open();
+            using (SqlConnection dbConn = new SqlConnection(conn))
+            {
+                dbConn.Open();
 
-            // SqlCommand command = new SqlCommand(createDB, dbConn);
+                // SqlCommand command = new SqlCommand(createDB, dbConn);
 
-            using SqlCommand command = new SqlCommand(useDB, dbConn);
-            command.ExecuteScalar();
+                using SqlCommand command = new SqlCommand(useDB, dbConn);
+                command.ExecuteScalar();
 
-            // command = new SqlCommand(createTables, dbConn);
-            // command.ExecuteScalar();
+                // command = new SqlCommand(createTables, dbConn);
+                // command.ExecuteScalar();
 
-            // command = new SqlCommand(insertValues, dbConn);
-            // command.ExecuteScalar();
+                // command = new SqlCommand(insertValues, dbConn);
+                // command.ExecuteScalar();
 
-            // 2. Villain Names
-            // Console.WriteLine(GetVillainCountMinions(dbConn));
+                // 2
+                // Console.WriteLine(VillainNames(dbConn));
 
-            // 3. Minion Names
-            // Console.Write("Input villain id: ");
-            // int villainId = int.Parse(Console.ReadLine());
-            // Console.WriteLine(GetMinionsOfAVillain(dbConn, villainId));
+                // 3
+                // Console.Write("Input villain id: ");
+                // int villainId = int.Parse(Console.ReadLine());
+                // Console.WriteLine(MinionNames(dbConn, villainId));
 
-            // 4. Add Minion
-            // string[] inputFour = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
-            // string minionName = inputFour[1];
-            // int minionAge = int.Parse(inputFour[2]);
-            // string town = inputFour[3];
-            // inputFour = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
-            // string villainName = inputFour[1];
+                // 4
+                // string[] inputFour = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                // string minionName = inputFour[1];
+                // int minionAge = int.Parse(inputFour[2]);
+                // string town = inputFour[3];
+                // inputFour = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                // string villainName = inputFour[1];
 
-            // Console.WriteLine(AddMinion(dbConn, minionName, minionAge, town, villainName));
+                // Console.WriteLine(AddMinion(dbConn, minionName, minionAge, town, villainName));
 
-            // 5. Change Town Names Casing
-            //string countryName = Console.ReadLine();
-            //Console.WriteLine(ChangeTownNamesCasing(dbConn, countryName));
+                // 5. Change Town Names Casing
+                //string countryName = Console.ReadLine();
+                //Console.WriteLine(ChangeTownNamesCasing(dbConn, countryName));
 
-            // 6. Remove Villain
-            // int villainId = int.Parse(Console.ReadLine());
-            // Console.WriteLine(RemoveVillainById(dbConn, villainId));
+                // 6. Remove Villain
+                // int villainId = int.Parse(Console.ReadLine());
+                // Console.WriteLine(RemoveVillainById(dbConn, villainId));
 
-            // 7. Print All Minion Names
-            // PrintMinionNames(dbConn);
+                // 7. Print All Minion Names
+                // PrintMinionNames(dbConn);
 
-            // 8. Increase Minion Age
-            // string ages = Console.ReadLine();
-            // IncreaseMinionAge(dbConn, ages);
+                // 8. Increase Minion Age
+                // string ages = Console.ReadLine();
+                // IncreaseMinionAge(dbConn, ages);
 
-            // 9. Increase Age Stored Procedure
-            int minionId = int.Parse(Console.ReadLine());
-            IncreaseMinionAgeSP(dbConn, minionId);
+                // 9. Increase Age Stored Procedure
+                //int minionId = int.Parse(Console.ReadLine());
+                //IncreaseMinionAgeSP(dbConn, minionId);
+
+            }
         }
 
-        private static string GetVillainCountMinions(SqlConnection dbConn)
+        private static string VillainNames(SqlConnection dbConn)
         {
             string query = @"
             SELECT v.Name, COUNT(mv.MinionId) AS MinionCount
@@ -96,52 +99,55 @@ namespace AdoNet
             HAVING COUNT(mv.MinionId) > 2
             ORDER BY COUNT(mv.VillainId) ASC";
 
-            using SqlCommand command = new SqlCommand(query, dbConn);
-            Console.WriteLine(command.ExecuteScalar()?.ToString());
-
-            StringBuilder sb = new StringBuilder();
-
-            using SqlDataReader reader = command.ExecuteReader();
-
-            if (reader.HasRows)
+            using (SqlCommand command = new SqlCommand(query, dbConn))
             {
-                while (reader.Read())
+                Console.WriteLine(command.ExecuteScalar()?.ToString());
+
+                StringBuilder sb = new StringBuilder();
+
+                using SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
                 {
-                    string villainName = reader["Name"]?.ToString();
-                    string minionCount = reader["MinionCount"]?.ToString();
+                    while (reader.Read())
+                    {
+                        string villainName = reader["Name"]?.ToString();
+                        string minionCount = reader["MinionCount"]?.ToString();
 
-                    sb.AppendLine($"{villainName} - {minionCount}");
+                        sb.AppendLine($"{villainName} - {minionCount}");
+                    }
                 }
+                else
+                {
+                    sb.AppendLine("No rows");
+                }
+                reader.Close();
+                return sb.ToString().TrimEnd();
             }
-            else
-            {
-                sb.AppendLine("No rows");
-            }
-
-            return sb.ToString().TrimEnd();
         }
 
-        private static string GetMinionsOfAVillain(SqlConnection dbConn, int villainId)
+        private static string MinionNames(SqlConnection dbConn, int villainId)
         {
             string selectVillainName = @"SELECT Name FROM Villains WHERE Id = @villainId";
 
-            using SqlCommand getVillainName = new SqlCommand(selectVillainName, dbConn);
-            getVillainName.Parameters.AddWithValue("@villainId", villainId);
-
-            string villainName = getVillainName.ExecuteScalar()?.ToString();
-
-            StringBuilder sb = new StringBuilder();
-
-            if (villainName == null)
+            using (SqlCommand getVillainName = new SqlCommand(selectVillainName, dbConn))
             {
-                sb.AppendLine($"No villain with ID {villainId} exists in the database.");
-                return sb.ToString().TrimEnd();
-            }
-            else
-            {
-                sb.AppendLine($"Villain: {villainName}");
+                getVillainName.Parameters.AddWithValue("@villainId", villainId);
 
-                string query = @"
+                string villainName = getVillainName.ExecuteScalar()?.ToString();
+
+                StringBuilder sb = new StringBuilder();
+
+                if (villainName == null)
+                {
+                    sb.AppendLine($"No villain with ID {villainId} exists in the database.");
+                    return sb.ToString().TrimEnd();
+                }
+                else
+                {
+                    sb.AppendLine($"Villain: {villainName}");
+
+                    string query = @"
                     SELECT m.[Name], m.[Age] FROM Villains v
                     LEFT OUTER JOIN MinionsVillains mv
                     ON v.Id = mv.VillainId
@@ -150,36 +156,39 @@ namespace AdoNet
                     WHERE v.[Name] = @villainName
                     ORDER BY m.[Name]";
 
-                using SqlCommand getMinionsInfo = new SqlCommand(query, dbConn);
-                getMinionsInfo.Parameters.AddWithValue("@villainName", villainName);
-
-                using SqlDataReader reader = getMinionsInfo.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    int rowNum = 1;
-
-                    while (reader.Read())
+                    using (SqlCommand getMinionsInfo = new SqlCommand(query, dbConn))
                     {
-                        string minionName = reader["Name"]?.ToString();
-                        string minionAge = reader["Age"]?.ToString();
+                        getMinionsInfo.Parameters.AddWithValue("@villainName", villainName);
 
-                        if (minionName == String.Empty || minionAge == String.Empty)
+                        using SqlDataReader reader = getMinionsInfo.ExecuteReader();
+
+                        if (reader.HasRows)
+                        {
+                            int rowNum = 1;
+
+                            while (reader.Read())
+                            {
+                                string minionName = reader["Name"]?.ToString();
+                                string minionAge = reader["Age"]?.ToString();
+
+                                if (minionName == String.Empty || minionAge == String.Empty)
+                                {
+                                    sb.AppendLine("No minions");
+                                    break;
+                                }
+
+                                sb.AppendLine($"{rowNum}. {minionName} {minionAge}");
+                                rowNum++;
+                            }
+                        }
+                        else
                         {
                             sb.AppendLine("No minions");
-                            break;
                         }
-
-                        sb.AppendLine($"{rowNum}. {minionName} {minionAge}");
-                        rowNum++;
+                        reader.Close();
                     }
+                    return sb.ToString().TrimEnd();
                 }
-                else
-                {
-                    sb.AppendLine("No minions");
-                }
-
-                return sb.ToString().TrimEnd();
             }
         }
 
@@ -194,36 +203,41 @@ namespace AdoNet
             string insertMinion = @"INSERT INTO Minions (Name, Age, TownId)
                                    VALUES (@minionName, @minionAge, @townId)";
 
-            using SqlCommand insertMinionCmd = new SqlCommand(insertMinion, dbConn);
-            insertMinionCmd.Parameters.AddRange(new[]
+            using (SqlCommand insertMinionCmd = new SqlCommand(insertMinion, dbConn))
             {
+                insertMinionCmd.Parameters.AddRange(new[]
+                {
                 new SqlParameter("@minionName", minionName),
                 new SqlParameter("@minionAge", minionAge),
                 new SqlParameter("@townId", townId),
-            });
+                });
 
-            insertMinionCmd.ExecuteNonQuery();
+                insertMinionCmd.ExecuteNonQuery();
+            }
 
             string getMinionId = @"SELECT Id FROM Minions WHERE Name = @minionName";
-            using SqlCommand getMinionIdCmd = new SqlCommand(getMinionId, dbConn);
-            getMinionIdCmd.Parameters.AddWithValue("@minionName", minionName);
+            using (SqlCommand getMinionIdCmd = new SqlCommand(getMinionId, dbConn))
+            {
+                getMinionIdCmd.Parameters.AddWithValue("@minionName", minionName);
 
-            string minionId = getMinionIdCmd.ExecuteScalar()?.ToString();
+                string minionId = getMinionIdCmd.ExecuteScalar()?.ToString();
 
-            string assignMinion = @"INSERT INTO MinionsVillains(MinionId, VillainId) 
+                string assignMinion = @"INSERT INTO MinionsVillains(MinionId, VillainId) 
                 VALUES (@minionId, @villainId)";
 
-            using SqlCommand assignMinionCmd = new SqlCommand(assignMinion, dbConn);
-            assignMinionCmd.Parameters.AddRange(new[]
-            {
-                new SqlParameter("@minionId", minionId),
-                new SqlParameter("@villainId", villainId)
-            });
+                using (SqlCommand assignMinionCmd = new SqlCommand(assignMinion, dbConn))
+                {
+                    assignMinionCmd.Parameters.AddRange(new[]
+                    {
+                    new SqlParameter("@minionId", minionId),
+                    new SqlParameter("@villainId", villainId)
+                    });
 
-            assignMinionCmd.ExecuteNonQuery();
-
-            output.AppendLine($"Successfully added {minionName} to be minion of {villainName}.");
-            return output.ToString().TrimEnd();
+                    assignMinionCmd.ExecuteNonQuery();
+                }
+                output.AppendLine($"Successfully added {minionName} to be minion of {villainName}.");
+                return output.ToString().TrimEnd();
+            }
         }
 
         private static string SelectVillainId(SqlConnection dbConn, string villainName, StringBuilder output)
@@ -313,14 +327,14 @@ namespace AdoNet
                     towns.Add(new Town(townId, townName, countryCode));
                     changedTownsCount++;
                 }
-                
+
                 Console.WriteLine($"{changedTownsCount} town names were affected.");
                 Console.Write("[");
                 foreach (var town in towns)
                 {
                     output += town.Name + ", ";
                 };
-                
+
                 //towns.ForEach(t => Console.Write("{0}, ", t.Name));
                 output = output.Remove(output.Length - 2, 2) + "]";
             }
@@ -343,7 +357,7 @@ namespace AdoNet
             getVillainNameCmd.Transaction = sqlTransaction;
 
             string villainName = getVillainNameCmd.ExecuteScalar()?.ToString();
-            
+
             if (villainName == null)
             {
                 sb.AppendLine($"No such villain was found.");
@@ -357,7 +371,7 @@ namespace AdoNet
                     releaseMinionsCmd.Parameters.AddWithValue("@villainId", villainId);
                     releaseMinionsCmd.Transaction = sqlTransaction;
                     int releasedMinoinsCount = releaseMinionsCmd.ExecuteNonQuery();
-                    
+
                     string deleteVillain = @"DELETE FROM Villains WHERE Id = @villainId";
                     using SqlCommand deleteVillainCmd = new SqlCommand(deleteVillain, dbConn);
                     deleteVillainCmd.Parameters.AddWithValue("@villainId", villainId);
@@ -438,11 +452,11 @@ namespace AdoNet
         private static void IncreaseMinionAge(SqlConnection dbConn, string ages)
         {
             string[] agesArr = ages.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-            
+
             foreach (var character in agesArr)
             {
                 int minionId = int.Parse(character);
-                
+
                 string setMinionAgeName = @"UPDATE Minions SET Age = Age + 1, 
                 Name = UPPER(LEFT(Name, 1)) + LOWER(RIGHT(Name, LEN(Name) - 1))
                 FROM [MinionsDB].[dbo].[Minions] WHERE Id = @minionId";
@@ -451,7 +465,7 @@ namespace AdoNet
                 setMinionAgeNameCmd.Parameters.AddWithValue("@minionId", minionId);
                 setMinionAgeNameCmd.ExecuteScalar();
             }
-            
+
             string selectMinions = @"SELECT [Id], [Name], [Age] FROM Minions";
             using SqlCommand selectMinionsCmd = new SqlCommand(selectMinions, dbConn);
             using SqlDataReader reader = selectMinionsCmd.ExecuteReader();
@@ -460,11 +474,11 @@ namespace AdoNet
             {
                 while (reader.Read())
                 {
-                     Console.WriteLine($"{reader["Name"]?.ToString()} {reader["Age"]?.ToString()}");
+                    Console.WriteLine($"{reader["Name"]?.ToString()} {reader["Age"]?.ToString()}");
                 }
             }
         }
-        
+
         private static void IncreaseMinionAgeSP(SqlConnection dbConn, int minionId)
         {
             string procedureName = "usp_GetOlder";
