@@ -7,7 +7,7 @@
     using System.Reflection;
 
     internal class ChangeTracker<T>
-        where T : class, new()
+        where T : class, new() // T is reference type and has empty ctor
     {
         private readonly List<T> allEntities;
 
@@ -29,23 +29,16 @@
 
         public IReadOnlyCollection<T> Removed => this.removed.AsReadOnly();
 
-        public void Add(T item)
-        {
-            this.added.Add(item);
-        }
-
-        public void Remove(T item)
-        {
-            this.removed.Add(item);
-        }
+        public void Add(T item) => this.added.Add(item);
+        public void Remove(T item) => this.removed.Add(item);
 
         public IEnumerable<T> GetModifiedEntities(DbSet<T> dbSet)
         {
             List<T> modifiedEntities = new List<T>();
-
+            
             PropertyInfo[] primaryKeys = typeof(T)
                 .GetProperties()
-                .Where(pk => pk.HasAttribute<KeyAttribute>())
+                .Where(pi => pi.HasAttribute<KeyAttribute>())
                 .ToArray();
 
             foreach (T proxyEntity in this.AllEntities)
@@ -54,7 +47,8 @@
 
                 T entity = dbSet
                     .Entities
-                    .Single(e => GetPrimaryKeyValues(primaryKeys, e).SequenceEqual(primaryKeyValues));
+                    .Single(e => GetPrimaryKeyValues(primaryKeys, e)
+                    .SequenceEqual(primaryKeyValues));
 
                 bool isModified = IsModified(proxyEntity, entity);
                 if (isModified)
@@ -68,47 +62,44 @@
 
         private static bool IsModified(T proxyEntity, T entity)
         {
-            IEnumerable<PropertyInfo> monitoredProperties = typeof(T)
-                .GetProperties()
-                .Where(mp => DbContext.AllowedSqlTypes.Contains(mp.PropertyType));
-
-            PropertyInfo[] modifiedProperties = monitoredProperties
-                .Where(mp => !Equals(mp.GetValue(entity), mp.GetValue(proxyEntity)))
+            PropertyInfo[] monitoredProperties = typeof(T).GetProperties()
+                .Where(pi => DbContext.AllowedSqlTypes.Contains(pi.PropertyType))
                 .ToArray();
 
-            bool isModified = modifiedProperties.Any();
+            PropertyInfo[] modifiedProperties = monitoredProperties
+                .Where(pi => !Equals(pi.GetValue(entity), pi.GetValue(proxyEntity)))
+                .ToArray();
 
-            return isModified;
-        }
-
-        private static IEnumerable<object> GetPrimaryKeyValues(IEnumerable<PropertyInfo> primaryKeys, T proxyEntity)
-        {
-            return primaryKeys.Select(pk => pk.GetValue(proxyEntity));
+            return modifiedProperties.Any();
         }
 
         private static List<T> CloneEntities(IEnumerable<T> entities)
         {
             List<T> clonedEntities = new List<T>();
 
-            PropertyInfo[] propertiesToClone = typeof(T)
-                .GetProperties()
+            PropertyInfo[] propertiesToClone = typeof(T).GetProperties()
                 .Where(pi => DbContext.AllowedSqlTypes.Contains(pi.PropertyType))
                 .ToArray();
 
             foreach (T entity in entities)
             {
-                T clonedEntity = Activator.CreateInstance<T>();
+                T clone = Activator.CreateInstance<T>();
 
                 foreach (PropertyInfo property in propertiesToClone)
                 {
                     object value = property.GetValue(entity);
-                    property.SetValue(clonedEntity, value);
+                    property.SetValue(clone, value);
                 }
 
-                clonedEntities.Add(clonedEntity);
+                clonedEntities.Add(clone);
             }
-
+            
             return clonedEntities;
+        }
+
+        private IEnumerable<object> GetPrimaryKeyValues(IEnumerable<PropertyInfo> primaryKeys, T proxyEntity)
+        {
+            return primaryKeys.Select(pk => pk.GetValue(proxyEntity));
         }
     }
 }

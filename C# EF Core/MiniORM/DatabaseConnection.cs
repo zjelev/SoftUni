@@ -188,8 +188,7 @@
 				var columnsParameters = columnsToUpdate.Zip(rowValues, (param, value) => new SqlParameter(param, value))
 					.ToArray();
 
-				var columnsSql = string.Join(", ",
-					columnsToUpdate.Select(c => $"{c} = @{c}"));
+				var columnsSql = string.Join(", ", columnsToUpdate.Select(c => $"{c} = @{c}"));
 
 				var primaryKeysSql = string.Join(" AND ",
 					primaryKeyProperties.Select(pk => $"{pk.Name} = @{pk.Name}"));
