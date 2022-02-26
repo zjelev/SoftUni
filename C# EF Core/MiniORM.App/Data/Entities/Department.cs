@@ -1,4 +1,4 @@
-﻿namespace MiniORM.App.Data.Entities
+namespace MiniORM.App.Data.Entities
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -10,7 +10,7 @@
 
         [Required]
         public string Name { get; set; }
-
         public ICollection<Employee> Employees { get; }
+
     }
 }
