@@ -1,4 +1,4 @@
-﻿namespace MiniORM.App.Data.Entities
+namespace MiniORM.App.Data.Entities
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -14,7 +14,6 @@
         public int ProjectId { get; set; }
 
         public Employee Employee { get; set; }
-
         public Project Project { get; set; }
     }
 }

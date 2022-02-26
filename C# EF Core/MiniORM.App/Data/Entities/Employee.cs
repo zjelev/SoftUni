@@ -1,4 +1,4 @@
-﻿namespace MiniORM.App.Data.Entities
+namespace MiniORM.App.Data.Entities
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -6,26 +6,11 @@
 
     public class Employee
     {
-        public Employee()
-        {
-            this.EmployeeProjects = new List<EmployeeProject>();
-        }
-
-        public Employee(string firstName, string lastName, int departmentId, bool isEmployed)
-            : this()
-        {
-            this.FirstName = firstName;
-            this.LastName = lastName;
-            this.IsEmployed = isEmployed;
-            this.DepartmentId = departmentId;
-        }
-
         [Key]
         public int Id { get; set; }
 
         [Required]
         public string FirstName { get; set; }
-
         public string MiddleName { get; set; }
 
         [Required]
