@@ -17,7 +17,7 @@ namespace EFDemo
             
             // SQL Server Profiler -> Use the template = TSQL_Duration
 
-            // Always use Select().ToList()
+            // Always use Select().ToList() - get from db only what you need!
 
             var db = new SoftUniContext();
             Console.WriteLine(db.Employees.Count(x => x.Projects.Count() > 2));
