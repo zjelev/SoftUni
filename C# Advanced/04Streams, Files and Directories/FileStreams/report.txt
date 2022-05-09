@@ -1,0 +1,12 @@
+.txt
+--words.txt - 0.016kB
+--actualResults.txt - 0.029kB
+--text.txt - 0.120kB
+--output.txt - 0.167kB
+.png
+--copyMe.png - 9.136kB
+--sofUniLogo.png - 12.000kB
+.cs
+--Program.cs - 7.517kB
+.csproj
+--FileStreams.csproj - 0.174kB
