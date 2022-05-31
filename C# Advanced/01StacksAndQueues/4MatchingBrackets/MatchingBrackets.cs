@@ -1,32 +1,33 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace _4MatchingBrackets
 {
-    class MatchingBrackets
+    class Program
     {
         static void Main(string[] args)
         {
-            /*string input = Console.ReadLine();
+            char[] expression = Console.ReadLine()
+            //.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .ToCharArray();
 
-            var expressionFinder = new Stack<int>(input.Length);
+            Stack<int> indexes = new Stack<int>();
 
-            for (int i = 0; i < input.Length; i++)
+            for (int i = 0; i < expression.Length; i++)
             {
-                if (input[i] == '(')
+                if (expression[i] == '(')
                 {
-                    expressionFinder.Push(i);
+                    indexes.Push(expression[i]);
                 }
-
-                if (input[i] == ')')
+                else if (expression[i] == ')')
                 {
-                    int start = expressionFinder.Pop();
-                    Console.WriteLine(input.Substring(start, i - start + 1));
+                    int start = indexes.Pop();
+                    Console.WriteLine("{0}", string.Join("", expression)
+                    .Substring(start, i - start + 1));
                 }
-            }*/
-
-            int Desetichno = int.Parse(Console.ReadLine());
-            Console.WriteLine ("Hex: {0:X}", Desetichno);
+            }
+            //int desetichno = int.Parse(Console.ReadLine());
+            //Console.WriteLine ("Hex: {0:X}", Desetichno);
         }
     }
 }
