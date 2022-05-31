@@ -18,10 +18,10 @@ namespace _3Calculator
             {
 
                 int operand1 = int.Parse(stack.Pop());
-                string opr = stack.Pop();
+                string operation = stack.Pop();
                 int operand2 = int.Parse(stack.Pop());
                 
-                switch (opr)
+                switch (operation)
                 {
                     case "+":
                         stack.Push($"{operand1 + operand2}");
