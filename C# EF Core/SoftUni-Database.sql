@@ -1,15 +1,10 @@
--------------------------------------------------------------------
--- This script will create a sample database "SoftUni" in        --
--- MS SQL Server and will populate sample data in its tables.    --
--------------------------------------------------------------------
-
 USE master
 GO
 
-CREATE DATABASE SoftUni
+CREATE DATABASE SuTest
 GO
 
-USE SoftUni
+USE SuTest
 GO
 
 CREATE TABLE Towns(
