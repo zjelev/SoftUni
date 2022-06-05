@@ -2,7 +2,7 @@
 // dotnet add package Microsoft.EntityFrameworkCore.SqlServer.Design   // or Tools
 // dotnet tool install --global dotnet-ef
 // dotnet ef dbcontext scaffold "Server=.\SQLEXPRESS;Database=SuTest;Integrated Security=true;" Microsoft.EntityFrameworkCore.SqlServer -o Models -f --data-annotations
-// SQL Server Profiler -> Use the template = TSQL_Duration
+// SQL Server Profiler -> Use the template = TSQL_Duration, or expressprofiler.codeplex.com or Microsoft.Extensions.Logging 
 
 // string ->  MAX, Unicode  DB -> char(50)   => EF Fluent API
 
