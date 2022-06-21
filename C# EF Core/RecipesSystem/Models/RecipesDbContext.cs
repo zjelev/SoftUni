@@ -1,6 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using RecipesSystem.EntityConfiguraions;
 
 namespace RecipesSystem.Models
 {
@@ -14,6 +15,11 @@ namespace RecipesSystem.Models
         {
             optionsBuilder.UseSqlServer("Server=.;Database=Recipes;Integrated Security=true");
             optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
-        }        
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)   
+        {
+            modelBuilder.ApplyConfiguration(new RecipeConfigurations());
+        }
     }
 }
