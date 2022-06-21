@@ -10,10 +10,10 @@ namespace RecipesSystem.EntityConfiguraions
         {
             // builder.HasKey("Id", "Name"); // params
             // builder.HasKey(new[] { "Id", "Name" }); // without params
-            builder.HasKey(x => new { x.Id, x.Name }); // recommended
-            builder.HasIndex(x => x.Name);
+            // builder.HasKey(x => new { x.Id, x.Name }); // recommended
+            // builder.HasIndex(x => x.Name).IsUnique();
 
-            builder.Ignore(x => x.Test);
+            // builder.Ignore(x => x.Test);
             
             builder.Property(x => x.Name)
                 .HasColumnName("Title")

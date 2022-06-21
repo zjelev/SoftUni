@@ -21,6 +21,13 @@ namespace RecipesSystem
                 CookingTime = new TimeSpan(2, 3, 4) 
             });
 
+            db.Recipes.Add(new Recipe 
+            { 
+                Name = "Musaka 4",
+                Description = "Tr meal",
+                CookingTime = new TimeSpan(2, 3, 4) 
+            });
+
             db.Recipes.Select(x => new
             {
                 Egn = EF.Property<string>(x, "Egn") // shadow property
