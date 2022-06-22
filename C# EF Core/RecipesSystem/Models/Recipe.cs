@@ -7,6 +7,11 @@ namespace RecipesSystem.Models
 {
     public class Recipe
     {
+        public Recipe()
+        {
+            this.Ingredients = new HashSet<RecipeIngredient>(); // always initialize ICollection to avoid NullReferenceException
+        }
+
         [Key]
         public int Id { get; set;  }
 
@@ -23,7 +28,7 @@ namespace RecipesSystem.Models
 
         public TimeSpan? CookingTime { get; set; }
 
-        public ICollection<Ingredient> Ingredients { get; set; }
+        public ICollection<RecipeIngredient> Ingredients { get; set; }
 
     }
 }

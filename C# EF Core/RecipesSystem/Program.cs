@@ -14,24 +14,33 @@ namespace RecipesSystem
             db.Database.EnsureCreated();
             // db.Database.Migrate(); // dotnet ef database update
 
-            db.Recipes.Add(new Recipe 
-            { 
-                Name = "Musaka 4",
-                Description = "Traditional BG/Tr meal",
-                CookingTime = new TimeSpan(2, 3, 4) 
-            });
+            // db.Recipes.Select(x => new
+            // {
+            //     Egn = EF.Property<string>(x, "Egn") // shadow property
+            // });
 
-            db.Recipes.Add(new Recipe 
-            { 
-                Name = "Musaka 4",
-                Description = "Tr meal",
-                CookingTime = new TimeSpan(2, 3, 4) 
-            });
-
-            db.Recipes.Select(x => new
+            var recipe = new Recipe
             {
-                Egn = EF.Property<string>(x, "Egn") // shadow property
-            });
+                Name = "Musaka",
+                Description = "Traditional BG/Tr meal",
+                CookingTime = new TimeSpan(2, 3, 4),
+                Ingredients =
+                {
+                    new RecipeIngredient
+                    {
+                        Ingredient = new Ingredient { Name = "Potato" },
+                        Quantity = 2000,
+                    },
+                        new RecipeIngredient
+                    {
+                        Ingredient = new Ingredient { Name = "Meat" },
+                        Quantity = 1000,
+                    }
+                }
+            };
+            // 5  new objects in DB - thanks to graph analyser (part of change tracker)
+
+            db.Recipes.Add(recipe);
 
             db.SaveChanges();
         }
