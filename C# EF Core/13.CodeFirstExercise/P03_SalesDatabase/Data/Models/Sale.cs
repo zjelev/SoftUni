@@ -10,15 +10,15 @@ namespace P03_SalesDatabase.Data.Models
         public int SaleId { get; set; }
         public DateTime Date { get; set; }
 
-        [ForeignKey("Product")]
+        [ForeignKey(nameof(Product))]
         public int ProductId { get; set; }
         public Product Product { get; set; }
         
-        [ForeignKey("Customer")]
+        [ForeignKey(nameof(Customer))]
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
 
-        [ForeignKey("Store")]
+        [ForeignKey(nameof(Store))]
         public int StoreId { get; set; }
         public Store Store { get; set; }
 
