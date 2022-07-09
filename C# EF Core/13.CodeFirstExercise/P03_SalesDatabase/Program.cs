@@ -9,10 +9,9 @@ namespace P03_SalesDatabase
         static void Main(string[] args)
         {
             var dbContext = new SalesContext();
-            Random random = new Random();
 
             var seeders = new List<ISeeder>();
-            seeders.Add(new ProductSeeder(dbContext, random));
+            seeders.Add(new ProductSeeder(dbContext));
             seeders.Add(new StoreSeeder(dbContext));
 
             foreach (ISeeder seeder in seeders)

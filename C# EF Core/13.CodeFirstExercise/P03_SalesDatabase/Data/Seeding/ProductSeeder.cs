@@ -6,13 +6,12 @@ namespace P03_SalesDatabase.Data
 {
     public class ProductSeeder : ISeeder
     {
-        private Random random;
+        private Random random = new Random();
         private readonly SalesContext dbContext;
 
-        public ProductSeeder(SalesContext context, Random random)
+        public ProductSeeder(SalesContext context)
         {
             this.dbContext = context;
-            this.random = random;
         }
 
         public void Seed()
