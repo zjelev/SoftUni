@@ -35,6 +35,9 @@ namespace P03_SalesDatabase.Data
             {
                 entity.Property(e => e.Name)
                     .IsUnicode();
+
+                entity.Property(p => p.Description)
+                    .HasDefaultValue("No description");
             });
 
             modelBuilder.Entity<Customer>(entity =>
@@ -53,6 +56,12 @@ namespace P03_SalesDatabase.Data
             {
                 entity.Property(e => e.Name)
                     .IsUnicode();
+            });
+
+            modelBuilder.Entity<Sale>(entity =>
+            {
+                entity.Property(s => s.Date)
+                .HasDefaultValueSql("GETDATE()");
             });
 
         }
