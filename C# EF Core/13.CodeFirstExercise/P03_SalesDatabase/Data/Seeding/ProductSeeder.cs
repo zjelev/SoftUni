@@ -44,6 +44,7 @@ namespace P03_SalesDatabase.Data
                 };
 
                 products.Add(product);
+                Console.WriteLine($"Product (name: {product.Name}, price: {product.Price} added");
             }
 
             this.dbContext.Products.AddRange(products);
