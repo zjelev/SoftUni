@@ -14,7 +14,7 @@ namespace P03_SalesDatabase.Data.Models
 
         [Required]
         [MaxLength(50)]
-        public string Name { get; set; } // (unicode)
+        public string Name { get; set; }
         public double Quantity { get; set; }
         public decimal Price { get; set; }
         public ICollection<Sale> Sales { get; set; }

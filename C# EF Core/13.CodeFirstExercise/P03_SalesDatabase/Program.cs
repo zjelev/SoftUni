@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using P03_SalesDatabase.Data;
 
 namespace P03_SalesDatabase
 {
@@ -6,7 +8,17 @@ namespace P03_SalesDatabase
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var dbContext = new SalesContext();
+            Random random = new Random();
+
+            var seeders = new List<ISeeder>();
+            seeders.Add(new ProductSeeder(dbContext, random));
+            seeders.Add(new StoreSeeder(dbContext));
+
+            foreach (ISeeder seeder in seeders)
+            {
+                seeder.Seed();
+            }
         }
     }
 }
