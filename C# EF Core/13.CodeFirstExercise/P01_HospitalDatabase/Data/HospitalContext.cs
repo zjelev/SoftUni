@@ -75,6 +75,12 @@ namespace P01_HospitalDatabase.Data
             {
                 ent.HasKey(pm => new { pm.PatientId, pm.MedicamentId });
             });
+
+            modelBuilder.Entity<Doctor>(ent =>
+            {
+                ent.Property(d => d.Email)
+                    .IsUnicode(false);
+            });
         }
     }
 }

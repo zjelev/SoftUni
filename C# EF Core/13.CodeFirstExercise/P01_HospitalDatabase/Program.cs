@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using P01_HospitalDatabase.Data;
 using P01_HospitalDatabase.Data.Models;
@@ -30,8 +29,11 @@ namespace P01_HospitalDatabase
                 while (password != users[username])
                 {
                     Console.WriteLine("Wrong password!");
+                    password = Console.ReadLine();
                 }
-                Console.WriteLine("You are logged in!");
+                Console.WriteLine("Welcome dr. " 
+                    + db.Doctors.FirstOrDefault(d => d.UserName == username).Name + " "
+                    + db.Doctors.FirstOrDefault(d => d.UserName == username).Specialty);
             }
             else
             {
@@ -40,14 +42,20 @@ namespace P01_HospitalDatabase
                 {
                     Console.WriteLine("Enter your name: ");
                     string name = Console.ReadLine();
+                    Console.WriteLine("Enter your specialty: ");
+                    string specialty = Console.ReadLine();
                     Console.WriteLine("Enter your password: ");
                     string passwd = Console.ReadLine();
+                    Console.WriteLine("Enter your email: ");
+                    string email = Console.ReadLine();
 
                     db.Doctors.Add(new Doctor
                     {
                         Name = name,
                         UserName = username,
-                        Passwd = passwd
+                        Passwd = passwd,
+                        Specialty = specialty,
+                        Email = email
                     });
                 }
             }
