@@ -17,7 +17,7 @@ namespace LinqDemo
             // dotnet ef dbcontext scaffold "Server=.\SQLEXPRESS; Database=MusicX;Integrated Security=true;" Microsoft.EntityFrameworkCore.SqlServer -o Models
 
             Console.OutputEncoding = System.Text.Encoding.Unicode;
-            // var dbContext = new MusicXContext();
+            var dbContext = new MusicXContext();
 
             // // var songs = dbContext.Songs
             // //     // .Include(x => x.SongArtists) // joins all columns, so better use Select
@@ -38,12 +38,6 @@ namespace LinqDemo
 
             // // // songs[0].Name = "Lone Survivor Changed";
             // // // dbContext.SaveChanges();
-
-            // // foreach (var song in songs)
-            // // {
-            // //     Console.WriteLine($"{string.Join(", ", song.Artists)} - {song.Id} {song.Name}");
-            // // }
-
 
             // // // Projection makes LEFT JOIN
             // // var joinSongsWithSources = dbContext.Songs
@@ -129,16 +123,41 @@ namespace LinqDemo
 
             // // 3.15 Dapper - micro ORM on ADO.NET, make "pure" sql queries and save results in objects
 
-    // 14. Auto Mapping Objects
+            // 13. Advanced Querying
+            var searchString = Console.ReadLine();// "' OR 1=1 --"; // _bv%
+            var songs = dbContext.Songs
+                // With parameter
+                // .FromSqlRaw("SELECT * FROM [Songs] WHERE Name LIKE {0}", searchString) // LIKE '" + searchString + "'") => SQL Injection
+                .FromSqlInterpolated($"SELECT * FROM [Songs] WHERE Name LIKE {searchString}")
+                .ToList();
+
+            var changedName = "Abbi Cura Di Me Changed";
+            int deleted = 1;
+            dbContext.Database
+                .ExecuteSqlInterpolated(
+                    // $"UPDATE [Songs] SET Name = {changedName} WHERE Name LIKE {searchString}");
+                  $"EXEC SetIsDeleted {deleted}");
+                  
+
+
+
+            // 14. Auto Mapping Objects
             // var song = dbContext.Artists.Select(x => new ArtistWithCount
             // {
             //     Name = x.Name,
             //     SongsCount = x.SongArtists.Count()
             // }).ToList();
 
-            var service = new ArtistsService(new MusicXContext());
-            var artists = service.GetAllWithCount();
-            PrintAsJson(artists);
+            // var service = new ArtistsService(new MusicXContext());
+            // var artists = service.GetAllWithCount();
+            // PrintAsJson(artists);
+
+            foreach (var song in songs)
+            {
+                Console.WriteLine(
+                // {string.Join(", ", song.Artists)} - {song.Id} 
+                song.Name);
+            }
 
         }
 
