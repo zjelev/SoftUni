@@ -124,22 +124,64 @@ namespace LinqDemo
             // // 3.15 Dapper - micro ORM on ADO.NET, make "pure" sql queries and save results in objects
 
             // 13. Advanced Querying
-            var searchString = Console.ReadLine();// "' OR 1=1 --"; // _bv%
+            // var searchString = Console.ReadLine();// "' OR 1=1 --"; // _bv%
+            var dbContextOther = new MusicXContext();
+
             var songs = dbContext.Songs
                 // With parameter
                 // .FromSqlRaw("SELECT * FROM [Songs] WHERE Name LIKE {0}", searchString) // LIKE '" + searchString + "'") => SQL Injection
-                .FromSqlInterpolated($"SELECT * FROM [Songs] WHERE Name LIKE {searchString}")
-                .ToList();
+                // .FromSqlInterpolated($"SELECT * FROM [Songs] WHERE Name LIKE {searchString}")
+                // .AsNoTracking() //when we are sure we'll not modify it and want speed
+                //  // Eager loading
+                // .Include(s => s.Source)
+                // .Include(s => s.SongArtists)
+                // .ThenInclude(x => x.Artist)
+                // .ThenInclude(x => x.ArtistMetadata)
+                .Where(s => s.Name.Contains("а") || s.Name.Contains("е"))
+                //.UpdateFromQuery(song => new Songs {Name = song.Name + "BG"})
+                // // Recommended  loading
+                .Select(s => new
+                {
+                    s.Name,
+                    SourceName = s.Source.Name,
+                    Artist = s.SongArtists.Select(sa => sa.Artist.Name).FirstOrDefault()
+                })
+                .ToList()
+                //.FirstOrDefault()
+                ;
 
-            var changedName = "Abbi Cura Di Me Changed";
-            int deleted = 1;
-            dbContext.Database
-                .ExecuteSqlInterpolated(
-                    // $"UPDATE [Songs] SET Name = {changedName} WHERE Name LIKE {searchString}");
-                  $"EXEC SetIsDeleted {deleted}");
-                  
+            // var changedName = "Abbi Cura Di Me Changed";
+            // int deleted = 1;
+            // dbContext.Database
+            //     .ExecuteSqlInterpolated(
+            //         // $"UPDATE [Songs] SET Name = {changedName} WHERE Name LIKE {searchString}");
+            //       $"EXEC SetIsDeleted {deleted}");
 
+            // dbContext.Entry(songs).State = EntityState.Detached;
+            //songs.Name = "Осъдени души 12";
+            // dbContext.Entry(songs).State = EntityState.Modified;
+            //song.Source = new Sources { Name = "New source" };
+            // dbContext.SongMetadata.Where(x => x.SongId <= 10).DeleteFromQuery();
+            // dbContext.SaveChanges();
 
+            // // Explicit loading - works on 1 nav. property on 1 object, used rarely
+            // dbContext.Entry(songs).Reference(x => x.Source).Load();
+            // dbContext.Entry(songs).Collection(x => x.SongMetadata).Load();
+
+            // // Lazy loading - beware of N+1 problem!
+            // dotnet add package Microsoft.EntityFrameworkCore.Proxies
+            // OnConfiguring options.UseLazyLoadingProxies()
+            // all nav properties must be virtualdotnet
+
+            foreach (var song in songs)
+            {
+                Console.WriteLine(
+                // {string.Join(", ", song.Artists)} - {song.Id} 
+                song.Name + " "
+                //+ song.Source?.Name + " "
+                //+ song.SongMetadata.Count
+                );
+            }
 
             // 14. Auto Mapping Objects
             // var song = dbContext.Artists.Select(x => new ArtistWithCount
@@ -151,14 +193,6 @@ namespace LinqDemo
             // var service = new ArtistsService(new MusicXContext());
             // var artists = service.GetAllWithCount();
             // PrintAsJson(artists);
-
-            foreach (var song in songs)
-            {
-                Console.WriteLine(
-                // {string.Join(", ", song.Artists)} - {song.Id} 
-                song.Name);
-            }
-
         }
 
         // View
