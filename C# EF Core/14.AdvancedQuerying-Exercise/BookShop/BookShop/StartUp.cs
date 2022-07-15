@@ -50,14 +50,14 @@
             var bookTitlesPrices = context.Books
                 .AsEnumerable()
                 .Where(b => b.Price > 40m)
-                .OrderByDescending(b => b.Price)
                 .Select(b => new { b.Title, b.Price })
+                .OrderByDescending(b => b.Price)
                 .ToList();
 
             StringBuilder sb = new StringBuilder();
             foreach (var item in bookTitlesPrices)
             {
-                sb.AppendLine($"{item.Title} - ${item.Price}");
+                sb.AppendLine($"{item.Title} - ${item.Price:f2}");
             }
 
             return sb.ToString();
