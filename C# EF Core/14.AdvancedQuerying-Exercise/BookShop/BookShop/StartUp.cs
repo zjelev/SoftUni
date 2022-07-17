@@ -7,6 +7,8 @@
     using BookShop.Models.Enums;
     using Data;
     using Initializer;
+    using Z.EntityFramework.Plus;
+
     // get-childitem -Include bin -Recurse -force | Remove-Item -Force -Recurse
     // get-childitem -Include obj -Recurse -force | Remove-Item -Force -Recurse
 
@@ -19,8 +21,8 @@
 
             // string input = Console.ReadLine();
 
-            IncreasePrices(db);
-            //Console.WriteLine(result);
+            int result = RemoveBooks(db);
+            Console.WriteLine(result);
         }
 
         public static string GetBooksByAgeRestriction(BookShopContext context, string command)
@@ -259,10 +261,10 @@
         public static int RemoveBooks(BookShopContext context)
         {
             var books = context.Books
-                .Where(b => b.Copies < 4200);
+                .Where(b => b.Copies < 4200)
+                .Delete();
 
-            
-            return books.Count();
+            return books;
         }
     }
 }
