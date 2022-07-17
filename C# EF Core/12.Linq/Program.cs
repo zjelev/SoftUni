@@ -182,37 +182,6 @@ namespace LinqDemo
                 //+ song.SongMetadata.Count
                 );
             }
-
-            // 14. Auto Mapping Objects
-            // var song = dbContext.Artists.Select(x => new ArtistWithCount
-            // {
-            //     Name = x.Name,
-            //     SongsCount = x.SongArtists.Count()
-            // }).ToList();
-
-            // var service = new ArtistsService(new MusicXContext());
-            // var artists = service.GetAllWithCount();
-            // PrintAsJson(artists);
-        }
-
-        // View
-        public static void PrintArtists(IEnumerable<ArtistWithCount> artists)
-        {
-            foreach (var artist in artists)
-            {
-                Console.WriteLine($"~~{artist.Name}~~ => {artist.SongsCount} song{(artist.SongsCount != 1 ? "s" : string.Empty)}");
-            }
-        }
-
-        public static void PrintAsJson(object artists)
-        {
-            Console.WriteLine(JsonConvert.SerializeObject(artists, Formatting.Indented));
-        }
-
-        public class ArtistWithCount // DAO DTO
-        {
-            public string Name { get; set; }
-            public int SongsCount { get; set; }
         }
     }
 }
