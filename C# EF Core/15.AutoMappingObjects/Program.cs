@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using AutoMapping.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -18,14 +19,39 @@ namespace AutoMapping
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Artists, ArtistWithCount>();
+                cfg.AddProfile(new SongsToViewModelProfile());
             });
             IMapper mapper = config.CreateMapper();
 
-            var artist = db.Artists
-                // .Include(a => a.SongArtists)
-                .FirstOrDefault();
+            var dbSong = db.Songs.Skip(9).ProjectTo<SongViewModel>(config).FirstOrDefault();
+            var song = mapper.Map<SongViewModel>(dbSong);
+            Print(song);
 
-            var artistViewModel = mapper.Map<ArtistWithCount>(artist);
+            // // Reverse mapping -> used when reading data from client
+            // var inputModel = new SongViewModel { Name = "Test132", SourceName = "VBox7" };
+            // var song = mapper.Map<Songs>(inputModel);
+            // Print(song);
+            // db.Songs.Add(song);
+            // db.SaveChanges();
+
+            // var artist = db.Artists
+            //     // .Include(a => a.SongArtists)
+            //     .FirstOrDefault();
+
+            // var artistViewModel = mapper.Map<ArtistWithCount>(artist);
+
+            // // Without Automapper
+            // var artists = db.Songs.Select(x => new SongViewModel
+            // {
+            //     Name = x.Name,
+            //     Artists = string.Join(", ", x.SongArtists.Select(x => x.Artist.Name))
+            // }).Take(10).ToList();
+
+            // // With AutoMapper
+            // ArtistWithCount artistViewModel = db.Artists.Where(x => x.Id == 10)
+            //     .ProjectTo<ArtistWithCount>(config) // == Select
+            //     .FirstOrDefault();
+
 
             // db.Entry(artists).Collection(a => a.SongArtists).Load();
 
@@ -33,7 +59,7 @@ namespace AutoMapping
             // artistWithCount.Name = artists.Name;
             // artistWithCount.SongsCount = artists.SongArtists.Count();
 
-            Print(artistViewModel);
+            // Print(artistViewModel);
         }
 
         // View
