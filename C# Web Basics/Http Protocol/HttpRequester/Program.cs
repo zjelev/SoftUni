@@ -25,7 +25,8 @@ namespace HttpRequester
 <input type=text name='username' /> 
 <input type=password name='password' /> 
 <input type=submit name='Login' /> 
-</form>";
+</form><h1>" + DateTime.UtcNow + "</h1>";
+                // Thread.Sleep(1000);
                 string response = "HTTP/1.0 200 OK" + NewLine +
                                   "Server: MyFirstServer/1.0" + NewLine + 
                                   "Content-Type: text/html" + NewLine + //MIME type
