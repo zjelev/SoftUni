@@ -11,8 +11,8 @@ namespace Primes
 
             var sw = Stopwatch.StartNew();
             Console.WriteLine(
-                // CountPrimes(1, 1000000)
-                CountPrimesTwoThreads(1, 1000000)
+                CountPrimes(1, 30_000_000)
+                //CountPrimesTwoThreads(1, 1000000)
                 );
             Console.WriteLine(sw.Elapsed);
         }
@@ -39,7 +39,9 @@ namespace Primes
         private static int CountPrimes(int from, int to)
         {
             int count = 0;
-            for (int i = from; i <= to; i++)
+            var lockObj = new object();
+            // for (int i = from; i <= to; i++)
+            Parallel.For(from, to + 1, (i) =>
             {
                 bool isPrime = true;
                 for (int j = 2; j <= Math.Sqrt(i); j++)
@@ -52,9 +54,12 @@ namespace Primes
                 }
                 if (isPrime)
                 {
-                    count++;
+                    lock (lockObj)
+                    {
+                        count++;
+                    }
                 }
-            }
+            });
             return count;
         }
 
@@ -65,7 +70,7 @@ namespace Primes
             int count = 0;
             var thread2 = new Thread(() =>
             {
-                for (int i = from; i <= to/2; i++)
+                for (int i = from; i <= to / 2; i++)
                 {
                     bool isPrime = true;
                     for (int j = 2; j <= Math.Sqrt(i); j++)
@@ -89,7 +94,7 @@ namespace Primes
 
             var thread3 = new Thread(() =>
             {
-                for (int i = to/2+1; i <= to; i++)
+                for (int i = to / 2 + 1; i <= to; i++)
                 {
                     bool isPrime = true;
                     for (int j = 2; j <= Math.Sqrt(i); j++)
