@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/AsynchronousProcessing/bin/Debug/net6.0/AsynchronousProcessing.dll",
+            "program": "${workspaceFolder}/bin/Debug/net6.0/HttpRequester.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/AsynchronousProcessing",
+            "cwd": "${workspaceFolder}",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false
