@@ -55,23 +55,29 @@ namespace HttpRequester
 // <input type=submit name='Login' /> 
 // </form>
 "<h1>" + DateTime.UtcNow + "</h1>";
+
+            byte[] fileContent = File.ReadAllBytes("Cat03.jpg");
             // Thread.Sleep(1000);
-            string response = "HTTP/1.0 200 OK" + NewLine +
+
+            string headers = "HTTP/1.0 200 OK" + NewLine +
                               "Server: MyFirstServer/1.0" + NewLine +
                               "Set-Cookie: lang=bg; Path=/lang" + NewLine +
-                              (string.IsNullOrWhiteSpace(sid) ? 
-                                ("Set-Cookie: sid=" + newSid + NewLine) 
+                              (string.IsNullOrWhiteSpace(sid) ?
+                                ("Set-Cookie: sid=" + newSid + NewLine)
                                 : string.Empty) +
                               // "Set-Cookie: user=Niki; Expires=" + new DateTime(2023, 1, 1).ToString("R") + NewLine +
-                              "Set-Cookie: user=Niki; Max-Age=3600; Secure; HttpOnly; SameSite=Strict" + NewLine + 
-                              "Content-Type: text/html" + NewLine + //MIME type
+                              "Set-Cookie: user=Niki; Max-Age=3600; Secure; HttpOnly; SameSite=Strict" + NewLine +
+                              "Content-Type: image/jpeg" + NewLine + // MIME type
                                                                     // "Location: https://google.com" + NewLine + //307
                                                                     // "Content-Disposition: attachement; filename=niki.html" + NewLine + 
-                              "Content-Lenght: " + responseText.Length +
-                              NewLine + NewLine +
-                              responseText;
-            byte[] responseBytes = Encoding.UTF8.GetBytes(response);
-            await stream.WriteAsync(responseBytes, 0, responseBytes.Length);
+                              "Content-Lenght: " //+ responseText.Length 
+                                + fileContent.Length + NewLine + NewLine;
+            
+            byte[] headersBytes = Encoding.UTF8.GetBytes(headers);
+            byte[] responseBytes = Encoding.UTF8.GetBytes(responseText);
+            await stream.WriteAsync(headersBytes);
+            //await stream.WriteAsync(responseBytes);
+            await stream.WriteAsync(fileContent);
             // stream.Flush();
             Console.WriteLine(request);
             Console.WriteLine(new string('=', 60));
