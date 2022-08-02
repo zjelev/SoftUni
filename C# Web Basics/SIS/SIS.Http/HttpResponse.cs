@@ -10,6 +10,7 @@ namespace SIS.Http
             this.Version = HttpVersionType.Http11;
             this.StatusCode = statusCode;
             this.Headers = new List<Header>();
+            this.Cookies = new List<ResponseCookie>();
             this.Body = body;
 
             if (body?.Length > 0)
@@ -18,9 +19,9 @@ namespace SIS.Http
             }
         }
         public HttpVersionType Version { get; set; }
-
         public HttpReponseCode StatusCode { get; set; }
         public IList<Header> Headers { get; set; }
+        public IList<ResponseCookie> Cookies { get; set; }
         public byte[] Body { get; set; }
 
         public override string ToString()
@@ -37,6 +38,11 @@ namespace SIS.Http
             foreach (var header in this.Headers)
             {
                 responseAsString.Append(header + HttpConstants.NewLine);
+            }
+
+            foreach (var cookie in this.Cookies)
+            {
+                responseAsString.Append($"Set-Cookie: {cookie}" + HttpConstants.NewLine);
             }
 
             responseAsString.Append(HttpConstants.NewLine);
