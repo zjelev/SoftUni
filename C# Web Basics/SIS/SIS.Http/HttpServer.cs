@@ -7,9 +7,12 @@ namespace SIS.Http
     public class HttpServer : IHttpServer
     {
         private readonly TcpListener listener;
-        public HttpServer(int port)  //TODO: actions
+        private readonly IList<Route> routeTable;
+
+        public HttpServer(int port, IList<Route> routeTable)  //TODO: actions
         {
             this.listener = new TcpListener(IPAddress.Loopback, port);
+            this.routeTable = routeTable;
         }
 
         static Dictionary<string, int> SessionStore = new Dictionary<string, int>();
@@ -37,7 +40,7 @@ namespace SIS.Http
             this.listener.Stop();
         }
 
-        private static async Task ProcessClientAsync(TcpClient client)
+        private async Task ProcessClientAsync(TcpClient client)
         {
             using NetworkStream stream = client.GetStream();
             try
@@ -45,27 +48,22 @@ namespace SIS.Http
                 byte[] requestBytes = new byte[1000000];    // TODO: Use buffer
                 int bytesRead = await stream.ReadAsync(requestBytes, 0, requestBytes.Length);
                 string requestAsString = Encoding.UTF8.GetString(requestBytes, 0, bytesRead);
+                
                 var request = new HttpRequest(requestAsString);
-                string content = "<h1>random page</h1>";
-                if (request.Path == "/")
+                var route = this.routeTable.FirstOrDefault(
+                    x => x.HttpMethod == request.Method && x.Path == request.Path);
+                HttpResponse response;
+                if (route == null)
                 {
-                    content = "<h1>home page</h1>";
+                    response = new HttpResponse(HttpReponseCode.NotFound, new byte[0]);
                 }
-                else if (request.Path == "/users/login")
+                else
                 {
-                    content = "<h1>login page</h1>" +
-                    @"<form method='post'><input type=date name='date' /> 
-<input type=text name='username' /> 
-<input type=password name='password' /> 
-<input type=submit name='Login' /> 
-</form>";
+                    response = route.Action(request);
                 }
+                
+                response.Headers.Add(new Header("Server", "SoftUniServer/1.0"));
 
-                byte[] stringContent = Encoding.UTF8.GetBytes(content);
-                var response = new HttpResponse(HttpReponseCode.Ok, stringContent);
-                response.Headers.Add(new Header("Server", "SoftUniServer/1.0"));
-                response.Headers.Add(new Header("Server", "SoftUniServer/1.0"));
-                response.Headers.Add(new Header("Content-Type", "text/html"));
                 response.Cookies.Add(new ResponseCookie("sid", Guid.NewGuid().ToString())
                 { HttpOnly = true, MaxAge = 3600 });
 
