@@ -90,5 +90,6 @@ namespace SIS.Http
         public IList<Header> Headers { get; set; }
         public IList<Cookie>  Cookies { get; set; }
         public string Body { get; set; }
+        public IDictionary<string, string> SessionData { get; set; }
     }
 }
