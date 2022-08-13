@@ -1,12 +1,11 @@
-﻿using System.Text;
-using SIS.Http;
+﻿using SIS.Http;
 using SIS.HTTP.Response;
 
 namespace SIS
 {
     class Program
     {
-        private static async Task Main(string[] args)
+        private static async Task Main()
         {
             var routeTable = new List<Route>();
             routeTable.Add(new Route(HttpMethodType.Get, "/", Index));
@@ -17,6 +16,8 @@ namespace SIS
             var httpServer = new HttpServer(80, routeTable);
             await httpServer.StartAsync();
         }
+
+        // /TODO w StringBuilder: /headers => html table list of all header
 
         private static HttpResponse FavIcon(HttpRequest arg)
         {
@@ -31,13 +32,16 @@ namespace SIS
 
         public static HttpResponse Index(HttpRequest request)
         {
-            return new HtmlResponse($"<h1>home page. Hello, {request.SessionData["Username"]}</h1>");
+            // Sharing between two requests is done through eighter TempData or SessionData or Cache
+            var username = request.SessionData.ContainsKey("Username") ? request.SessionData["Username"] : "Anonymous";
+            return new HtmlResponse($"<h1>Home page. Hello, {username}</h1><img src= '/images/img.jpg' /><a href='users/login'>Go to login</a>");
+            // TODO - foreach all files (name, size, date created) in a folder in td-tr table
         }
 
         public static HttpResponse Login(HttpRequest request)
         {
             request.SessionData["Username"] = "Pesho";
-            return new HtmlResponse("<h1>login page</h1>");
+            return new HtmlResponse("<h1>login page</h1><a href='/'>Home</a>");
         }
 
         public static HttpResponse DoLogin(HttpRequest request)
