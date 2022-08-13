@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SIS.MvcFramework\SIS.MvcFramework.csproj" />
+    <ProjectReference Include="..\SIS.Http\SIS.Http.csproj" />
   </ItemGroup>
 
 </Project>
