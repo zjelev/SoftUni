@@ -41,13 +41,13 @@ namespace DemoApp
                 x.Content
             }).ToList();
             StringBuilder html = new StringBuilder();
-            html.Append("<html><table><tr><th>Date</th><th>Creator</th><th>Conteny</th></tr>");
+            html.Append("<table><tr><th>Date</th><th>Creator</th><th>Conteny</th></tr>");
             foreach (var tweet in tweets)
             {
                 html.Append($"<tr><td>{tweet.CreatedOn}</td><td>{tweet.Creator}</td><td>{tweet.Content}</td></tr>");
             }
             html.Append("</table>");
-            html.Append($"<form action='/Tweets/Create' method='post'><input name='creator' /><br /><textarea name='tweetName'></textarea><input type='submit' /></form></html>");
+            html.Append($"<form action='/Tweets/Create' method='post'><input name='creator' /><br /><textarea name='tweetName'></textarea><input type='submit' /></form>");
 
             return new HtmlResponse(html.ToString());
 

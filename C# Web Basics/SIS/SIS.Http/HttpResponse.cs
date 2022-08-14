@@ -6,7 +6,6 @@ namespace SIS.Http
     {
         public HttpResponse(HttpReponseCode statusCode, byte[] body) : this()
         {
-            this.Version = HttpVersionType.Http11;
             this.StatusCode = statusCode;
             this.Body = body;
             if (body?.Length > 0)
@@ -17,6 +16,7 @@ namespace SIS.Http
 
         internal HttpResponse()
         {
+            this.Version = HttpVersionType.Http11;
             this.Headers = new List<Header>();
             this.Cookies = new List<ResponseCookie>();
         }
