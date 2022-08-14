@@ -1,4 +1,5 @@
 using System.Text;
+using System.Web;
 
 namespace SIS.Http
 {
@@ -8,6 +9,7 @@ namespace SIS.Http
         {
             this.Headers = new List<Header>();
             this.Cookies = new List<Cookie>();
+            this.SessionData = new Dictionary<string, string>();
 
             var lines = httpRequestAsString.Split(HttpConstants.NewLine, StringSplitOptions.None);
             var httpInfoHeader = lines[0];
@@ -82,6 +84,17 @@ namespace SIS.Http
                 }
             }
 
+            this.Body = bodyBuilder.ToString().TrimEnd('\r', '\n');
+            this.FormData = new Dictionary<string, string>();
+            var bodyParts = this.Body.Split('&', StringSplitOptions.RemoveEmptyEntries);
+            foreach (var part in bodyParts)
+            {
+                var parameterParts = part.Split(new char[] { '=' }, 2);
+                this.FormData.Add(
+                    HttpUtility.UrlDecode(parameterParts[0]),
+                    HttpUtility.UrlDecode(parameterParts[1]));
+            }
+
             //StringReader reader = new StringReader(httpRequestAsString);
         }
         public HttpMethodType Method { get; set; }
@@ -90,6 +103,7 @@ namespace SIS.Http
         public IList<Header> Headers { get; set; }
         public IList<Cookie>  Cookies { get; set; }
         public string Body { get; set; }
+        public IDictionary<string, string> FormData { get; set; }
         public IDictionary<string, string> SessionData { get; set; }
     }
 }

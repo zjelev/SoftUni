@@ -11,6 +11,6 @@ namespace DemoApp
         public string Creator { get; set; }
 
         [Required]
-        public int Content { get; set; }
+        public string Content { get; set; }
     }
 }

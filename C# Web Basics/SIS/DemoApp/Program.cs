@@ -1,4 +1,5 @@
 ﻿using SIS.Http;
+using SIS.Http.Response;
 using SIS.HTTP.Response;
 
 namespace DemoApp
@@ -31,13 +32,23 @@ namespace DemoApp
         {
             // Sharing between two requests is done through eighter TempData or SessionData or Cache
             var username = request.SessionData.ContainsKey("Username") ? request.SessionData["Username"] : "Anonymous";
-            return new HtmlResponse($"<form action='/Tweets/Create' method='post'><textarea name='tweetName'></textarea><input type='submit' /></form>");
+            return new HtmlResponse($"<html><form action='/Tweets/Create' method='post'><input name='creator' /><br /><textarea name='tweetName'></textarea><input type='submit' /></form></html>");
+            
             // TODO - foreach all files (name, size, date created) in a folder in td-tr table
         }
 
         private static HttpResponse CreateTweet(HttpRequest request)
         {
-            return new HtmlResponse("");
+            var db = new ApplicationDbContext();
+            db.Tweets.Add(new Tweet
+            {
+                CreatedOn = DateTime.UtcNow,
+                Creator = request.FormData["creator"],
+                Content = request.FormData["tweetName"]
+            });
+            db.SaveChanges();
+
+            return new RedirectResponse("/");
         }
     }
 }
