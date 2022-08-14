@@ -1,4 +1,3 @@
-using System.Text;
 using SIS.Http;
 
 namespace SIS.HTTP.Response

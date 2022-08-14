@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Text;
 
 namespace SIS.Http
@@ -38,7 +37,7 @@ namespace SIS.Http
                 HttpVersionType.Http20 => "HTTP/2.0",
                 _ => "HTTP/1.0",
             };
-            responseAsString.Append($"{httpVersionAsString} {(int)this.StatusCode} {this.StatusCode}");
+            responseAsString.Append($"{httpVersionAsString} {(int)this.StatusCode} {this.StatusCode}" + HttpConstants.NewLine);
             foreach (var header in this.Headers)
             {
                 responseAsString.Append(header + HttpConstants.NewLine);

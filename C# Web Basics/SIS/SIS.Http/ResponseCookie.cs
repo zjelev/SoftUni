@@ -6,7 +6,7 @@ namespace SIS.Http
     {
         public ResponseCookie(string name, string value) : base(name, value)
         {
-            this.SameSite = SameSiteType.Lax;
+            this.SameSite = SameSiteType.None;
             this.Path = "/";
             this.Expires = DateTime.UtcNow.AddDays(30);
         }

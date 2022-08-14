@@ -86,7 +86,7 @@ namespace SIS.Http
 
             this.Body = bodyBuilder.ToString().TrimEnd('\r', '\n');
             this.FormData = new Dictionary<string, string>();
-            var bodyParts = this.Body.Split('&', StringSplitOptions.RemoveEmptyEntries);
+            var bodyParts = this.Body.Split(new char[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var part in bodyParts)
             {
                 var parameterParts = part.Split(new char[] { '=' }, 2);
