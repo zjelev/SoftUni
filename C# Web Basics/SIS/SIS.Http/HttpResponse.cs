@@ -25,7 +25,7 @@ namespace SIS.Http
         public HttpReponseCode StatusCode { get; set; }
         public IList<Header> Headers { get; set; }
         public IList<ResponseCookie> Cookies { get; set; }
-        public byte[] Body { get; set; }
+        public byte[] Body { get; set; } = null!;
 
         public override string ToString()
         {

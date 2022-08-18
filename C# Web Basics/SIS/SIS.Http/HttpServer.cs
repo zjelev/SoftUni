@@ -32,7 +32,7 @@ namespace SIS.Http
             {
                 var client = await listener.AcceptTcpClientAsync();
 #pragma warning disable CS1014
-                Task.Run(() => ProcessClientAsync(client));
+                await Task.Run(() => ProcessClientAsync(client));
 #pragma warning restore CS1014
             }
         }
@@ -52,7 +52,7 @@ namespace SIS.Http
                 string requestAsString = Encoding.UTF8.GetString(requestBytes, 0, bytesRead);
 
                 var request = new HttpRequest(requestAsString);
-                string newSessionId = null;;
+                string newSessionId = null!;
                 var sessionCookie = request.Cookies.FirstOrDefault(x => x.Name == HttpConstants.SessionIdCookieName);
                 if (sessionCookie != null && this.sessions.ContainsKey(sessionCookie.Value))
                 {

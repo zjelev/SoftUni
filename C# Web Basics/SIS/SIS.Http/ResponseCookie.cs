@@ -11,7 +11,7 @@ namespace SIS.Http
             this.Expires = DateTime.UtcNow.AddDays(30);
         }
 
-        public string Domain { get; set; }
+        public string Domain { get; set; } = null!;
         public string Path { get; set; }
         public DateTime? Expires { get; set; }
         public long? MaxAge { get; set; }

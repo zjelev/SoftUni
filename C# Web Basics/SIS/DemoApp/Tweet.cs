@@ -8,9 +8,9 @@ namespace DemoApp
         public DateTime CreatedOn { get; set; }
 
         [Required]
-        public string Creator { get; set; }
+        public string Creator { get; set; } = null!;
 
         [Required]
-        public string Content { get; set; }
+        public string Content { get; set; } = null!;
     }
 }
