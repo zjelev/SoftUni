@@ -1,7 +1,12 @@
+using System.ComponentModel.DataAnnotations;
 namespace SulsApp.Models
 {
     public class User
     {
+        public User()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
         public string Id { get; set; }
         
         [MaxLength(20)]

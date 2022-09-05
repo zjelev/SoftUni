@@ -1,7 +1,19 @@
-﻿internal class Program
+﻿using SIS.Http;
+
+namespace SulsApp
 {
-    private static void Main(string[] args)
+    public static class Program
     {
-        Console.WriteLine("Hello, World!");
+        private static async Task Main()
+        {
+            var db = new ApplicationDbContext();
+            db.Database.EnsureCreated();
+
+            var routeTable = new List<Route>();
+            routeTable.Add(new Route(HttpMethodType.Get, "/", Index));
+
+            var httpServer = new HttpServer(80, routeTable);
+            await httpServer.StartAsync();
+        }
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SulsApp.Models;
 
 namespace SulsApp
 {
@@ -6,7 +7,7 @@ namespace SulsApp
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=SulsApp;Integrated Security=true");
+            optionsBuilder.UseSqlServer("Server=.;Database=SulsApp;Integrated Security=true");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -14,7 +15,9 @@ namespace SulsApp
 
         }
 
-        public DbSet<Tweet> Tweets { get; set; } = null!;
+        public DbSet<User> Users { get; set; } = null!;
+        public DbSet<Problem> Problem { get; set; } = null!;
+        public DbSet<Submission> Submissions { get; set; } = null!;
 
     }
 }
