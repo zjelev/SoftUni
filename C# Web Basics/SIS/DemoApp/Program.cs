@@ -1,4 +1,6 @@
-﻿using System.Text;
+// dotnet ef database update
+
+using System.Text;
 using SIS.Http;
 using SIS.Http.Response;
 using SIS.HTTP.Response;
