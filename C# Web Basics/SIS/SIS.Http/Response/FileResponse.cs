@@ -1,6 +1,6 @@
 using SIS.Http;
 
-namespace SIS.HTTP.Response
+namespace SIS.Http.Response
 {
     public class FileResponse : HttpResponse
     {

@@ -1,6 +1,4 @@
-﻿using SIS.Http;
-
-namespace SIS.Http
+﻿namespace SIS.Http
 {
     public class Route
     {

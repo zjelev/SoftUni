@@ -3,7 +3,6 @@
 using System.Text;
 using SIS.Http;
 using SIS.Http.Response;
-using SIS.HTTP.Response;
 
 namespace DemoApp
 {
