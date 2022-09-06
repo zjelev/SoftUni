@@ -9,7 +9,7 @@ namespace SIS.MvcFramework
         protected HttpResponse View([CallerMemberName] string viewName = null)
         {
             var layout = File.ReadAllText("Views/Shared/_Layout.html");
-            var controllerName = this.GetType().Name.Replace("Controller", string.Empty); // взема името на класа, в който се изпълнява кода в момента (ако в HomeController ше вземе него) 
+            var controllerName = this.GetType().Name.Replace("Controller", string.Empty); // взема името на класа, в който се изпълнява кода в момента (ако в HomeController ще вземе него) 
             
             // other ways to do that:
             
@@ -27,7 +27,6 @@ namespace SIS.MvcFramework
             // {
             //     ex.StackTrace
             // }
-
 
             var html = File.ReadAllText("Views/" + controllerName + "/" + viewName + ".html");
             var bodyWithLayout = layout.Replace("@RenderBody()", html);
