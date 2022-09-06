@@ -1,5 +1,4 @@
-﻿using SIS.Http;
-using SulsApp.Controllers;
+﻿using SIS.MvcFramework;
 
 namespace SulsApp
 {
@@ -7,20 +6,7 @@ namespace SulsApp
     {
         private static async Task Main()
         {
-            var db = new ApplicationDbContext();
-            db.Database.EnsureCreated();
-
-            var routeTable = new List<Route>();
-            routeTable.Add(new Route(HttpMethodType.Get, "/", new HomeController().Index));
-            routeTable.Add(new Route(HttpMethodType.Get, "/css/bootstrap.min.css", new StaticFilesController().Bootstrap));
-            routeTable.Add(new Route(HttpMethodType.Get, "/css/site.css", new StaticFilesController().Site));
-            routeTable.Add(new Route(HttpMethodType.Get, "/css/reset.css", new StaticFilesController().Reset));
-            routeTable.Add(new Route(HttpMethodType.Get, "/Users/Login", new UsersController().Login));
-            routeTable.Add(new Route(HttpMethodType.Get, "/Users/Register", new UsersController().Register));
-
-
-            var httpServer = new HttpServer(80, routeTable);
-            await httpServer.StartAsync();
+            await WebHost.StartAsync(new Startup());
         }
     }
 }

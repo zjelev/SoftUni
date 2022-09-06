@@ -8,7 +8,7 @@ namespace SulsApp.Controllers
     {
         public HttpResponse Index(HttpRequest request)
         {
-            return this.View("Home/Index.html");
+            return this.View();
         }
     }
 }
