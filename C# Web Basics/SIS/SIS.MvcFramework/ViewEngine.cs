@@ -11,6 +11,12 @@ namespace SIS.MvcFramework
         public string GetHtml(string templateHtml, object model)
         {
             var methodCode = PrepareCSharpCode(templateHtml);
+            var typeName = model.GetType().FullName;
+            if (model.GetType().IsGenericType)
+            {
+                typeName = model.GetType().Name.Replace("`1", string.Empty) + "<" 
+                    + model.GetType().GenericTypeArguments.First().Name + ">";
+            }
             var code = @$"using System;
 using System.Text;
 using System.Linq;
@@ -22,6 +28,7 @@ namespace AppViewNamespace
     {{
         public string GetHtml(object model)
         {{
+            var Model = model as {typeName};
             var html = new StringBuilder();
             
 {methodCode}
@@ -91,7 +98,7 @@ namespace AppViewNamespace
                     line = line.Remove(indexOfAt, 1);
                     cSharpCode.AppendLine(line);
                 }
-                else if (line.Contains("@"))
+                else
                 {
                     var currentCSharpLine = new StringBuilder("html.AppendLine(@\"");
                     while (line.Contains("@"))
@@ -107,10 +114,6 @@ namespace AppViewNamespace
                     }
                     currentCSharpLine.Append(line.Replace("\"", "\"\"") + "\");");
                     cSharpCode.AppendLine(currentCSharpLine.ToString());
-                }
-                else
-                {
-                    cSharpCode.AppendLine($"html.AppendLine(@\"{line.Replace("\"", "\"\"")}\");");
                 }
             }
 
