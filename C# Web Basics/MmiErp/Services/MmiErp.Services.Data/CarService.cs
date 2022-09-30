@@ -2,11 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
     using MmiErp.Data.Common.Models;
     using MmiErp.Data.Common.Repositories;
+    using MmiErp.Services.Mapping;
 
     public class CarService : ICarService
     {
@@ -28,6 +28,14 @@
 
             await this.carRepository.AddAsync(car);
             await this.carRepository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetAllCars<T>()
+        {
+            return await this.carRepository
+                .AllAsNoTracking()
+                .To<T>()
+                .ToArrayAsync();
         }
     }
 }
