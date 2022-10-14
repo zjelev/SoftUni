@@ -69,7 +69,7 @@ namespace SIS.Http
                 Console.WriteLine($"{request.Method} {request.Path}");
 
                 var route = this.routeTable.FirstOrDefault(
-                    x => x.HttpMethod == request.Method && x.Path == request.Path);
+                    x => x.HttpMethod == request.Method && string.Compare(x.Path, request.Path, true) == 0);
                 HttpResponse response;
                 if (route == null)
                 {

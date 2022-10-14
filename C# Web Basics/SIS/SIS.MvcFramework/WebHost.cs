@@ -1,3 +1,4 @@
+using System.Reflection;
 using SIS.Http;
 using SIS.Http.Response;
 
@@ -10,7 +11,8 @@ namespace SIS.MvcFramework
             var routeTable = new List<Route>();
             application.ConfigureServices();
             application.Configure(routeTable);
-            AutoRegisterRoutes(routeTable, application);
+            AutoRegisterStaticFilesRoutes(routeTable);
+            AutoRegisterActionRoutes(routeTable, application);
 
             foreach (var route in routeTable)
             {
@@ -21,7 +23,48 @@ namespace SIS.MvcFramework
             await httpServer.StartAsync();
         }
 
-        public static void AutoRegisterRoutes(List<Route> routeTable, IMvcApplication application)
+        private static void AutoRegisterActionRoutes(List<Route> routeTable, IMvcApplication application)
+        {
+            //Assembly.GetEntryAssembly().GetTypes()
+            var types = application.GetType().Assembly.GetTypes()
+            .Where(type => type.IsSubclassOf(typeof(Controller)) && !type.IsAbstract);
+            foreach (var type in types)
+            {
+                Console.WriteLine(type.FullName);
+                var methods = type.GetMethods()
+                    .Where(x => !x.IsSpecialName 
+                    && !x.IsConstructor 
+                    && x.DeclaringType == type);
+                foreach (var method in methods)
+                {
+                    string url = "/" + type.Name.Replace("Controller", string.Empty) + "/" + method.Name;
+
+                    var attribute = method.GetCustomAttributes()
+                        .FirstOrDefault(x => x.GetType()
+                        .IsSubclassOf(typeof(HttpMethodAttribute)))
+                        as HttpMethodAttribute;
+                    var httpActionType = HttpMethodType.Get;
+                    if (attribute != null)
+                    {
+                        httpActionType = attribute.Type;
+                        if (attribute.Url != null)
+                        {
+                            url = attribute.Url;
+                        }
+                    }
+                    
+                    routeTable.Add(new Route(httpActionType, url, (request) =>
+                    {
+                        var controller = Activator.CreateInstance(type) as Controller;
+                        var response = method.Invoke(controller, new[] { request }) as HttpResponse;
+                        return response;
+                    }));
+                    Console.WriteLine(url);
+                }
+            }
+        }
+
+        public static void AutoRegisterStaticFilesRoutes(List<Route> routeTable)
         {
             var staticFiles = Directory.GetFiles("wwwroot", "*", SearchOption.AllDirectories);
             foreach (var staticFile in staticFiles)
@@ -35,7 +78,7 @@ namespace SIS.MvcFramework
                         ".css" => "text",
                         ".html" => "text/html",
                         ".js" => "text/javascript",
-                        ".ico" => "image/vnd.microsoft.icon",
+                        ".ico" => "image/x-icon",
                         ".jpg" => "image/jpeg",
                         ".jpeg" => "image/jpeg",
                         ".png" => "image/png",
