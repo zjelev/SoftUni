@@ -7,11 +7,12 @@ namespace SulsApp.Controllers
     class HomeController : Controller
     {
         [HttpGet("/")]
-        public HttpResponse Index(HttpRequest request)
+        public HttpResponse Index()
         {
+
             var viewModel = new IndexViewModel
             {
-                Message = "Welcome to SULS Platform!",
+                Message = this.Request.Headers.FirstOrDefault(x => x.Name == "User-Agent")?.Value,
                 Year = DateTime.UtcNow.Year,
             };
             return this.View(viewModel);
