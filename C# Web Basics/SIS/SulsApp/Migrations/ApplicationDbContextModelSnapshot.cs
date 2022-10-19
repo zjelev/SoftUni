@@ -57,11 +57,9 @@ namespace SulsApp.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ProblemId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -86,6 +84,9 @@ namespace SulsApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -99,20 +100,26 @@ namespace SulsApp.Migrations
             modelBuilder.Entity("SulsApp.Models.Submission", b =>
                 {
                     b.HasOne("SulsApp.Models.Problem", "Problem")
-                        .WithMany()
-                        .HasForeignKey("ProblemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Submissions")
+                        .HasForeignKey("ProblemId");
 
                     b.HasOne("SulsApp.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Submissions")
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Problem");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SulsApp.Models.Problem", b =>
+                {
+                    b.Navigation("Submissions");
+                });
+
+            modelBuilder.Entity("SulsApp.Models.User", b =>
+                {
+                    b.Navigation("Submissions");
                 });
 #pragma warning restore 612, 618
         }

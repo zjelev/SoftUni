@@ -14,7 +14,7 @@ namespace SIS.MvcFramework
             this.Url = url;
         }
 
-        public string Url { get; }
+        public string? Url { get; }
 
         public abstract HttpMethodType Type { get; }
     }

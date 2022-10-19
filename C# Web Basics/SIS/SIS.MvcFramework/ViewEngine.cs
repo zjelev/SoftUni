@@ -38,8 +38,8 @@ namespace AppViewNamespace
         }}
     }}
 }}";
-            IView view = GetInstanceFromCode(code, model);
-            string html = view.GetHtml(model);
+            IView view = GetInstanceFromCode(code, model!);
+            string html = view.GetHtml(model!);
             return html;
         }
 
@@ -80,9 +80,9 @@ namespace AppViewNamespace
             var assemblyByteArray = memoryStream.ToArray();
             var assembly = Assembly.Load(assemblyByteArray);
             var type = assembly.GetType("AppViewNamespace.AppViewCode");
-            var instance = Activator.CreateInstance(type) as IView;
+            var instance = Activator.CreateInstance(type!) as IView;
 
-            return instance;
+            return instance!;
         }
 
         private string PrepareCSharpCode(string templateHtml)
@@ -92,7 +92,7 @@ namespace AppViewNamespace
             StringBuilder cSharpCode = new StringBuilder();
             StringReader reader = new StringReader(templateHtml);
             string line;
-            while ((line = reader.ReadLine()) != null)
+            while ((line = reader.ReadLine()!) != null)
             {
                 if (line.TrimStart().StartsWith("{") || line.TrimStart().StartsWith("}"))
                 {

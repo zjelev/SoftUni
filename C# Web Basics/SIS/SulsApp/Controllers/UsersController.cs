@@ -1,13 +1,19 @@
 using System.Net.Mail;
 using SIS.Http;
-using SIS.Http.Response;
 using SIS.MvcFramework;
-using SulsApp.Models;
+using SulsApp.Services;
 
 namespace SulsApp.Controllers
 {
     public class UsersController : Controller
     {
+        private IUsersService usersService;
+
+        public UsersController()
+        {
+            this.usersService = new UsersService(new ApplicationDbContext());
+        }
+
         public HttpResponse Login()
         {
             return this.View();
@@ -28,42 +34,34 @@ namespace SulsApp.Controllers
 
         public HttpResponse DoRegister()
         {
-            var username = this.Request.FormData["username"];
-            var email = this.Request.FormData["email"];
-            var password = this.Request.FormData["password"];
-            var confirmPassword = this.Request.FormData["confirmPassword"];
+            var username = this.Request?.FormData["username"];
+            var email = this.Request?.FormData["email"];
+            var password = this.Request?.FormData["password"];
+            var confirmPassword = this.Request?.FormData["confirmPassword"];
 
             if (password != confirmPassword)
             {
                 return this.Error("Passwords should be the same<");
             }
 
-            if (username?.Length < 5 || username.Length > 20)
+            if (username?.Length < 5 || username?.Length > 20)
             {
                 return this.Error("Username should be between 5 and 20 characters");
             }
 
-            if (password?.Length < 6 || password.Length > 20)
+            if (password?.Length < 6 || password?.Length > 20)
             {
                 return this.Error("Password should be abetween 6  and 20 characters");
             }
 
-            if (!IsValid(email))
+            if (!IsValid(email!))
             {
                 return this.Error("Email should be valid");
             }
 
-            var user = new User
-            {
-                Email = email,
-                Username = username,
-                Password = this.Hash(password),
-            };
-
-            var db = new ApplicationDbContext();
-            db.Users.Add(user);
-            db.SaveChanges();
-
+            this.usersService.CreateUser(username!, email!, password!);
+            var userId = this.usersService.GetUserId(username, password);
+            this.SignIn(userId);
             // TODO: Login
 
             return this.Redirect("/");

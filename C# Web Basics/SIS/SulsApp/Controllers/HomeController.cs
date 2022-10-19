@@ -12,7 +12,7 @@ namespace SulsApp.Controllers
 
             var viewModel = new IndexViewModel
             {
-                Message = this.Request.Headers.FirstOrDefault(x => x.Name == "User-Agent")?.Value,
+                Message = this.Request?.Headers.FirstOrDefault(x => x.Name == "User-Agent")?.Value!,
                 Year = DateTime.UtcNow.Year,
             };
             return this.View(viewModel);

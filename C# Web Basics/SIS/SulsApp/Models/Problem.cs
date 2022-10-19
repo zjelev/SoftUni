@@ -13,7 +13,7 @@ namespace SulsApp.Models
 
         [MaxLength(20)]
         [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public int Points { get; set; }
 

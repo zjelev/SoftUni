@@ -57,9 +57,9 @@ namespace SIS.MvcFramework
                     routeTable.Add(new Route(httpActionType, url, (request) =>
                     {
                         var controller = Activator.CreateInstance(type) as Controller;
-                        controller.Request = request;
+                        controller!.Request = request;
                         var response = method.Invoke(controller, new object[] { }) as HttpResponse;
-                        return response;
+                        return response!;
                     }));
                     Console.WriteLine(url);
                 }
