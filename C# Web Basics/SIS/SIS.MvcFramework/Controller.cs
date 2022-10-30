@@ -37,11 +37,11 @@ namespace SIS.MvcFramework
             IViewEngine viewEngine = new ViewEngine();
 
             var html = File.ReadAllText(viewPath);
-            html = viewEngine.GetHtml(html, viewModel);
+            html = viewEngine.GetHtml(html, viewModel, this.User);
 
             var layout = File.ReadAllText("Views/Shared/_Layout.html");
             var bodyWithLayout = layout.Replace("@RenderBody()", html);
-            bodyWithLayout = viewEngine.GetHtml(bodyWithLayout, viewModel);
+            bodyWithLayout = viewEngine.GetHtml(bodyWithLayout, viewModel, this.User);
             return new HtmlResponse(bodyWithLayout);
         }
 

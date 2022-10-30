@@ -6,7 +6,7 @@ public class ViewEngineTests
     [InlineData("OnlyHtmlView")]
     [InlineData("ForForeachIfView")]
     [InlineData("ViewModelView")]
-    public void TestGetHtml(string testName)
+    public void TestGetHtml(string testName, string user)
     {
         var viewModel = new TestViewModel()
         {
@@ -19,13 +19,13 @@ public class ViewEngineTests
         var expectedResultContent = File.ReadAllText($"../../../ViewTests/{testName}.Expected.html");
 
         IViewEngine viewEngine = new ViewEngine();
-        var actualResult = viewEngine.GetHtml(viewContent, viewModel);
+        var actualResult = viewEngine.GetHtml(viewContent, viewModel, user);
 
         Assert.Equal(expectedResultContent, actualResult);
     }
 
     [Fact]
-    public void TestGetHtmlWithTemplateModel()
+    public void TestGetHtmlWithTemplateModel(string user)
         {
             var viewModel = new List<int> { 1, 2, 3 };
 
@@ -41,7 +41,7 @@ public class ViewEngineTests
 ";
 
             IViewEngine viewEngine = new ViewEngine();
-            var actualResult = viewEngine.GetHtml(viewContent, viewModel);
+            var actualResult = viewEngine.GetHtml(viewContent, viewModel, user);
 
             Assert.Equal(expectedResultContent, actualResult);
         }
