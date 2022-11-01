@@ -1,5 +1,6 @@
 using System.Reflection;
 using SIS.Http;
+using SIS.Http.Logging;
 using SIS.Http.Response;
 
 namespace SIS.MvcFramework
@@ -8,39 +9,48 @@ namespace SIS.MvcFramework
     {
         public static async Task StartAsync(IMvcApplication application)
         {
-            var routeTable = new List<Route>();
-            application.ConfigureServices();
+            IList<Route> routeTable = new List<Route>();
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.Add<ILogger, ConsoleLogger>();
+
+            application.ConfigureServices(serviceCollection);
             application.Configure(routeTable);
             AutoRegisterStaticFilesRoutes(routeTable);
-            AutoRegisterActionRoutes(routeTable, application);
-
+            AutoRegisterActionRoutes(routeTable, application, serviceCollection);
+            
+            var logger = serviceCollection.CreateInstance<ILogger>();
+            logger.Log("Registered routes:");
             foreach (var route in routeTable)
             {
-                Console.WriteLine(route);
+                logger.Log(route.ToString());
             }
 
-            var httpServer = new HttpServer(80, routeTable);
+            logger.Log(string.Empty);
+            logger.Log("Requests:");
+            var httpServer = new HttpServer(80, routeTable, logger);
             await httpServer.StartAsync();
         }
 
-        private static void AutoRegisterActionRoutes(List<Route> routeTable, IMvcApplication application)
+        // /{controller}/{action}
+
+        private static void AutoRegisterActionRoutes(IList<Route> routeTable, IMvcApplication application, IServiceCollection serviceCollection)
         {
             //Assembly.GetEntryAssembly().GetTypes()
-            var types = application.GetType().Assembly.GetTypes()
-            .Where(type => type.IsSubclassOf(typeof(Controller)) && !type.IsAbstract);
-            foreach (var type in types)
+            var controllers = application.GetType().Assembly.GetTypes()
+                .Where(type => type.IsSubclassOf(typeof(Controller)) && !type.IsAbstract);
+            foreach (var controller in controllers)
             {
-                Console.WriteLine(type.FullName);
-                var methods = type.GetMethods()
-                    .Where(x => !x.IsSpecialName 
+                // Console.WriteLine(controller.FullName);
+                var actions = controller.GetMethods()
+                    .Where(x => !x.IsSpecialName
                     && !x.IsConstructor
                     && x.IsPublic
-                    && x.DeclaringType == type);
-                foreach (var method in methods)
+                    && x.DeclaringType == controller);
+                foreach (var action in actions)
                 {
-                    string url = "/" + type.Name.Replace("Controller", string.Empty) + "/" + method.Name;
+                    string url = "/" + controller.Name.Replace("Controller", string.Empty) + "/" + action.Name;
 
-                    var attribute = method.GetCustomAttributes()
+                    var attribute = action.GetCustomAttributes()
                         .FirstOrDefault(x => x.GetType()
                         .IsSubclassOf(typeof(HttpMethodAttribute)))
                         as HttpMethodAttribute;
@@ -53,20 +63,42 @@ namespace SIS.MvcFramework
                             url = attribute.Url;
                         }
                     }
-                    
-                    routeTable.Add(new Route(httpActionType, url, (request) =>
-                    {
-                        var controller = Activator.CreateInstance(type) as Controller;
-                        controller!.Request = request;
-                        var response = method.Invoke(controller, new object[] { }) as HttpResponse;
-                        return response!;
-                    }));
-                    Console.WriteLine(url);
+
+                    routeTable.Add(new Route(httpActionType, url, (request) => InvokeAction(request, serviceCollection, controller, action)));
                 }
             }
         }
 
-        public static void AutoRegisterStaticFilesRoutes(List<Route> routeTable)
+        private static HttpResponse InvokeAction(HttpRequest request, IServiceCollection serviceCollection,
+                Type controllerType, MethodInfo actionMethod)
+        {
+            var controller = serviceCollection.CreateInstance(controllerType) as Controller;
+            controller.Request = request;
+
+            var actionsParameterValues = new List<object>();
+            var actionsParameters = actionMethod.GetParameters();
+            foreach (var parameter in actionsParameters)
+            {
+                var parameterName = parameter.Name.ToLower();
+                object value = null;
+
+                if (request.QueryData.Any(x => x.Key.ToLower() == parameterName))
+                {
+                    value = request.FormData.FirstOrDefault(x => x.Key.ToLower() == parameterName).Value;
+                }
+                else if (request.FormData.Any(x => x.Key.ToLower() == parameterName))
+                {
+                    value = request.FormData.FirstOrDefault(x => x.Key.ToLower() == parameterName).Value;
+                }
+
+                actionsParameterValues.Add(value);
+            }
+            var response = actionMethod.Invoke(controller, new object[] { }) as HttpResponse;
+            return response;
+        }
+
+
+        public static void AutoRegisterStaticFilesRoutes(IList<Route> routeTable)
         {
             var staticFiles = Directory.GetFiles("wwwroot", "*", SearchOption.AllDirectories);
             foreach (var staticFile in staticFiles)
@@ -87,7 +119,7 @@ namespace SIS.MvcFramework
                         ".gif" => "image/gif",
                         _ => "text/plain"
                     };
-                return new FileResponse(File.ReadAllBytes(staticFile), contentType);
+                    return new FileResponse(File.ReadAllBytes(staticFile), contentType);
                 }));
             }
         }

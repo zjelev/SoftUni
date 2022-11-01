@@ -1,19 +1,21 @@
 using SIS.Http;
+using SIS.Http.Logging;
 using SIS.MvcFramework;
+using SulsApp.Services;
 
 namespace SulsApp
 {
     public class Startup : IMvcApplication
     {
-        public void ConfigureServices()
+        public void ConfigureServices(IServiceCollection serviceCollection)
         {
-            var db = new ApplicationDbContext();
-            db.Database.EnsureCreated();
+            serviceCollection.Add<IUsersService, UsersService>();
         }
 
         public void Configure(IList<Route> routeTable)
         {
-
+            var db = new ApplicationDbContext();
+            db.Database.EnsureCreated();
         }
     }
 }

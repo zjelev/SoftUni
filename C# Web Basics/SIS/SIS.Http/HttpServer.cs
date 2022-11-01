@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using SIS.Http.Logging;
 
 namespace SIS.Http
 {
@@ -10,7 +11,7 @@ namespace SIS.Http
         private readonly IList<Route> routeTable;
         private readonly IDictionary<string, IDictionary<string, string>> sessions;
 
-        public HttpServer(int port, IList<Route> routeTable)  //TODO: actions
+        public HttpServer(int port, IList<Route> routeTable, ILogger logger)  //TODO: actions
         {
             this.listener = new TcpListener(IPAddress.Loopback, port);
             this.routeTable = routeTable;

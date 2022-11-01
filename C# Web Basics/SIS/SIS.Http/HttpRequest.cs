@@ -14,21 +14,21 @@ namespace SIS.Http
             var lines = httpRequestAsString.Split(HttpConstants.NewLine, StringSplitOptions.None);
             var httpInfoHeader = lines[0];
             var infoHeaderParts = httpInfoHeader.Split(' ');
-            if(infoHeaderParts.Length != 3)
+            if (infoHeaderParts.Length != 3)
             {
                 throw new HttpServerException("Invalid HTTP header line");
             }
 
             var httpMethod = infoHeaderParts[0];
-            
+
             // Enum.TryParse(httpMethod, out HttpMethodType type);
             this.Method = httpMethod switch
             {
-                "POST"   => HttpMethodType.Post,
-                "GET"    => HttpMethodType.Get,
-                "PUT"    => HttpMethodType.Put,
+                "POST" => HttpMethodType.Post,
+                "GET" => HttpMethodType.Get,
+                "PUT" => HttpMethodType.Put,
                 "DELETE" => HttpMethodType.Delete,
-                _        => HttpMethodType.Unknown
+                _ => HttpMethodType.Unknown
             };
 
             this.Path = infoHeaderParts[1];
@@ -39,7 +39,7 @@ namespace SIS.Http
                 "HTTP/1.0" => HttpVersionType.Http10,
                 "HTTP/1.1" => HttpVersionType.Http11,
                 "HTTP/2.0" => HttpVersionType.Http20,
-                _          => HttpVersionType.Http11
+                _ => HttpVersionType.Http11
             };
 
             bool isInHeader = true;
@@ -86,17 +86,33 @@ namespace SIS.Http
 
             this.Body = bodyBuilder.ToString().TrimEnd('\r', '\n');
             this.FormData = new Dictionary<string, string>();
-            var bodyParts = this.Body.Split(new char[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var part in bodyParts)
+            ParseData(this.FormData, this.Body);
+
+            this.Query = string.Empty;
+            if (this.Path.Contains("?"))
             {
-                var parameterParts = part.Split(new char[] { '=' }, 2);
-                this.FormData.Add(
-                    HttpUtility.UrlDecode(parameterParts[0]),
-                    HttpUtility.UrlDecode(parameterParts[1]));
+                var parts = this.Path.Split(new char[] { '?' }, 2);
+                this.Path = parts[0];
+                this.Query = parts[1];
             }
+            this.QueryData = new Dictionary<string, string>();
+            ParseData(this.QueryData, this.Query);
 
             //StringReader reader = new StringReader(httpRequestAsString);
         }
+
+        private void ParseData(IDictionary<string, string> output, string input)
+        {
+            var dataParts = input.Split(new char[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var dataPart in dataParts)
+            {
+                var parameterParts = dataPart.Split(new char[] { '=' }, 2);
+                output.Add(
+                    HttpUtility.UrlDecode(parameterParts[0]),
+                    HttpUtility.UrlDecode(parameterParts[1]));
+            }
+        }
+
         public HttpMethodType Method { get; set; }
         public string Path { get; set; }
         public HttpVersionType Version { get; set; }
@@ -104,6 +120,8 @@ namespace SIS.Http
         public IList<Cookie>  Cookies { get; set; }
         public string Body { get; set; }
         public IDictionary<string, string> FormData { get; set; }
+        public string Query { get; set; }
+        public IDictionary<string, string> QueryData { get; set; }
         public IDictionary<string, string> SessionData { get; set; }
     }
 }

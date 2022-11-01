@@ -1,5 +1,6 @@
 using System.Net.Mail;
 using SIS.Http;
+using SIS.Http.Logging;
 using SIS.MvcFramework;
 using SulsApp.Services;
 
@@ -8,10 +9,13 @@ namespace SulsApp.Controllers
     public class UsersController : Controller
     {
         private IUsersService usersService;
+        private ILogger logger;
+        // Ninject / AutoFaq
 
-        public UsersController()
+        public UsersController(IUsersService usersService, ILogger logger)
         {
-            this.usersService = new UsersService(new ApplicationDbContext());
+            this.usersService = usersService;
+            this.logger = logger;
         }
 
         public HttpResponse Login()
@@ -19,8 +23,8 @@ namespace SulsApp.Controllers
             return this.View();
         }
 
-        [HttpPost]
-        public HttpResponse Login(string username, string password)
+        [HttpPost("/Users/Login")]
+        public HttpResponse DoLogin(string username, string password)
         {
             var userId = this.usersService.GetUserId(username, password);
             if (userId == null)
@@ -29,6 +33,7 @@ namespace SulsApp.Controllers
             }
 
             this.SignIn(userId);
+            this.logger.Log("User logged in: " + username);
             return this.Redirect("/");
         }
 
@@ -48,7 +53,7 @@ namespace SulsApp.Controllers
 
             if (password != confirmPassword)
             {
-                return this.Error("Passwords should be the same<");
+                return this.Error("Passwords should be the same!");
             }
 
             if (username?.Length < 5 || username?.Length > 20)
@@ -67,9 +72,13 @@ namespace SulsApp.Controllers
             }
 
             this.usersService.CreateUser(username, email, password);
-            var userId = this.usersService.GetUserId(username, password);
-            this.SignIn(userId);
+            this.logger.Log("New user: " + username);
+            return this.Redirect("/Users/Login");
+        }
 
+        public HttpResponse Logout()
+        {
+            this.SignOut();
             return this.Redirect("/");
         }
 

@@ -19,7 +19,7 @@ public class ViewEngineTests
         var expectedResultContent = File.ReadAllText($"../../../ViewTests/{testName}.Expected.html");
 
         IViewEngine viewEngine = new ViewEngine();
-        var actualResult = viewEngine.GetHtml(viewContent, viewModel, user);
+        var actualResult = viewEngine.GetHtml(viewContent, viewModel, "123");
 
         Assert.Equal(expectedResultContent, actualResult);
     }
@@ -41,7 +41,7 @@ public class ViewEngineTests
 ";
 
             IViewEngine viewEngine = new ViewEngine();
-            var actualResult = viewEngine.GetHtml(viewContent, viewModel, user);
+            var actualResult = viewEngine.GetHtml(viewContent, viewModel, null);
 
             Assert.Equal(expectedResultContent, actualResult);
         }
