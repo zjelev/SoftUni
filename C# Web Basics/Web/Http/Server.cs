@@ -1,12 +1,6 @@
-﻿// var client = new HttpClient();
-// var response = await client.GetAsync(args[0]);
-// string result = await response.Content.ReadAsStringAsync();
-// File.WriteAllText("index.html", result);
-
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Text.RegularExpressions;
 
 public class Server
 {
@@ -27,7 +21,6 @@ public class Server
         {
             TcpClient tcpClient = await tcpListener.AcceptTcpClientAsync();
 #pragma warning disable CS4014
-            //Task.Run(() => 
             ProcessClientASync(tcpClient);
 #pragma warning restore CS4014
         }
@@ -51,14 +44,12 @@ public class Server
             response = route.Action(request);
         }
 
-
         response.Headers.Add(new("Server", "MySrv 1.0"));
-
         byte[] headerBytes = Encoding.UTF8.GetBytes(response.ToString());
         await networkStream.WriteAsync(headerBytes, 0, headerBytes.Length);
         await networkStream.WriteAsync(response.Body, 0, response.Body.Length);
 
-        Console.WriteLine(request);
+        Console.WriteLine(requestAsString);
         Console.WriteLine(new string('=', 60) + DateTime.UtcNow);
     }
 

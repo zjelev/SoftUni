@@ -14,36 +14,24 @@ static Response FavIcon(Request request)
 
 static Response Contact(Request request)
 {
-    var content = "<h1>contact page</h1>";
-    byte[] byteContent = Encoding.UTF8.GetBytes(content);
-    var response = new Response(200, byteContent);
-    response.Headers.Add(new("Content-Type", "text/html"));
-    return response;
+    return new HtmlResponse("<h1>contact page</h1>");
 }
 
 static Response Index(Request request)
 {
-    var content = "<h1>Home page</h1>" +
+    return new HtmlResponse("<h1>Home page</h1>" +
             @"<form action=/users/login>
-<input type='submit' value='Login' /></form>";
-    byte[] byteContent = Encoding.UTF8.GetBytes(content);
-    var response = new Response(200, byteContent);
-    response.Headers.Add(new("Content-Type", "text/html"));
-    return response;
+<input type='submit' value='Login' /></form>");
 }
 
 static Response Login(Request request)
 {
-    var content = "<h1>Login page</h1>" +
+    return new HtmlResponse("<h1>Login page</h1>" +
             @"<form action='/users/login' method='post'>
 <input type=date name='date' />
 <input type=text name='username' />
 <input type=password name='password' />
-<input type=submit value='Login' /></form>";
-    byte[] byteContent = Encoding.UTF8.GetBytes(content);
-    var response = new Response(200, byteContent);
-    response.Headers.Add(new("Content-Type", "text/html"));
-    return response;
+<input type=submit value='Login' /></form>");
 }
 
 static Response DoLogin(Request request)

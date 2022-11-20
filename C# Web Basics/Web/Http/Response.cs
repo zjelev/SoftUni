@@ -9,6 +9,11 @@ public class Response : Protocol
             this.Headers.Add(new ("Content-Length", body.Length.ToString()));
         }
     }
+
+    internal Response() : base()
+    {
+    }
+    
     public int Code { get; set; }
 
     public override string ToString()

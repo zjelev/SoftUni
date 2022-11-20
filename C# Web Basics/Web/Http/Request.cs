@@ -6,8 +6,8 @@ public class Request : Protocol
     {
         this.headerAndBody = httpRequestAsString.Split(Server.NewLn + Server.NewLn, StringSplitOptions.None);
         
-        var header = headerAndBody[0];
-        var headerLines = header.Split(Server.NewLn);
+        string header = headerAndBody[0];
+        string[] headerLines = header.Split(Server.NewLn);
         
         var methodPathVersion = headerLines[0].Split(' ');
         if (methodPathVersion.Length != 3)

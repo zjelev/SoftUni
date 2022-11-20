@@ -9,6 +9,7 @@ public abstract class Protocol
         this.Cookies = new List<(string, string)>();
         this.sb = new StringBuilder();
     }
+    
     public IList<(string, string)> Headers { get; set; }
     public string Version { get; set; } = "HTTP/1.1";
     public IList<(string, string)> Cookies { get; set; }
