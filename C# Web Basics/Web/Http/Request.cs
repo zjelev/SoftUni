@@ -1,6 +1,6 @@
 using System.Text;
 
-class Request : Protocol
+public class Request : Protocol
 {
     public Request(string httpRequestAsString)
     {
@@ -27,12 +27,12 @@ class Request : Protocol
 
         var body = headerAndBody[1];
         var bodyLines = body.Split(Server.NewLn);
-        for (int i = 0; i < body.Length; i++)
+        for (int i = 0; i < bodyLines.Length; i++)
         {
             var line = bodyLines[i];
-            this.toString.Append(line + Server.NewLn);
+            this.sb.Append(line + Server.NewLn);
         }
-        this.Body = Encoding.UTF8.GetBytes(toString.ToString().TrimEnd('\r', '\n'));
+        this.Body = Encoding.UTF8.GetBytes(sb.ToString().TrimEnd('\r', '\n'));
     }
 
     public string Method { get; set; }

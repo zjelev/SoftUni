@@ -12,8 +12,11 @@ public class Server
 {
     private readonly TcpListener tcpListener;
     public const string NewLn = "\r\n";
-    public Server(int port)
+    private readonly IList<Route> routeTable;
+
+    public Server(int port, IList<Route> routeTable)
     {
+        this.routeTable = routeTable;
         this.tcpListener = new TcpListener(IPAddress.Loopback, port);
     }
 
@@ -30,45 +33,30 @@ public class Server
         }
     }
 
-    private static async Task ProcessClientASync(TcpClient tcpClient)
+    private async Task ProcessClientASync(TcpClient tcpClient)
     {
         using NetworkStream networkStream = tcpClient.GetStream();
         byte[] requestBytes = new byte[100000];
         int bytesRead = await networkStream.ReadAsync(requestBytes, 0, requestBytes.Length);
         string requestAsString = Encoding.UTF8.GetString(requestBytes, 0, bytesRead);
         var request = new Request(requestAsString);
-
-        string content = "<h1>random page</h1>";
-        if (request.Path == "/")
+        var route = this.routeTable.FirstOrDefault(x => x.Method == request.Method && x.Path == request.Path);
+        Response response;
+        if (route == null)
         {
-            content = "<h1>Home page</h1>" +
-            @"<form action=/users/login>
-<input type='submit' value='Login' /></form>";
+            response = new Response(404, new byte[0]);
         }
-        else if (request.Path == "/users/login?")
+        else
         {
-            content = "<h1>Login page</h1>" +
-            @"<form action='Account/Login' method='post'>
-<input type=date name='date' />
-<input type=text name='username' />
-<input type=password name='password' />
-<input type=submit value='Login' /></form>";
+            response = route.Action(request);
         }
 
-        //var sid = Regex.Match(request, @"sid=[^\n]*\n").Value;
-        string response = "HTTP/1.1 200 OK" + NewLn + //307
-                        "Server: MySrv 1.0" + NewLn +
-                        "Content-Type: text/html" + NewLn +
-                        /* (string.IsNullOrWhiteSpace(sid) ?
-                            "Set-Cookie: sid=" + Guid.NewGuid().ToString() + "; Max-Age=3600*24*7; SameSite=Strict;" + NewLn
-                            : string.Empty) +  //prevent XSRF
-                                               // "Location: https://google.com" + NewLn +
-                                               //"Content-Disposition: attachment; filename=index.html" + NewLn + */
-                        "Content-Lenght: " + content.Length + NewLn +
-                        NewLn +
-                        content;
-        byte[] responseBytes = Encoding.UTF8.GetBytes(response);
-        await networkStream.WriteAsync(responseBytes, 0, responseBytes.Length); // netstandard 2.0 compatible
+
+        response.Headers.Add(new("Server", "MySrv 1.0"));
+
+        byte[] headerBytes = Encoding.UTF8.GetBytes(response.ToString());
+        await networkStream.WriteAsync(headerBytes, 0, headerBytes.Length);
+        await networkStream.WriteAsync(response.Body, 0, response.Body.Length);
 
         Console.WriteLine(request);
         Console.WriteLine(new string('=', 60) + DateTime.UtcNow);

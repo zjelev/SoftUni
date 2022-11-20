@@ -1,4 +1,4 @@
-class Response : Protocol
+public class Response : Protocol
 {
     public Response(int code, byte[] body)
     {
@@ -13,11 +13,11 @@ class Response : Protocol
 
     public override string ToString()
     {
-        this.toString.Append($"{this.Version} {this.Code}" + Server.NewLn);
+        this.sb.Append($"{this.Version} {this.Code}" + Server.NewLn);
         foreach (var header in this.Headers)
         {
-            toString.Append(header.Item1 + ": " + header.Item2 + Server.NewLn);
+            sb.Append(header.Item1 + ": " + header.Item2 + Server.NewLn);
         }
-        return toString.ToString() + Server.NewLn;
+        return sb.ToString() + Server.NewLn;
     }
 }
