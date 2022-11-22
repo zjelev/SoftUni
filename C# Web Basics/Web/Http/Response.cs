@@ -12,6 +12,7 @@ public class Response : Protocol
 
     internal Response() : base()
     {
+        this.Code = 200;
     }
     
     public int Code { get; set; }

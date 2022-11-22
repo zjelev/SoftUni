@@ -2,12 +2,11 @@ using System.Text;
 
 public class Request : Protocol
 {
-    public Request(string httpRequestAsString)
+    public Request(string httpRequest)
     {
-        this.headerAndBody = httpRequestAsString.Split(Server.NewLn + Server.NewLn, StringSplitOptions.None);
+        this.headerAndBody = httpRequest.Split(Server.NewLn + Server.NewLn);
         
-        string header = headerAndBody[0];
-        string[] headerLines = header.Split(Server.NewLn);
+        string[] headerLines = headerAndBody[0].Split(Server.NewLn);
         
         var methodPathVersion = headerLines[0].Split(' ');
         if (methodPathVersion.Length != 3)
@@ -21,12 +20,11 @@ public class Request : Protocol
         for (int i = 1; i < headerLines.Length; i++)
         {
             var line = headerLines[i];
-            var headerParts = line.Split(": ", 2, StringSplitOptions.None);
+            var headerParts = line.Split(": ", 2);
             this.Headers.Add(new(headerParts[0], headerParts[1]));
         }
 
-        var body = headerAndBody[1];
-        var bodyLines = body.Split(Server.NewLn);
+        var bodyLines = headerAndBody[1].Split(Server.NewLn);
         for (int i = 0; i < bodyLines.Length; i++)
         {
             var line = bodyLines[i];

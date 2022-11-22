@@ -33,6 +33,7 @@ public class Server
         int bytesRead = await networkStream.ReadAsync(requestBytes, 0, requestBytes.Length);
         string requestAsString = Encoding.UTF8.GetString(requestBytes, 0, bytesRead);
         var request = new Request(requestAsString);
+        Console.WriteLine($"{request.Method} {request.Path}");
         var route = this.routeTable.FirstOrDefault(x => x.Method == request.Method && x.Path == request.Path);
         Response response;
         if (route == null)
@@ -48,9 +49,6 @@ public class Server
         byte[] headerBytes = Encoding.UTF8.GetBytes(response.ToString());
         await networkStream.WriteAsync(headerBytes, 0, headerBytes.Length);
         await networkStream.WriteAsync(response.Body, 0, response.Body.Length);
-
-        Console.WriteLine(requestAsString);
-        Console.WriteLine(new string('=', 60) + DateTime.UtcNow);
     }
 
     public void Stop()

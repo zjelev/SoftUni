@@ -9,7 +9,8 @@ routeTable.Add(new Route("GET", "/favicon.ico", FavIcon));
 
 static Response FavIcon(Request request)
 {
-    throw new NotImplementedException();
+    var file = File.ReadAllBytes("wwwroot/favicon.ico");
+    return new FileResponse(file, "image/x-icon");
 }
 
 static Response Contact(Request request)
@@ -36,11 +37,7 @@ static Response Login(Request request)
 
 static Response DoLogin(Request request)
 {
-    var content = "<h1>User logged in</h1>";
-    byte[] byteContent = Encoding.UTF8.GetBytes(content);
-    var response = new Response(200, byteContent);
-    response.Headers.Add(new("Content-Type", "text/html"));
-    return response;
+    return new HtmlResponse("<h1>User logged in</h1>");
 }
 
 var server = new Server(80, routeTable);
