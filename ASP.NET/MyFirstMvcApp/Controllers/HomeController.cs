@@ -2,9 +2,13 @@
 using System.Diagnostics;
 using MyFirstMvcApp.Models;
 using MyFirstMvcApp.Services;
+using MyFirstMvcApp.Filters;
 
 namespace MyFirstMvcApp.Controllers;
 
+[AddHeader("X-Debug", "Works")]
+//[TypeFilter(typeof(MyAuthorizeFilterAttribute))]
+[ServiceFilter(typeof(MyAuthorizeFilterAttribute))]
 public class HomeController : Controller
 {
     private readonly IUsersService usersService;
@@ -32,6 +36,15 @@ public class HomeController : Controller
         var viewModel = new IndexViewModel { Usernames = usernames };
         //this.configuration["Greetings"];
         return View(viewModel);
+    }
+
+    [ValidateModelStateFilter]
+    public IActionResult AcceptForm(FormInputModel input)
+    {
+        if (!this.ModelState.IsValid)
+            return this.Content("Not Ok!");
+
+        return this.Content("Ok");
     }
 
     public IActionResult Privacy() => View();

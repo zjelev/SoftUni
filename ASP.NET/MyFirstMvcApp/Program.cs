@@ -5,6 +5,7 @@ using System;
 using System.Security.Cryptography.X509Certificates;
 using MyFirstMvcApp.Data;
 using MyFirstMvcApp.Services;
+using MyFirstMvcApp.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +17,19 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add(new AddHeaderAttribute("X-Debug-Global", "Global")); // Not for Pages
+    //options.Filters.Add(new MyAuthorizeFilter());
+    options.Filters.Add(new MyResourceFilter());
+    options.Filters.Add(new ValidateModelStateFilterAttribute());
+    options.Filters.Add(new MyResultFilter());
+    options.Filters.Add(new MyExceptionFilter());
+});
 
 builder.Services.AddTransient<IUsersService, UsersService>(); // DI
 builder.Services.AddSingleton<ICounterService, CounterService>();
+builder.Services.AddTransient<MyAuthorizeFilterAttribute>();
 
 var app = builder.Build();
 
