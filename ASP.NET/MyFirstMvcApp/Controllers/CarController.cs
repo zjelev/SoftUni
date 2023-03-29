@@ -9,7 +9,6 @@ public class CarController : Controller
     {
         var model = new CreateInputModel();
         model.Description = "initial value";
-        model.ReleaseDate = DateTime.Now;
         return this.View(model);
     }
 
