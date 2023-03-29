@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyFirstMvcApp.ModelBinders;
+using MyFirstMvcApp.ValidationAttributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyFirstMvcApp.Models.Car;
@@ -28,7 +29,8 @@ public class CreateInputModel
 
     [DataType(DataType.Date)]
     // TODO: custom validator to current year
-    [Range(1900, 2100)]
+    //[Range(1900, 2100)]
+    [BeforeCurrentYear(1900)]
     // [ModelBinder(typeof(DatetimeToYearModelBinder))] // Added globally
     public int Year { get; set; }
 
