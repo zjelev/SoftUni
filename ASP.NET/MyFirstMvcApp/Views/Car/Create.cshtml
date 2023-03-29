@@ -9,9 +9,36 @@
 @*XSS, CRRF, SQL Inj, Parameter Tampering*@
 
 <form asp-controller="Car" asp-action="Create">
-    @*<input type="password" name="password" />
-    <input type="number" name="money" />*@
 
+    <label asp-for="Car.Brand"></label>
+    <input asp-for="Car.Brand" class="form-control" />
+
+    <label asp-for="Car.Model"></label>
+    <input asp-for="Car.Model" class="form-control" />
+
+    <label asp-for="Description"></label>
+    <textarea asp-for="Description" class="form-control" placeholder="Enter description"></textarea>
+
+    <label asp-for="ReleaseDate"></label>
+    <input asp-for="ReleaseDate" class="form-control" />
+
+    <label asp-for="Year"></label>
+    <input asp-for="Year" class="form-control" />
+
+    <label asp-for="Price"></label>
+    <input asp-for="Price" class="form-control" />
+
+  @*@{
+        var items = new List<SelectListItem>
+        {
+            new SelectListItem { Text = "Niki", Value = "1"},
+            new SelectListItem { Text = "Pesho", Value = "2"},
+            new SelectListItem { Text = "Gosho", Value = "3"}
+        };
+    }*@
+
+    <label asp-for="Type"></label>
+    <select asp-for="Type" class="form-control" asp-items="Html.GetEnumSelectList<CarType>()"></select> @*"items"*@
 
     <input type="submit" />
 </form>

@@ -7,6 +7,7 @@ using MyFirstMvcApp.Data;
 using MyFirstMvcApp.Services;
 using MyFirstMvcApp.Filters;
 using Microsoft.AspNetCore.Mvc;
+using MyFirstMvcApp.ModelBinders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews(options =>
 {
+    options.ModelBinderProviders.Insert(0, new DatetimeToYearModelBinderProvider());
     options.Filters.Add(new AddHeaderAttribute("X-Debug-Global", "Global")); // Not for Pages
     //options.Filters.Add(new MyAuthorizeFilter());
     options.Filters.Add(new MyResourceFilter());
