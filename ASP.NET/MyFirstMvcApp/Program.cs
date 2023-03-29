@@ -6,6 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using MyFirstMvcApp.Data;
 using MyFirstMvcApp.Services;
 using MyFirstMvcApp.Filters;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,7 @@ builder.Services.AddControllersWithViews(options =>
     options.Filters.Add(new ValidateModelStateFilterAttribute());
     options.Filters.Add(new MyResultFilter());
     options.Filters.Add(new MyExceptionFilter());
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
 });
 
 builder.Services.AddTransient<IUsersService, UsersService>(); // DI

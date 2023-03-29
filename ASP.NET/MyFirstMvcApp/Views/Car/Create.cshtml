@@ -1,0 +1,17 @@
+﻿@using MyFirstMvcApp.Models.Car;
+@model CreateInputModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+@*XSS, CRRF, SQL Inj, Parameter Tampering*@
+
+<form asp-controller="Car" asp-action="Create">
+    @*<input type="password" name="password" />
+    <input type="number" name="money" />*@
+
+
+    <input type="submit" />
+</form>

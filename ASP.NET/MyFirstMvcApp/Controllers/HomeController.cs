@@ -24,14 +24,26 @@ public class HomeController : Controller
         this.counterService = counterService;
     }
 
-    public IActionResult Index()
+    public IActionResult Index(IndexInputModel input, int id)
     {
         //throw new Exception();
         this.HttpContext.Items = new Dictionary<object, object>() { [111]="some value" };
         // this.HttpContext.Response.Headers.Add("Content-Type", "application/json");
         // this.HttpContext.User.Identity.AuthenticationType;
-                    // this.User.Identity.AuthenticationType;
-        
+        // this.User.Identity.AuthenticationType;
+
+        if (!ModelState.IsValid)
+        {
+            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            {
+            }
+            // TODO: Return Error Page
+
+        }
+
+        //return Ok("Success!");
+
+
         var usernames = this.usersService.GetUsernames();
         var viewModel = new IndexViewModel { Usernames = usernames };
         //this.configuration["Greetings"];
