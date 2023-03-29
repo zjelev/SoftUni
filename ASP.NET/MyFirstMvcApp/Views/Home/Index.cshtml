@@ -1,0 +1,72 @@
+﻿@model IndexViewModel
+@* Избягвайте директна работа с базата данни.
+    Данните винаги ще ги даваме през ViewModel-a,
+    а пък контролера ще си извика необходимия service *@
+@inject IUsersService UsersService
+@inject IWebHostEnvironment EnvService
+@inject IConfiguration Configuration
+@inject ICounterService Counter
+
+@{
+    ViewData["Title"] = "Home Page";
+    var someDbvalue = "<script>alert('test');</script>";
+}
+
+<h1>Hello to @UsersService.GetCount() user(s)</h1>
+@foreach (var item in this.Model.Usernames)
+{
+    <span>@item</span>
+}
+<p>
+    Current time is: @DateTime.Now
+    @* Not HTML encoded value: @Html.Raw(someDbvalue + 1) @*No html entities*@
+</p>
+
+<span>@(Model.Usernames.Count() + 1)</span>
+
+<!-- html comment visible in browser-->
+@section MenuItems {
+    @if (DateTime.Now.DayOfWeek == DayOfWeek.Friday)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="https://google.com">Google</a>
+        </li>
+    }
+}
+
+@using (Html.BeginForm())
+{
+    <br />
+    @Html.TextBox("Input")
+    <br />
+    @Html.TextBoxFor(x => x.Input123)
+    <br />
+    @Html.EditorFor(x => x.Input123)
+    <br />
+    @Html.DisplayNameFor(x => x.Input123)
+}
+<br />
+<h1 greeting-name="Ivo">Hello!!</h1>
+<br />
+<h2>H2 without tag helper</h2>
+<br />
+
+<partial name="_UsersListPartial" />
+@await Html.PartialAsync("_UsersListPartial")  @*don't use it*@
+
+<div>@EnvService.EnvironmentName</div>
+<div>@EnvService.ApplicationName</div>
+<div>@EnvService.ContentRootPath</div>
+<div>@EnvService.ContentRootFileProvider.GetType().ToString()</div>
+<div>@EnvService.WebRootPath</div>
+<div>@EnvService.WebRootFileProvider.GetType().ToString()</div>
+
+<div>@Configuration["AllowedHosts"]</div>
+<div>@Configuration["Greetings:Morning"]</div>
+<div>@Configuration["Greetings:Evening"]</div>
+
+<div>Counter: @Counter.GetCount()</div>
+
+@section Scripts {
+    <script></script>
+}
