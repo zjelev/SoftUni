@@ -9,6 +9,7 @@
 @*XSS, CRRF, SQL Inj, Parameter Tampering*@
 
 <form asp-controller="Car" asp-action="Create">
+    <div asp-validation-summary="All" class="text-danger"></div>
 
     <div>
         <label asp-for="Car.Brand"></label>

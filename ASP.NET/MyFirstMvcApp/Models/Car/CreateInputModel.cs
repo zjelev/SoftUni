@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyFirstMvcApp.Models.Car;
 
-public class BrandAndModel
+public class BrandAndModel : IValidatableObject
 {
     [Required(ErrorMessage = "Въведете марка")]
     [MinLength(2)]
@@ -13,6 +13,15 @@ public class BrandAndModel
 
     [Required]
     public string Model { get; set; }
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        if (this.Brand == "Audi" && !this.Model.StartsWith("Q") && !this.Model.StartsWith("A"))
+            yield return new ValidationResult("Invalid Audi model");
+
+        if (this.Brand == "BMW" && !this.Model.StartsWith("M") && !this.Model.StartsWith("3"))
+            yield return new ValidationResult("Invalid BMW model");
+    }
 }
 
 public class CreateInputModel
@@ -20,7 +29,8 @@ public class CreateInputModel
     [Range(1, int.MaxValue, ErrorMessage = "Please select valid type")]
     public CarType Type { get; set; }
 
-    public BrandAndModel? Car { get; set; }
+    [Required]
+    public BrandAndModel Car { get; set; }
 
     [Display(Name = "Long description")] // presentation only attr, not connected to validation 1:35
     [DataType(DataType.MultilineText)]
