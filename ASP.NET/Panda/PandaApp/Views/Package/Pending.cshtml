@@ -1,0 +1,37 @@
+﻿@using PandaApp.Models.Package
+@model List<PackagePendingViewModel>
+
+@{
+    ViewData["Title"] = "Pending";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Id)</th>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Description)</th>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().ShippingAddress)</th>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Recipient)</th>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Weight)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><a asp-action="Details" asp-route-id="@item.Id">@item.Id</a></td>
+                <td>@item.Description</td>
+                <td>@item.ShippingAddress</td>
+                <td>@item.Recipient</td>
+                <td>@item.Weight</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-controller="Home" asp-action="Index">Back</a>
+</div>
