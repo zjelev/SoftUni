@@ -3,9 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventures", "Eventures\Eventures.csproj", "{680EB701-2309-40E1-B550-3F7EBF48E1DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventures", "Eventures\Eventures.csproj", "{680EB701-2309-40E1-B550-3F7EBF48E1DA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2F0DA1E8-645B-4C7B-89E6-FD2DD3EDD3CF} = {2F0DA1E8-645B-4C7B-89E6-FD2DD3EDD3CF}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{2F0DA1E8-645B-4C7B-89E6-FD2DD3EDD3CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{2F0DA1E8-645B-4C7B-89E6-FD2DD3EDD3CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
