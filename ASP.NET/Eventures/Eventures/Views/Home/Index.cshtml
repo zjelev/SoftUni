@@ -9,5 +9,12 @@
 
 @if (this.User.Identity.IsAuthenticated)
 {
-    <h2>Welcome, @this.User.Identity.Name</h2>
+    @if (this.User.IsInRole("Admin"))
+    {
+        <h3>Enjoy your work, Administrator @this.User.Identity.Name</h3>
+    }
+    else
+    {
+        <h3>Welcome, @this.User.Identity.Name</h3>
+    }
 }
