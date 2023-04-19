@@ -18,14 +18,12 @@ namespace Eventures.Areas.Identity.Pages.Account
             _signInManager = signInManager;
         }
 
-        public async Task<IActionResult> OnPost(string returnUrl = null)
+        public async Task<IActionResult> OnPost() //string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
-            if (returnUrl != null)
-                return LocalRedirect(returnUrl);
-            else
-                // This needs to be a redirect so that the browser performs a new
-                // request and the identity for the user gets updated.
+            //if (returnUrl != null)
+            //    return LocalRedirect(returnUrl);
+            //else
                 return RedirectToPage();
         }
     }
