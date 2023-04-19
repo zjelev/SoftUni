@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Domain;
 public class EventuresDbContext : IdentityDbContext<EventuresUser, IdentityRole, string>
 {
+    public DbSet<Event> Events { get; set; }
     public EventuresDbContext(DbContextOptions<EventuresDbContext> options) : base(options)
     {
     }
