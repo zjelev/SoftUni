@@ -1,7 +1,5 @@
 ﻿using Domain;
-using Eventures.Areas.Identity.Pages.Account;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Eventures.Data
 {
@@ -15,16 +13,39 @@ namespace Eventures.Data
         }
         public async void Seed()
         {
-            var admin = new EventuresUser
+            switch (_userManager.Users.Count())
             {
-                UserName = "admin@admin.net",
-                Email = "admin@admin.net"
-            };
+                case 0:
+                    {
+                        var user = new EventuresUser
+                        {
+                            UserName = "admin@admin.net",
+                            Email = "admin@admin.net"
+                        };
 
-            var result = await _userManager.CreateAsync(admin, "123");
+                        var result = await _userManager.CreateAsync(user, "123");
 
-            if (result.Succeeded && _userManager.Users.Count() == 1)
-                _userManager.AddToRoleAsync(admin, "Admin");
+                        if (result.Succeeded)
+                            _userManager.AddToRoleAsync(user, "Admin");
+                    }
+                    break;
+                case 1:
+                    {
+                        var user = new EventuresUser
+                        {
+                            UserName = "user@user.net",
+                            Email = "user@user.net"
+                        };
+
+                        var result = await _userManager.CreateAsync(user, "123");
+
+                        if (result.Succeeded)
+                            _userManager.AddToRoleAsync(user, "User");
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
