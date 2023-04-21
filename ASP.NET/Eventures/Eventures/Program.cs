@@ -1,6 +1,8 @@
 using Domain;
+using Eventures.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,23 +26,29 @@ builder.Services.AddIdentity<EventuresUser, IdentityRole>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages(); ;
+builder.Services.AddRazorPages();
+
+builder.Services.AddScoped<RoleSeeder>();
+builder.Services.AddScoped<UserSeeder>();
 
 var app = builder.Build();
 
 using var scope = app.Services.CreateScope();
 using var context = scope.ServiceProvider.GetRequiredService<EventuresDbContext>();
 
-// dotnet ef migrations add Initial -o Migrations
+// dotnet ef migrations add Initial -o Data\Migrations
 context.Database.Migrate();
 
-if (!context.Roles.Any())
-{
-    context.Roles.Add(new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" });
-    context.Roles.Add(new IdentityRole { Name = "User", NormalizedName = "USER" });
-}
+//var seeder = new UserRoleSeeder(context);
+//seeder.Seed();
+var seeders = Assembly.GetCallingAssembly()
+    .GetTypes()
+    .Where(type => typeof(ISeeder).IsAssignableFrom(type))
+    .Where(type => type.IsClass && !type.IsInterface)
+    .Select(type => (ISeeder)scope.ServiceProvider.GetRequiredService(type))
+    .ToList();
 
-context.SaveChanges();
+seeders.ForEach(seeder => seeder.Seed());
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

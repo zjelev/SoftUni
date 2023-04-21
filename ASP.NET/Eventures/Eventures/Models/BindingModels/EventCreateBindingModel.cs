@@ -21,10 +21,12 @@ namespace Eventures.Models.BindingModels
         public DateTime End { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Total tickets must be positive number.")]
         [Display(Name = "TotalTickets")]
         public int TotalTickets { get; set; }
 
         [Required]
+        [Range(0, double.MaxValue, ErrorMessage="Price must be positive number.")]
         [Display(Name = "PricePerTicket")]
         public decimal PricePerTicket { get; set; }
     }
