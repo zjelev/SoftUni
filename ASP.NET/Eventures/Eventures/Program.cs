@@ -1,5 +1,6 @@
 using Domain;
 using Eventures.Data;
+using Eventures.Filters;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -25,11 +26,14 @@ builder.Services.AddIdentity<EventuresUser, IdentityRole>(options =>
     .AddDefaultTokenProviders();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options => options.Filters.Add(typeof(AdminActivityLoggerFilter)));
 builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<RoleSeeder>();
 builder.Services.AddScoped<UserSeeder>();
+
+//builder.Logging.ClearProviders();
+//builder.Logging.AddConsole(); //default anyway
 
 var app = builder.Build();
 
