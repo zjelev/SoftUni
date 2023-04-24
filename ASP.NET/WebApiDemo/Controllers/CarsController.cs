@@ -19,6 +19,12 @@ public class CarsController : ApiController
         return dbContext.Cars.ToList();
     }
 
+    [HttpGet("{id}")]
+    public ActionResult<Car> Get(int id)
+    {
+        return dbContext.Cars.FirstOrDefault(x => x.Id == id);
+    }
+
     [HttpPost]
     public async Task<ActionResult<Car>> Post(Car car)
     {

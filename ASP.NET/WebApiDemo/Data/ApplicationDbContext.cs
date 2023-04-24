@@ -8,6 +8,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<Car> Cars { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server=.;Database=Cars;User Id=AspNet;Password=.;Encrypt=False;MultipleActiveResultSets=true");
+        optionsBuilder.UseSqlServer("Server=.;Database=Cars;User Id=AspNet;Password=123456;Encrypt=False;MultipleActiveResultSets=true");
     }
 }

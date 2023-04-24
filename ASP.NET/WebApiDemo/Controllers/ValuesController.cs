@@ -42,6 +42,9 @@ public class ValuesController : ApiController
     [HttpGet("GetCar/{year:int}")]
     public ActionResult<Car> GetCar(int year)
     {
+        if (year > DateTime.UtcNow.Year)
+            return BadRequest();
+
         return new Car() { Colour = Colour.Red, Model = "Audi A7", Year = year };
     }
 }
