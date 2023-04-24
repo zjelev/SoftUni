@@ -30,6 +30,31 @@ public class CarsController : ApiController
     {
         await dbContext.Cars.AddAsync(car);
         await dbContext.SaveChangesAsync();
+        return CreatedAtAction("Get", new { car.Id });
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(Car car, int id)
+    {
+        var dbCar = dbContext.Cars.FirstOrDefault(x => x.Id == id);
+        dbCar.Colour = car.Colour;
+        dbCar.Model = car.Model;
+        dbCar.Year = car.Year;
+        await dbContext.SaveChangesAsync();
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<Car>> Delete(int id)
+    {
+        var car = dbContext.Cars.FirstOrDefault(x => x.Id == id);
+        if (car == null)
+        {
+            return NotFound();
+        }
+
+        dbContext.Cars.Remove(car);
+        await dbContext.SaveChangesAsync();
         return car;
     }
 }
