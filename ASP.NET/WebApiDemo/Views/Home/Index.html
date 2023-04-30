@@ -1,0 +1,73 @@
+﻿<html>
+
+<head>
+    <title>JS Advanced</title>
+</head>
+
+<body>
+    <header>
+        <h1>DOM</h1>
+    </header>
+    <h1 id="heading">Intro</h1>
+    <ul>
+        <li id="methods-list-items" class="list-item" data-name="Pesho">Methods</li>
+        <li class="list-item">Properties</li>
+    </ul>
+
+    <script>
+        // // let listElements = document.getElementsByTagName('li');
+        // // // let h1Element = h1Elements[0];
+        // // // let currentSeconds = new Date().getSeconds();
+        // // // if (currentSeconds % 2 == 0) {
+        // // //     h1Element.innerHTML += ", " + currentSeconds;
+        // // // }
+        // // let propertiesElement = listElements[1];
+        // // propertiesElement.innerHTML += ' - Selected';
+        // // console.log(listElements);
+        // // // alert("Hello World");
+
+        // // let listElement = document.getElementById("methods-list-items");
+        // // let listItemElements = document.querySelectorAll('.list-item');
+        // // listItemElements = document.querySelectorAll('li');
+        
+        // // let ulElement = document.querySelector('ul');
+        // // ulElement.innerHTML += "<li>New</li>";
+
+        // // let listElement = document.querySelector("#methods-list-items");
+        // // listElement.setAttribute('data-name2', 'Ivo');
+        // // //console.log(listElement.attributes["data-name"]);
+        // // listElement.style.backgroundColor = "pink";
+        // // listElement.style.color = "white";
+
+        // let parentElement = document.querySelector('ul');
+        // let childElement = document.getElementById("methods-list-items");
+
+        // // parentElement.removeChild(childElement);
+        // // childElement.innerHTML += ' was deleted';
+        // // parentElement.appendChild(childElement);
+
+        // let secondChildElement = document.getElementsByClassName('list-item')[1];
+        // // parentElement.replaceChild(childElement, secondChildElement);
+
+        // // document.write('Oh well, whatever, nevermind!')
+        // let newLiElement = document.createElement('li');
+        // newLiElement.textContent = 'newly created list item';
+        // //parentElement.appendChild(newLiElement);
+
+        // newLiElement = secondChildElement.cloneNode(true);
+        // parentElement.appendChild(newLiElement);
+        // newLiElement.remove();
+        // parentElement.appendChild(newLiElement);
+        let names = ['Pesho', 'Gosho', 'Maria', 'Stamat']
+        let listElement = document.createElement('ul');
+        names.forEach(x => {
+            let liElement = document.createElement('li');
+            liElement.textContent = x;
+            listElement.appendChild(liElement);
+        });
+        document.body.appendChild(listElement);
+        
+    </script>
+</body>
+
+</html>
