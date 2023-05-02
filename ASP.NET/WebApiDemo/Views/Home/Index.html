@@ -2,6 +2,11 @@
 
 <head>
     <title>JS Advanced</title>
+    <style>
+        .selected {
+            background-color: pink;
+        }
+    </style>
 </head>
 
 <body>
@@ -10,8 +15,10 @@
     </header>
     <h1 id="heading">Intro</h1>
     <ul>
-        <li id="methods-list-items" class="list-item" data-name="Pesho">Methods</li>
-        <li class="list-item">Properties</li>
+        <li id="methods-list-items" class="list-item" data-name="Pesho">JS</li>
+        <li class="list-item">C#</li>
+        <li class="list-item">Java</li>
+        <li class="list-item">Python</li>
     </ul>
 
     <script>
@@ -39,7 +46,7 @@
         // // listElement.style.backgroundColor = "pink";
         // // listElement.style.color = "white";
 
-        // let parentElement = document.querySelector('ul');
+        //let parentElement = document.querySelector('ul');
         // let childElement = document.getElementById("methods-list-items");
 
         // // parentElement.removeChild(childElement);
@@ -58,14 +65,29 @@
         // parentElement.appendChild(newLiElement);
         // newLiElement.remove();
         // parentElement.appendChild(newLiElement);
-        let names = ['Pesho', 'Gosho', 'Maria', 'Stamat']
-        let listElement = document.createElement('ul');
-        names.forEach(x => {
-            let liElement = document.createElement('li');
-            liElement.textContent = x;
-            listElement.appendChild(liElement);
-        });
-        document.body.appendChild(listElement);
+        // let names = ['Pesho', 'Gosho', 'Maria', 'Stamat']
+        // let listElement = document.createElement('ul');
+        // names.forEach(x => {
+        //     let liElement = document.createElement('li');
+        //     liElement.textContent = x;
+        //     listElement.appendChild(liElement);
+        // });
+        // document.body.appendChild(listElement);
+        let liElement = document.querySelectorAll('.list-item')[1];
+        let parentElement = liElement.parentElement;
+        // //console.log(liElement.classList);
+
+        // liElement.classList.add('selected');
+        // parentElement.classList.add('selected');
+        // liElement.parentElement.appendChild(liElement.cloneNode(true));
+
+        let firstElement = parentElement.children[0];
+        firstElement.nextElementSibling.innerHTML += ' RLZ';
+        console.log(parentElement.lastElementChild);
+
+        parentElement.prepend(parentElement.lastElementChild.cloneNode(true));
+
+        // Events
         
     </script>
 </body>
