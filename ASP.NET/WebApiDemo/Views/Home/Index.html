@@ -14,7 +14,7 @@
         <h1>DOM</h1>
     </header>
     <h1 id="heading">Intro</h1>
-    <ul>
+    <ul onclick="onListClick()" style="cursor: pointer;">
         <li id="methods-list-items" class="list-item" data-name="Pesho">JS</li>
         <li class="list-item">C#</li>
         <li class="list-item">Java</li>
@@ -81,14 +81,19 @@
         // parentElement.classList.add('selected');
         // liElement.parentElement.appendChild(liElement.cloneNode(true));
 
-        let firstElement = parentElement.children[0];
-        firstElement.nextElementSibling.innerHTML += ' RLZ';
-        console.log(parentElement.lastElementChild);
+        // let firstElement = parentElement.children[0];
+        // firstElement.nextElementSibling.innerHTML += ' RLZ';
+        // console.log(parentElement.lastElementChild);
 
-        parentElement.prepend(parentElement.lastElementChild.cloneNode(true));
+        // parentElement.prepend(parentElement.lastElementChild.cloneNode(true));
 
         // Events
-        
+        function onListClick() {
+            let parentElement = document.getElementsByTagName('ul')[0];
+            let lastElementChild = parentElement.lastElementChild;
+            parentElement.prepend(lastElementChild);
+        }
+
     </script>
 </body>
 
