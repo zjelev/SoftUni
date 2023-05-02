@@ -73,8 +73,8 @@
         //     listElement.appendChild(liElement);
         // });
         // document.body.appendChild(listElement);
-        let liElement = document.querySelectorAll('.list-item')[1];
-        let parentElement = liElement.parentElement;
+        //let liElement = document.querySelectorAll('.list-item')[1];
+        //let parentElement = liElement.parentElement;
         // //console.log(liElement.classList);
 
         // liElement.classList.add('selected');
@@ -88,8 +88,10 @@
         // parentElement.prepend(parentElement.lastElementChild.cloneNode(true));
 
         // Events
+        let parentElement = document.getElementsByTagName('ul')[0];
+        parentElement.addEventListener('click', onListClick);
+
         function onListClick() {
-            let parentElement = document.getElementsByTagName('ul')[0];
             let lastElementChild = parentElement.lastElementChild;
             parentElement.prepend(lastElementChild);
         }
