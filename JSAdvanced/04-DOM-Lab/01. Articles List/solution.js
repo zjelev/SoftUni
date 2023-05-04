@@ -1,6 +1,8 @@
 function createArticle() {
 	let titleInputElement = document.getElementById('createTitle');
 	let contentInputElement = document.getElementById('createContent');
+	titleInputElement.setAttribute('placeholder', 'Pesho');
+	titleInputElement.removeAttribute('placeholder');
 	// console.log(titleElement.value);
 	// console.log(createContentElement.value);
 
