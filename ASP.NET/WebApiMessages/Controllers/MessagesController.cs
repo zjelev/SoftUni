@@ -14,6 +14,7 @@ namespace WebApiMessages.Controllers
             this.context = context;
         }
 
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<Message>>> Index() 
         {
             return this.context.Messages
@@ -21,16 +22,20 @@ namespace WebApiMessages.Controllers
                 .ToList();
         }
 
+        [HttpPost(Name = "Create")]
+        [Route("create")]
         public async Task<ActionResult> Create(MessageCreateBindingModel model)
         {
             Message message = new Message
             {
+                Id = Guid.NewGuid().ToString(),
                 Content = model.Content,
                 User = model.User,
                 CreatedOn = DateTime.UtcNow
             };
 
             await this.context.Messages.AddAsync(message);
+            await this.context.SaveChangesAsync();
             return this.Ok();
         }
     }
