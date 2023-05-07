@@ -3,7 +3,7 @@ using WebApiMessages.Data;
 
 namespace WebApiMessages.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class MessagesController : ControllerBase
     {
@@ -15,15 +15,14 @@ namespace WebApiMessages.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Message>>> Index() 
+        public async Task<ActionResult<IEnumerable<Message>>> All() 
         {
             return this.context.Messages
                 .OrderBy(m => m.CreatedOn)
                 .ToList();
         }
 
-        [HttpPost(Name = "Create")]
-        [Route("create")]
+        [HttpPost]
         public async Task<ActionResult> Create(MessageCreateBindingModel model)
         {
             Message message = new Message
