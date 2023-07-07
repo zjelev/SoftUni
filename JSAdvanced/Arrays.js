@@ -17,17 +17,17 @@ function calc(oper, arg1, arg2) {
 // let result = calc(sum, 5, 10);
 
 // //26:12
-// let emptyArr = [];
-// emptyArr[100] = 'kooj';
-
+let emptyArr = [];
+emptyArr[100] = 'kooj';
+// emptyArr.length = 5; 
+// console.log(emptyArr);
 // emptyArr.unshift("hi", "my name is");
 
-// emptyArr.length = 5;
-
-// let array = [10, 3, 'Pesho', 6, true]; // Mixing types is bad practice
-// console.log(array[-1]);
-// // array[array.length + 10] = 'Gerry';
-// console.log(array);
+let array = [10, 3, 'Pesho', 6, true]; // Mixing types is bad practice
+//console.log(array[-1]);
+array[array.length + 10] = 'Gerry';
+array[-1] = 'Ivan'; // Don't do it
+//console.log(array.length);
 // array[-1] = 'Gosho';
 // console.log(array); 
 // console.log(array.length);  //WTF
@@ -47,48 +47,48 @@ let names = ['Pesho', 'Gosho', 'ivan', 'Stamat', 'Batman', 'superman', 'SpiderMa
 // console.log(names);
 // getNames(names);
 function getNames(names) {
-    // let firstName = names[0];
-    // let secondName = names[1];
-    // // Array destructuring
+    //let firstName = names[0];
+    let secondName = names[1];
+    // Array destructuring
     let [firstName, ...others] = names; // Rest operator
 
     // console.log(firstName);
     // console.log(others);
 }
 
-// // 51:00 Mutator Methods
-// let lastName = names.pop();
-// names.push('Gerry');
+// 51:00 Mutator Methods
+let lastName = names.pop();
+names.push('Gerry');
 
 function solve(...names) {           // Rest operator
-    // console.log(names.join(', '));
+    console.log(names.join(', '));
 }
 // solve('pesho', 'gosho', 'stamat');
 
-// let numbers = [10, 2, 100, 4];
-// let largestNumber = Math.max(...numbers);   // Spread operator
+let numbers = [10, 2, 100, 4];
+// let result = Math.max(...numbers);   // Spread operator
 
 // 1:14 - Task 1
 function sumFirstLast(params) {
-    console.log(Number(params[0]) + Number(params[params.length - 1]));
+    return Number(params[0]) + Number(params[params.length - 1]);
 }
-// sumFirstLast(['20', '30', '40']);
-// let result = names.splice(2, 1);
+//let result = sumFirstLast(['20', '30', '40']);
+//let result = names.splice(2, 1);
 
 // 2
 function evenPositionElement(params) {
-    let output = '';
+    let result = '';
     // for (let i = 0; i < params.length; i+=2) {
     //     output += params[i] + ' ';
     // }
     for (const key in params) {
         if (key % 2 == 0) {
-            output += params[key] + ' ';
+            result += params[key] + ' ';
         }
     }
-    // console.log(output);
+    return result;
 }
-// evenPositionElement(['5', '30', '40']);
+// console.log(evenPositionElement(['5', '30', '40']));
 
 // 3
 function negativePositiveNums(params) {
@@ -100,16 +100,16 @@ function negativePositiveNums(params) {
             array.push(element)
         }
     });
-    // console.log(array.join(' '));
+    console.log(array.join(' '));
 }
 
-
+// negativePositiveNums(7, -2, 8, 9);
 // let arr = [1, 2, 3, 4, 5, 6, 7, 10, 100, 256];
 // arr.length = 5;
-// arr.fill(5, 1, 3);  // Ctrl + Shift + Space
-// arr.reverse();
+arr.fill(5, 1, 3);  // Ctrl + Shift + Space
+arr.reverse();
 
-// names.sort((a, b) => a.localeCompare(b));
+names.sort((a, b) => a.localeCompare(b));
 function compareNums(a, b) {
     return a - b;
 }
@@ -137,7 +137,7 @@ function compareNums(a, b) {
 // }
 // names.forEach((x, i, arr) => console.log(x + ' ' + i + ' ' + arr));
 
-// names = names.filter(x => (x[0] !== 'S' && x[0] !== 's'));   // returns all
+// names = names.filter(x => (x[0] !== 'S' && x[0] !== 's'));   // 
 
 // names = names.find(x => x[0] === 'S');                       // Like FirstOrDefault in C#
 
@@ -145,9 +145,11 @@ function compareNums(a, b) {
 
 // names = names.map(x => x.toUpperCase());                     // Like Select in C#
 
-// names = names.reduce((accumulator, element) => {
-//     return accumulator + element[0];
-// }, '');
+let reducedNames = names.reduce((accumulator, element) => {
+    return accumulator + element[0];
+}, '--');
+
+// console.log(reducedNames);
 
 // // 4
 // let start;
@@ -155,27 +157,34 @@ function compareNums(a, b) {
 
 function lastKNumbersSequence(n, k) {
     let nums = [1];
-    let sum = 1;
-    for (let i = 1; i <= k; i++) {
-        nums[i] = sum;
-        sum += nums[i];
+    // let sum = 1;
+    // for (let i = 1; i <= k; i++) {
+    //     nums[i] = sum;
+    //     sum += nums[i];
+    // }
+
+    // for (let i = k + 1; i < n; i++) {
+    //     let lastK = nums.slice(i - k, i);
+    //     let sum = 0;
+    //     lastK.forEach(x => sum += x);
+    //     nums[i] = sum;
+    // }
+
+    for (let i = 1; i < n; i++) {
+        nums.push(nums.slice(-k).reduce((a, v) => a + v, 0))
     }
 
-    for (let i = k + 1; i < n; i++) {
-        let lastK = nums.slice(i - k, i);
-        let sum = 0;
-        lastK.forEach(x => sum += x);
-        nums[i] = sum;
-    }
     return nums;
 }
 
+// console.log(lastKNumbersSequence(6, 3));
+
 function numSequent(n, k) {
     let output = [1];
-    while(n-- > 1) {
+    while (n-- > 1) {
         let sum = 0;
         for (let i = output.length - 1; i > output.length - 1 - k; i--) {
-            if (typeof(output[i]) == 'number') {
+            if (typeof (output[i]) == 'number') {
                 sum += Number(output[i]);
             }
         }
@@ -196,20 +205,18 @@ function numSequent(n, k) {
 
 // 5
 function processOddPositions(params) {
-    let result = params.filter((v, i) => i % 2 == 1).map(v => v * 2).reverse();
-    return result;
+    return params.filter((v, i) => i % 2 == 1).map(v => v * 2).reverse();
 }
-// console.log(processOddPositions([10, 15, 20, 25]))
+// console.log(processOddPositions([3, 0, 10, 4, 7, 3]))
 
 // 6
 function smallestTwoNumbers(params) {
-    let result = params.sort((a, b) => a -b).slice(0, 2)
-    return result;
+    return params.sort((a, b) => a - b).slice(0, 2)
 }
-// console.log(smallestTwoNumbers([30, 15, 50, 5]));
+//console.log(smallestTwoNumbers([30, 15, 50, 5]));
 
 // 7
-function biggestElement(matrix) {  
+function biggestElement(matrix) {
     //let maxNum = Number.MIN_SAFE_INTEGER;
     // matrix.forEach(row => {
     //     row.forEach(el => {
@@ -229,60 +236,80 @@ function biggestElement(matrix) {
     // let maxNums = matrix.map(row => Math.max(...row));
     // let maxNum = Math.max(...maxNums);
 
-    let maxNum = matrix
-        .map(row => Math.max(...row))
-        .reduce((a, x) => Math.max(a, x), Number.MIN_SAFE_INTEGER)
-
-    return maxNum;
+    return Math.max(... //
+            matrix.map(row => Math.max(...row))
+        ) //
+            //.reduce((a, x) => Math.max(a, x), Number.MIN_SAFE_INTEGER)
 }
 // console.log(biggestElement([[3, 5, 7, 12],[-1, 4, 33, 2],[8, 3, 0, 4]]));
 // console.log(biggestElement([[20, 50, 10], [8, 33, 145]]));
 
 // 8 
 function diagonalSums(matrix) {
-    let leftRightSum = 0;
+    // let leftRightSum = 0;
+    // for (let i = 0; i < matrix.length; i++) {
+    //     leftRightSum += matrix[i][i];
+    // }
 
-    for (let i = 0; i < matrix.length; i++) {
-        leftRightSum += matrix[i][i]; 
-    }
+    // let rightLeftSum = 0;
+    // let reverseCounter = matrix.length;
+    // for (let i = 0; i < matrix.length; i++) {
+    //     rightLeftSum += matrix[i][--reverseCounter];
+    // }
+    // return leftRightSum + ' ' + rightLeftSum;
 
-    let rightLeftSum = 0;
-    let reverseCounter = matrix.length;
-    for (let i = 0; i < matrix.length; i++) {
-        rightLeftSum += matrix[i][--reverseCounter];
-    }
-    return leftRightSum + ' ' + rightLeftSum;
+    const calcDiagonal = arr => arr.reduce((a, v, i) => a + v[i][i], 0)
+    return `${calcDiagonal(matrix)} ${calcDiagonal(matrix.reverse())}`
 }
 // console.log(diagonalSums([[3, 5, 17],[-1, 7, 14],[1, -8, 89]]));
 
 // 9. 
 function equalNeighbors(matrix) {
     let sum = 0;
-    let lastRow = matrix[matrix.length - 1];
+    
+    // let lastRow = matrix[matrix.length - 1];
+
+    // for (let i = 0; i < matrix.length - 1; i++) {
+    //     for (let j = 0; j < matrix[i].length - 1; j++) {
+    //         if ((matrix[i][j] === matrix[i + 1][j])) {
+    //             sum++;
+    //         }
+
+    //         if (matrix[i][j] === matrix[i][j + 1]) {
+    //             sum++;
+    //         }
+    //     }
+    // }
+
+    // for (let row = 0; row < matrix.length - 1; row++) {
+    //     if (matrix[row][matrix[row].length - 1] === matrix[row + 1][matrix[row].length - 1]) {
+    //         sum++;
+    //     }
+    // }
+
+    // for (let col = 0; col < lastRow.length - 1; col++) {
+    //     if (lastRow[col] === lastRow[col + 1]) {
+    //         sum++
+    //     }
+    // }
+
+    matrix.forEach(x =>
+        x.reduce((a, v) => {
+            if (a === v) {
+                sum++
+            }
+            return v
+        })
+    )
 
     for (let i = 0; i < matrix.length - 1; i++) {
-        for (let j = 0; j < matrix[i].length - 1; j++) {
-            if ((matrix[i][j] === matrix[i + 1][j])) {
-                sum++;
+        matrix[i].forEach((_, j) => {
+            if (matrix[i][j] === matrix[i + 1][j]) {
+                sum++
             }
-
-            if (matrix[i][j] === matrix[i][j + 1]) {
-                sum++;
-            }
-        }
+        })
     }
 
-    for (let row = 0; row < matrix.length - 1; row++) {
-        if (matrix[row][matrix[row].length - 1] === matrix[row + 1][matrix[row].length - 1]) {
-            sum++;
-        }
-    }
-
-    for (let col = 0; col < lastRow.length - 1; col++) {
-        if (lastRow[col] === lastRow[col + 1]) {
-            sum++
-        }
-    }
     return sum;
 }
 // console.log(equalNeighbors([['2', '3', '4', '7', '0'],
@@ -297,5 +324,3 @@ function equalNeighbors(matrix) {
 // console.log(equalNeighbors([[2, 2, 5, 7, 4],
 // [4, 0, 5, 3, 4],
 // [2, 5, 5, 4, 2]]))
-
-

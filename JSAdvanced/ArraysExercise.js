@@ -17,10 +17,10 @@ function solve(input) {
 // solve([1, 2 ,3, 4, 1, 9])
 
 // 1
-function solve(input) {
-    return input.join(input.pop());
+function solve(arr, d) {
+    return arr.join(d)
 }
-// console.log(solve(['One', 'Two', 'Three', 'Four', 'Five', '+']))
+//console.log(solve(['One', 'Two', 'Three', 'Four', 'Five'], '+'))
 
 //2
 function everyNthElement(input) {
@@ -40,41 +40,52 @@ function everyNthElement(input) {
 function addRemove(input) {
     let count = 1;
     let output = [];
-    input.forEach(command => {
-        if (command === 'add') {
-            output.push(count);
-        } else {
-            output.pop();
-        }
+
+    // input.forEach(command => {
+    //     if (command === 'add') {
+    //         output.push(count);
+    //     } else {
+    //         output.pop();
+    //     }
+    //     count++;
+    // });
+
+    input.map(el => {
+        el === 'remove' ? output.pop() : output.push(count);
         count++;
-    });
+    })
+
     output.length == 0 ? console.log('Empty') : console.log(output.join('\n'));
 }
 // addRemove(['add', 'add', 'remove', 'add', 'add']);
 
 // 4
-function rotateArray(input) {
-    let count = input.pop() % input.length;
-    for (let i = 0; i < count; i++) {
-        input.unshift(input.splice(input.length - 1))// pop());
+function rotateArray(arr, n) {
+    for (let i = 0; i < n % arr.length; i++) {
+        arr.unshift(arr.pop());
     }
-    return input.join(' ');
+    return arr.join(' ');
 }
 // console.log(rotateArray([1, 2, 3, 4, 2]))
 // console.log(rotateArray(['Banana', 'Orange', 'Coconut', 'Apple', '15']))
 
 // 5
 function increasingSubsequence(input) {
-    let currMax = Number.MIN_SAFE_INTEGER;
-    input = input.filter(num => {
-        if (num >= currMax) {
-            currMax = num;
-            return true;
-        } else {
-            return false;
-        }
-    });
-    return input.join("\n");
+    // let currMax = Number.MIN_SAFE_INTEGER;
+    // return input.filter(num => {
+    //     if (num >= currMax) {
+    //         currMax = num;
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // })
+    return input.reduce((a, v) => {
+        if (v >= (a[a.length - 1] || input[0])) {
+            a.push(v)
+        };
+        return a;
+    }, [])
 }
 // console.log(increasingSubsequence([1, 3, 8, 4, 10, 12, 3, 2, 24]));
 // console.log(increasingSubsequence([20, 3, 2, 15, 6, 1]));
@@ -90,9 +101,9 @@ function arraySort2Crit(input) {
     //         return -1;
     //     }
     // });
+
     const twoCrtSort = (a, b) => a.length - b.length || a.localeCompare(b);
-    input.sort(twoCrtSort);
-    return input.join("\n");
+    return input.sort(twoCrtSort).join("\n");
 }
 // console.log(arraySort2Crit(['test', 'Deny', 'omen', 'Default']));
 
@@ -124,19 +135,14 @@ function tictactoe(moves) {
     let matrix = [[false, false, false],
     [false, false, false],
     [false, false, false]];
-
     let counter = 0;
 
     for (const move of moves) {
         let [x, y] = move.split(' ').map(num => Number(num));
-        if (matrix[x][y]) {
+        if (matrix[x][y])
             console.log(`This place is already taken. Please choose another!`);
-        } else {
-            if (counter % 2 === 0) {
-                matrix[x][y] = 'X'
-            } else {
-                matrix[x][y] = 'O'
-            }
+        else {
+            matrix[x][y] = counter % 2 === 0 ? 'X' : 'O';
             counter++;
 
             if (counter === matrix.length ** 2) {
@@ -147,26 +153,20 @@ function tictactoe(moves) {
                 return;
             }
 
-            // for (let i = 0; i < matrix.length; i++) {
-            //     if (matrix[i][i] === matrix[i][i + 1] && matrix[i][i + 1] === matrix[i][i + 2] && matrix[i][i] ||
-            //         matrix[i][i] === matrix[i + 1][i] && matrix[i + 1][i] === matrix[i + 2][i] && matrix[i][i]
-            //     ) {
-            //         console.log(`Player ${matrix[x][y]} wins`);
-            //         for (const row of matrix) {
-            //             console.log(row.join(' '));
-            //         }
-            //         return;
-            //     }
-            // }
+            let playerWins = false;
 
-            if (matrix[0][0] === matrix[0][1] && matrix[0][1] === matrix[0][2] && matrix[0][0] ||
-                matrix[1][0] === matrix[1][1] && matrix[1][1] === matrix[1][2] && matrix[1][1] ||
-                matrix[2][0] === matrix[2][1] && matrix[2][1] === matrix[2][2] && matrix[2][2] ||
-                matrix[0][0] === matrix[1][0] && matrix[1][0] === matrix[2][0] && matrix[0][0] ||
-                matrix[0][1] === matrix[1][1] && matrix[1][1] === matrix[2][1] && matrix[1][1] ||
-                matrix[0][2] === matrix[1][2] && matrix[1][2] === matrix[2][2] && matrix[2][2] ||
+            if (matrix[x].every(z => z == matrix[x][y]) ||
+                matrix.reduce((a, v) => {
+                    a.push(v[y])
+                    return a
+                }, []).every(z => z === matrix[x][y]) ||
                 matrix[0][0] === matrix[1][1] && matrix[1][1] === matrix[2][2] && matrix[1][1] ||
-                matrix[2][0] === matrix[1][1] && matrix[1][1] === matrix[0][2] && matrix[1][1]) {
+                matrix[2][0] === matrix[1][1] && matrix[1][1] === matrix[0][2] && matrix[1][1])
+            {
+                playerWins = true;
+            }
+
+            if (playerWins) {
                 console.log(`Player ${matrix[x][y]} wins!`);
                 for (const row of matrix) {
                     console.log(row.join('	'));
@@ -178,7 +178,7 @@ function tictactoe(moves) {
 }
 
 // tictactoe(["0 1", "0 0", "0 2", "2 0", "1 0", "1 2", "1 1", "2 1", "2 2", "0 0"])
-// tictactoe(["0 0","0 0","1 1","0 1","1 2","0 2","2 2","1 2","2 2","2 1"])
+// tictactoe(["0 0", "0 0", "1 1", "0 1", "1 2", "0 2", "2 2", "1 2", "2 2", "2 1"])
 // tictactoe(["0 1", "0 0", "0 2", "2 0", "1 0", "1 1", "1 2", "2 2", "2 1", "0 0"])
 
 //9
@@ -226,11 +226,9 @@ function orbit(params) {
             matrix[i][j] = Math.max(Math.abs(i - params[2]), Math.abs(j - params[3])) + 1;
         }
     }
-    for (let row of matrix) {
-        console.log(row.join(' '));
-    }
+    return matrix;
 }
-// orbit([5, 5, 2, 2])
+// console.log(orbit([5, 5, 2, 2]));
 
 // 11
 function spiralMatrix(w, h) {
@@ -260,4 +258,4 @@ function spiralMatrix(w, h) {
     return matrix.map(x => x.join(" ")).join("\n")
 }
 
-console.log(spiralMatrix(5, 5))
+// console.log(spiralMatrix(6, 6))
