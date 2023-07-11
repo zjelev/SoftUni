@@ -1,54 +1,67 @@
-// let person = {
-//     firstName: 'Pesho',
-//     lastName: 'Petrov',
-//     age: function (myAge) {
-//         return `My age is ${myAge}`;
-//     },
-//     talk: function () {
-//         person.greet('qewwqdas');
-//     },
-//     height: 180,
-//     greet: name => console.log('Hello ' + name + '!'),
+let person = {
+    firstName: 'Pesho',
+    lastName: 'Petrov',
+    age: function (myAge) {
+        return `My age is ${myAge}`;
+    },
+    talk: function () {
+        person.greet('qewwqdas');
+    },
+    height: 180,
+    greet: name => console.log('Hello ' + name + '!'),
+    course: {
+        name: "JS",
+        teacher: "Gosho",
+    }
+}
+
+// person.talk();
+
+let person2 = Object.assign({}, person); // cloning
+let propName = 'firstName';
+// console.log(person2[propName]);
+
+person['jobtitle'] = 'Trainer';
+// console.log(person['jobtitle']);
+// console.log(person.age(30));
+// delete person.age;
+// console.log(person.age);
+
+// let keys = Object.keys(person);
+//console.log(keys);
+// if (person.hasOwnProperty('age')) {
+//     console.log(person.age(30));  // JS Core 
 // }
 
-// // person.talk();
+// let values = Object.values(person);
+// console.log(values);
+// if (values.includes('Pesho')) {
+//     console.log("found value");
+// }
 
-// // let person2 = Object.assign({}, person);
-// // let propName = 'firstName';
-// // console.log(person2[propName]);
+// for (const key in person) {
+//     console.log(`${key} --> ${person[key]}`);
+// }
 
-// // person['jobtitle'] = 'Trainer';
-// // console.log(person['jobtitle']);
-// // console.log(person.age(30));
-// // delete person.age;
-// // console.log(person.age);
+// for (const el of Object.keys(person)) { // ForOf работи само с масиви
+//      console.log(`${el} --> ${person[el]}`);
+// }
 
-// // let keys = Object.keys(person);
-// // //console.log(keys);
-// // if (person.hasOwnProperty('age')) {
-// //     console.log(person.age(30));  // JS Core 
-// // }
+// Object.keys(person.course).forEach((key) => {
+//     console.log(key)
+// })
 
-// // let values = Object.values(person);
-// // console.log(values);
-// // if (values.includes('Pesho')) {
-// //     console.log("found value");
-// // }
+let res = Object.entries(person);
+console.log(res);
+let samePerson = Object.fromEntries(res);
+console.log(samePerson);
 
-// // for (const key in person) {
-// //     console.log(`${key} --> ${person[key]}`);
-// // }
+let data = '[{"manager": {"firstName":"Pesho","lastName":"Petrov","height":180}}, {"firstName": "Gosho"}]'; //JSON.stringify(person);
+// console.log(data);
+person2 = JSON.parse(data);
+// console.log(person2[0].manager.firstName);
 
-// // for (const el of Object.keys(person)) {
-// //      console.log(`${el} --> ${person[el]}`);
-// // }
-
-// // let data = '[{"manager": {"firstName":"Pesho","lastName":"Petrov","height":180}}, {"firstName": "Gosho"}]'; //JSON.stringify(person);
-// // // console.log(data);
-// // let person2 = JSON.parse(data);
-// // console.log(person2[0].manager.firstName);
-
-// //1
+//1
 function townsToJson(input) {
     let data = input
         .map(row => row.split('|').filter(x => x != '').map(x => x.trim()));
@@ -184,5 +197,5 @@ function lowestPricesInCities(input) {
     products.forEach(p => console.log(`${p.product} -> ${p.price} (${p.town})`))
 }
 
-lowestPricesInCities(['Sample Town | Sample Product | 1000', 'Sample Town | Orange | 2','Sample Town | Peach | 1',
-    'Sofia | Orange | 3','Sofia | Peach | 2','New York | Sample Product | 1000.1','New York | Burger | 10'])
+// lowestPricesInCities(['Sample Town | Sample Product | 1000', 'Sample Town | Orange | 2','Sample Town | Peach | 1',
+//    'Sofia | Orange | 3','Sofia | Peach | 2','New York | Sample Product | 1000.1','New York | Burger | 10'])
