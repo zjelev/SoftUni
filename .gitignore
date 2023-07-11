@@ -409,3 +409,4 @@ appsettings.json
 Migrations/
 uploads/
 *.pdf
+*.zip
