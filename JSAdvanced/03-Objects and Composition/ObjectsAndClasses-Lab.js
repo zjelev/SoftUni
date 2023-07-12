@@ -81,7 +81,7 @@ function townsToJson(input) {
     console.log(JSON.stringify(result));
 }
 
-// townsToJson(['| Town | Latitude | Longitude |', '| Sofia | 42.696552 | 23.32601 |', '| Beijing | 39.913818 | 116.363625 |']);
+townsToJson(['| Town | Latitude | Longitude |', '| Sofia | 42.696552 | 23.32601 |', '| Beijing | 39.913818 | 116.363625 |']);
 
 function sumByTown(input = []) {
     //.map(v => v.split(','));
