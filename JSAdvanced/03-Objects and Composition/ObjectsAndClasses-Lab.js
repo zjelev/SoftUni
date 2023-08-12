@@ -52,9 +52,9 @@ person['jobtitle'] = 'Trainer';
 // })
 
 let res = Object.entries(person);
-console.log(res);
+//console.log(res);
 let samePerson = Object.fromEntries(res);
-console.log(samePerson);
+//console.log(samePerson);
 
 let data = '[{"manager": {"firstName":"Pesho","lastName":"Petrov","height":180}}, {"firstName": "Gosho"}]'; //JSON.stringify(person);
 // console.log(data);
@@ -81,7 +81,7 @@ function townsToJson(input) {
     console.log(JSON.stringify(result));
 }
 
-townsToJson(['| Town | Latitude | Longitude |', '| Sofia | 42.696552 | 23.32601 |', '| Beijing | 39.913818 | 116.363625 |']);
+// townsToJson(['| Town | Latitude | Longitude |', '| Sofia | 42.696552 | 23.32601 |', '| Beijing | 39.913818 | 116.363625 |']);
 
 function sumByTown(input = []) {
     //.map(v => v.split(','));
@@ -199,3 +199,13 @@ function lowestPricesInCities(input) {
 
 // lowestPricesInCities(['Sample Town | Sample Product | 1000', 'Sample Town | Orange | 2','Sample Town | Peach | 1',
 //    'Sofia | Orange | 3','Sofia | Peach | 2','New York | Sample Product | 1000.1','New York | Burger | 10'])
+
+//// 2023
+function cityRecord(name, population, treasury) {
+    return {
+        name,
+        population,
+        treasury,
+    };
+}
+console.log(cityRecord('Tortuga', 7000, 15000));
