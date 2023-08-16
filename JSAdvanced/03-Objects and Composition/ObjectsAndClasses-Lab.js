@@ -201,11 +201,41 @@ function lowestPricesInCities(input) {
 //    'Sofia | Orange | 3','Sofia | Peach | 2','New York | Sample Product | 1000.1','New York | Burger | 10'])
 
 //// 2023
-function cityRecord(name, population, treasury) {
-    return {
-        name,
-        population,
-        treasury,
-    };
+function cityRecord(townName, population, gold) {
+    let townInfo = {name: townName, population, treasury: gold};
+
+    return townInfo;
 }
-console.log(cityRecord('Tortuga', 7000, 15000));
+// console.log(cityRecord('Tortuga', 7000, 15000));
+
+function townPopulation(input) {
+    let towns = {};
+
+    input.forEach(line => {
+        let [town, population] = line.split(' <-> ');
+        population = Number(population);
+
+        if (!towns.hasOwnProperty(town)) {
+            towns[town] = 0;
+        }
+
+        towns[town] += population;
+    });
+
+    for (let town in towns) {
+        console.log(`${town} : ${towns[town]}`);
+    }
+}
+
+const input = [
+    'Sofia <-> 1200000',
+    'Montana <-> 20000',
+    'New York <-> 10000000',
+    'Washington <-> 2345000',
+    'Las Vegas <-> 1000000'
+];
+
+//townPopulation(input);
+function cityTaxes(name, population, treasury) {
+    let city = cityRecord(name, population, treasury);
+}

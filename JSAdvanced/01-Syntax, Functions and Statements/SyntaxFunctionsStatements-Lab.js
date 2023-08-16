@@ -1,27 +1,26 @@
 // //sudo apt install nodejs
 
-// console.log(+'5' / 2); //bad practise
+// console.log(+'5' / 2); //bad practice
 
-// function maxNum(first, second, third) {
-//     let result = Math.max(first, second, third);
-//     console.log(`The largest number is ${result}`);
-// }
-
+function maxNum(first, second, third) {
+    let result = Math.max(first, second, third);
+    console.log(`The largest number is ${result}`);
+}
 // maxNum(5, -3, 16);
 
-// const foo = function(a, b, c) {
-//     console.log(a);
-//     console.log(b);
-//     console.log(c);
-//  }
+const foo = function(a, b, c) {
+    console.log(a);
+    console.log(b);
+    console.log(c);
+ }
 //  foo(2,5)
 
-// function calculate(sth) {
-//     if (true)
-//         this.sth = sth;
-    
-//     console.log(sth);
-// }
+function calculate(sth) {
+    if (true)
+        this.sth = sth;
+
+    console.log(sth);
+}
 // sth = 'Gosho'
 // calculate(sth)
 
