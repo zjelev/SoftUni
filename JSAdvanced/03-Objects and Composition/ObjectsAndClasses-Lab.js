@@ -202,9 +202,9 @@ function lowestPricesInCities(input) {
 
 //// 2023
 function cityRecord(townName, population, gold) {
-    let townInfo = {name: townName, population, treasury: gold};
+    let obj = {name: townName, population, treasury: gold};
 
-    return townInfo;
+    return obj;
 }
 // console.log(cityRecord('Tortuga', 7000, 15000));
 
@@ -236,6 +236,145 @@ const input = [
 ];
 
 //townPopulation(input);
+
 function cityTaxes(name, population, treasury) {
-    let city = cityRecord(name, population, treasury);
+    return {
+        name,
+        population,
+        treasury,
+        taxRate: 10,
+        collectTaxes() {
+            this.treasury += this.population * this.taxRate;
+        },
+        applyGrowth(percentage) {
+            this.population *= 1 + percentage / 100;
+        },
+        applyRecession(percentage) {
+            this.treasury *= 1 - percentage / 100;
+        }
+    };
 }
+
+// const city = cityTaxes('Tortuga', 7000, 15000);
+// console.log(city);
+
+function factory(library, orders) {
+    let arr = [];
+    
+    for (const order of orders) {
+        let template = order.template;
+
+        for (const part of order.parts) {
+            if (library.hasOwnProperty(part)) {
+                template[part] = library[part];
+            }
+        }
+
+        arr.push(template);
+    }
+
+    return arr;
+}
+
+const library = {
+    print: function () {
+        console.log(`${this.name} is printing a page`);
+    },
+    scan: function () {
+        console.log(`${this.name} is scanning a document`);
+    },
+    play: function (artist, track) {
+        console.log(`${this.name} is playing '${track}' by ${artist}`);
+    },
+};
+
+const orders = [
+    {
+        template: { name: 'ACME Printer' },
+        parts: ['print']
+    },
+    {
+        template: { name: 'Initech Scanner' },
+        parts: ['scan']
+    },
+    {
+        template: { name: 'ComTron Copier' },
+        parts: ['scan', 'print']
+    },
+    {
+        template: { name: 'BoomBox Stereo' },
+        parts: ['play']
+    }
+];
+
+// const products = factory(library, orders);
+// console.log(products);  
+
+function createAssemblyLine() {
+    let result = {
+        hasClima(myCar) {
+            myCar.temp = 21;
+            myCar.tempSettings = 21;
+
+            myCar.adjustTemp = () => {
+                if (myCar.temp < myCar.tempSettings) {
+                    myCar.temp += 1;
+                } else if (myCar.temp > myCar.tempSettings) {
+                    myCar.temp -= 1;
+                }
+            }
+        },
+
+        hasAudio(myCar) {
+            myCar.currentTrack = null;
+
+            myCar.nowPlaying = () => {
+                if (myCar.currentTrack !== null) {
+                    console.log(`Now playing '${myCar.currentTrack.name}' by ${myCar.currentTrack.artist}`);
+                }
+            }
+        },
+
+        hasParktronic(myCar) {
+            myCar.checkDistance = (distance) => {
+                if (distance < 0.1) {
+                    console.log('Beep! Beep! Beep!');
+                } else if (distance < 0.25) {
+                    console.log('Beep! Beep!');
+                } else if (distance < 0.5) {
+                    console.log('Beep!');
+                } else {
+                    console.log('');
+                }
+            }
+        }
+    };
+
+    return result;
+}
+
+const assemblyLine = createAssemblyLine();
+
+const myCar = {
+    make: 'Toyota',
+    model: 'Avensis',
+};
+
+assemblyLine.hasClima(myCar);
+console.log(myCar.temp);
+myCar.tempSettings = 18;
+myCar.adjustTemp();
+console.log(myCar.temp);
+
+assemblyLine.hasAudio(myCar);
+myCar.currentTrack = {
+    name: 'Never Gonna Give You Up',
+    artist: 'Rick Astley'
+};
+myCar.nowPlaying();
+
+assemblyLine.hasParktronic(myCar);
+myCar.checkDistance(0.4);
+myCar.checkDistance(0.2);
+
+console.log(myCar);
