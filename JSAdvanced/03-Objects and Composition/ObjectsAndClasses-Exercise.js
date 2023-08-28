@@ -59,3 +59,63 @@ function cappyJuice(input) {
 }
 
 // cappyJuice(['Kiwi => 234','Pear => 2345','Watermelon => 3456','Kiwi => 4567','Pear => 5678','Watermelon => 6789'])
+
+// 2023
+function calorieObject(arr) {
+    let obj = {};
+    for (let i = 0; i < arr.length; i+=2) {
+        obj[arr[i]] = Number(arr[i + 1]);
+    }
+    return obj;
+}
+
+// console.log(calorieObject(['Yoghurt', '48', 'Rise', '138', 'Apple', '52']))
+
+function constructionCrew(obj) {
+    if (obj.dizziness) {
+        obj.levelOfHydrated += 0.1*obj.weight*obj.experience;
+        obj.dizziness = false;
+    }
+    return obj;
+}
+
+// console.log(constructionCrew({ weight: 120, experience: 20, levelOfHydrated: 200, dizziness: true }))
+
+function carFactory(obj) {
+    let engines = {
+        Small: { power: 90, volume: 1800 } ,
+        Normal: { power: 120, volume: 2400 },
+        Monster: { power: 200, volume: 3500 }
+    };
+
+    let car = {
+        model: obj.model,
+        carriage: { 
+            type: obj.carriage,
+            color: obj.color
+        }
+    };
+     
+    if (obj.power <= 90 ) {
+        car.engine = engines.Small;
+    } else if (obj.power <= 120) {
+        car.engine = engines.Normal;
+    } else {
+        car.engine = engines.Monster;
+    }
+    
+    let wheels = [];
+    if (obj.wheelsize % 2 == 0) {
+        obj.wheelsize--;
+    }
+
+    for (let i = 0; i < 4; i++) {
+        wheels.push(obj.wheelsize)   
+    }
+
+    car.wheels = wheels;
+    
+    return car;
+}
+
+console.log(carFactory({model: 'VW Golf II', power: 90, color: 'blue', carriage: 'hatchback', wheelsize: 14 }))

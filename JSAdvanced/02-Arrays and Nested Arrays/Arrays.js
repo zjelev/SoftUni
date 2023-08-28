@@ -19,16 +19,16 @@ function calc(oper, arg1, arg2) {
 // //26:12
 let emptyArr = [];
 emptyArr[100] = 'kooj';
-// emptyArr.length = 5; 
+emptyArr.length = 5; 
 // console.log(emptyArr);
-// emptyArr.unshift("hi", "my name is");
+emptyArr.unshift("hi", "my name is");
 
 let array = [10, 3, 'Pesho', 6, true]; // Mixing types is bad practice
 //console.log(array[-1]);
 array[array.length + 10] = 'Gerry';
 array[-1] = 'Ivan'; // Don't do it
 //console.log(array.length);
-// array[-1] = 'Gosho';
+array[-1] = 'Gosho';
 // console.log(array); 
 // console.log(array.length);  //WTF
 let arr = [];
@@ -66,14 +66,14 @@ function solve(...names) {           // Rest operator
 // solve('pesho', 'gosho', 'stamat');
 
 let numbers = [10, 2, 100, 4];
-// let result = Math.max(...numbers);   // Spread operator
+let result = Math.max(...numbers);   // Spread operator
 
 // 1:14 - Task 1
 function sumFirstLast(params) {
     return Number(params[0]) + Number(params[params.length - 1]);
 }
-//let result = sumFirstLast(['20', '30', '40']);
-//let result = names.splice(2, 1);
+result = sumFirstLast(['20', '30', '40']);
+result = names.splice(2, 1);
 
 // 2
 function evenPositionElement(params) {
